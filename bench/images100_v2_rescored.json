@@ -1,0 +1,4204 @@
+[
+  {
+    "file": "cover_001.jpg",
+    "expected_title": "The Kite Runner",
+    "expected_author": "Khaled Hosseini",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Kite Runner",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Kite Runner"
+    ],
+    "shown_authors": [
+      "Khaled Hosseini"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "RUNNER KITE",
+        "author": "COPY",
+        "full": "KHALED HOSSEINI KITE TH RUNNER SIGNED COPY",
+        "confidence": 0.9888583847454616
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "RUNNER KITE",
+        "author": "COPY",
+        "full": "KHALED HOSSEINI KITE TH RUNNER 0 SIGNED COPY",
+        "confidence": 0.9198570474982262
+      }
+    ],
+    "seconds": 22.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_002.jpg",
+    "expected_title": "The Alchemist",
+    "expected_author": "Paulo Coelho",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "ALCHEMIST.",
+    "top_score": 78.26086956521739,
+    "top_author_score": 96.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "ALCHEMIST.",
+      "The Alchemist",
+      "The Alchemist"
+    ],
+    "shown_authors": [
+      "PAULO. COELHO",
+      "Ben Jonson",
+      "Paulo Coelho"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "AICHEMIST",
+        "author": "The",
+        "full": "The AICHEMIST 25 HNVEASAY KON PAULO COELHO",
+        "confidence": 0.8156559566656748
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ALCHEMIST",
+        "author": "The",
+        "full": "The ALCHEMIST 25 INNVERSAR KOITEN PAULO COELHO",
+        "confidence": 0.9376972615718842
+      }
+    ],
+    "seconds": 12.0,
+    "error": "",
+    "strict": 78.3,
+    "loose": 78.3
+  },
+  {
+    "file": "cover_003.jpg",
+    "expected_title": "Atomic Habits",
+    "expected_author": "James Clear",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Atomic Habits: an Easy and Proven Way to Build Good Habits and Break Bad Ones",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Atomic Habits: an Easy and Proven Way to Build Good Habits and Break Bad Ones",
+      "Atomic Habits"
+    ],
+    "shown_authors": [
+      "James Clear",
+      "James Clear"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "James Clear Tiny Changes, Remarkable Results & Break Bad Ones",
+        "author": "An Easy & Proven Way",
+        "full": "Tiny Changes, Remarkable Results An Easy & Proven Way OVER to Build Good Habits 2MILLION COPIES & Break Bad Ones SOLD James Clear",
+        "confidence": 0.977989113330841
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "James Clear Tiny Changes, Remarkable Results & Break Bad Ones",
+        "author": "An Easy & Proven Way",
+        "full": "Tiny Changes, Remarkable Results An Easy & Proven Way OVER to Build Good Habits 2MILLION COPIES & Break Bad Ones SOLD James Clear",
+        "confidence": 0.9968439698219299
+      }
+    ],
+    "seconds": 28.2,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_004.jpg",
+    "expected_title": "Nineteen Eighty-Four",
+    "expected_author": "George Orwell",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Nineteen Eighty-Four",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Nineteen Eighty-Four"
+    ],
+    "shown_authors": [
+      "George Orwell"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "NINETEEN EIGITY-FOUR",
+        "author": "",
+        "full": "NINETEEN EIGITY-FOUR",
+        "confidence": 0.8988221883773804
+      }
+    ],
+    "seconds": 2.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_005.jpg",
+    "expected_title": "To Kill a Mockingbird",
+    "expected_author": "Harper Lee",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "To Kill a Mockingbird",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "To Kill a Mockingbird"
+    ],
+    "shown_authors": [
+      "Harper Lee"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Mockingbird TO KILL A",
+        "author": "HARPER LEE",
+        "full": "TO KILL A Mockingbird NOVELBY HARPER LEE",
+        "confidence": 0.976905569434166
+      }
+    ],
+    "seconds": 4.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_006.jpg",
+    "expected_title": "The Great Gatsby",
+    "expected_author": "F. Scott Fitzgerald",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Great Gatsby",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Great Gatsby",
+      "The Great Gatsby By F. Scott Fitzgerald"
+    ],
+    "shown_authors": [
+      "F. Scott Fitzgerald",
+      "F Scott Fitzgerald"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "THE GREAT GATSBY F.SCOTT FITZGERALD OCR OXFORD",
+        "author": "Officlal Publisher Partnership",
+        "full": "THE GREAT GATSBY F.SCOTT FITZGERALD OCR OXFORD UNIVERSITY PRESS AOCOONSNGAORVENENT Officlal Publisher Partnership",
+        "confidence": 0.9437051282988654
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "THE GREAT GATSBY F. SCOTT FITZGERALD OCR OXFORD",
+        "author": "Official Publisher Partnership",
+        "full": "THE GREAT GATSBY F. SCOTT FITZGERALD OCR OXFORD UNIVERSITY PRESS MOCOUNSING ADHRVEMENT Official Publisher Partnership",
+        "confidence": 0.9704130424393548
+      }
+    ],
+    "seconds": 19.2,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_007.jpg",
+    "expected_title": "Pride and Prejudice",
+    "expected_author": "Jane Austen",
+    "verdict": "review",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Pride and Prejudice and Zombies",
+    "top_score": 76.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Pride and Prejudice and Zombies",
+      "Pride and Prejudice"
+    ],
+    "shown_authors": [
+      "Seth Grahame-Smith, Jane Austen",
+      "Jane Austen"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Prejudice Pride and",
+        "author": "",
+        "full": "Pride and Prejudice",
+        "confidence": 0.9674468040466309
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Prejudice Pride \u56fd 100 and",
+        "author": "",
+        "full": "\u56fd Pride and Prejudice 100",
+        "confidence": 0.8142577409744263
+      }
+    ],
+    "seconds": 12.7,
+    "error": "",
+    "strict": 76.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_008.jpg",
+    "expected_title": "The Catcher in the Rye",
+    "expected_author": "J. D. Salinger",
+    "verdict": "review",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "J.D. Salinger's The Catcher in the Rye",
+    "top_score": 73.33333333333334,
+    "top_author_score": 30.769230769230774,
+    "best_in_list": 100.0,
+    "shown": [
+      "J.D. Salinger's The Catcher in the Rye",
+      "J.D. Salinger's The Catcher in the Rye"
+    ],
+    "shown_authors": [
+      "Sarah Graham",
+      "Harold Bloom"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "iNeRYE TCHER",
+        "author": "31867 00082 4651",
+        "full": "HILUPSACACEMY TCHER 31867 00082 4651 iNeRYE",
+        "confidence": 0.8611613512039185
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "in theRYE TCHER",
+        "author": "3 1867 00082 4651",
+        "full": "PHILLIPS ACADEMY TCHER 3 1867 00082 4651 in theRYE",
+        "confidence": 0.9810491651296616
+      }
+    ],
+    "seconds": 15.0,
+    "error": "",
+    "strict": 73.3,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_009.jpg",
+    "expected_title": "The Hobbit",
+    "expected_author": "J.R.R. Tolkien",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Hobbit",
+    "top_score": 100.0,
+    "top_author_score": 88.88888888888889,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Hobbit"
+    ],
+    "shown_authors": [
+      "J. R. R. Tolkien"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "HOBBIT",
+        "author": "THE",
+        "full": "8B 95\u4e2d THE HOBBIT THE ENCHANTING PRELUIDE TO \"THE LORD OF THE RINGS\" JRRTOLKIEN",
+        "confidence": 0.8600359814507621
+      }
+    ],
+    "seconds": 8.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_010.jpg",
+    "expected_title": "Harry Potter and the Philosopher's Stone",
+    "expected_author": "J. K. Rowling",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue_ocr_recovery",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Harry Potter and the Philosopher's Stone",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Harry Potter and the Philosopher's Stone",
+      "Harry Potter and the Prisoner of Azkaban"
+    ],
+    "shown_authors": [
+      "J. K. Rowling",
+      "J. K. Rowling"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "EXPRESS HARRY POTTER HOGWARTS 9\u53f7",
+        "author": "and",
+        "full": "HARRY POTTER tbe Pbilosopber's and Stone J.K.ROWLING 9\u53f7 HOGWARTS EXPRESS 0 NN .this is a terrific book.\"Tbe Sunday Telegrapb",
+        "confidence": 0.8959102905713595
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "EXPRESS HARRY POTTER HOGWARTS 94",
+        "author": "and",
+        "full": "HARRY POTTER the Philosopber's and Stone J.K.ROWLING 94 HOGWARTS EXPRESS D o NN this is a terrific book.\" The Sunday Telegraph",
+        "confidence": 0.9157564427171435
+      }
+    ],
+    "seconds": 26.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_011.jpg",
+    "expected_title": "The Da Vinci Code",
+    "expected_author": "Dan Brown",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "CODE DANBROWN",
+        "author": "THE",
+        "full": "THE CODE DANBROWN",
+        "confidence": 0.9946431716283163
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "CODE DAN BROWN",
+        "author": "THE",
+        "full": "THE CODE DAN BROWN",
+        "confidence": 0.999793291091919
+      }
+    ],
+    "seconds": 24.2,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_012.jpg",
+    "expected_title": "The Hunger Games",
+    "expected_author": "Suzanne Collins",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Hunger Games",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Hunger Games"
+    ],
+    "shown_authors": [
+      "Suzanne Collins"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "HUNGER GAMES COLLINS SUZANNE THE",
+        "author": "",
+        "full": "THE HUNGER GAMES SUZANNE COLLINS",
+        "confidence": 0.9814737796783447
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "HUNGER GAMES COLLINS SUZANNE THE",
+        "author": "",
+        "full": "THE HUNGER GAMES SUZANNE COLLINS",
+        "confidence": 0.9999463319778442
+      }
+    ],
+    "seconds": 11.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_013.jpg",
+    "expected_title": "Gone Girl",
+    "expected_author": "Gillian Flynn",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Gone Girl",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Gone Girl",
+      "Gone Girl by Gillian Flynn"
+    ],
+    "shown_authors": [
+      "Gillian Flynn",
+      "Melanie Joosten"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "FLYNN \uff27\uff29\uff2c\uff2cIAN GONE GIRL",
+        "author": "Sausalito",
+        "full": "DARK PLACES 3111103182 1216 \uff27\uff29\uff2c\uff2cIAN FLYNN GONE GIRL Sausalito Pablie ONE WEEK CHECKOUT Library UATE CHARGE:SOC PER DAY NORENEWALS",
+        "confidence": 0.9012914647658666
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "FLYNN GILLIAN GONE GIRL",
+        "author": "Sausalito",
+        "full": "AND DARKPLACES 31111031821216 GILLIAN FLYNN GONE GIRL Sausalito Public ONE WEEK CHECKOUT Library LATE CHARGE: S0C PER DAY NORENEWALS",
+        "confidence": 0.979073166847229
+      }
+    ],
+    "seconds": 28.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_014.jpg",
+    "expected_title": "The Fault in Our Stars",
+    "expected_author": "John Green",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Fault in Our Stars",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Fault in Our Stars",
+      "The Fault in Our Stars"
+    ],
+    "shown_authors": [
+      "John Green",
+      "Expert Book Reviews"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "JOHN GREEN STAR'S FAULT INOUR",
+        "author": "THE",
+        "full": "JOHN GREEN BESTSELIER THE FAULT INOUR NOWA FROM TWENTIETH STAR'S CENTURY FOX",
+        "confidence": 0.9509810407956442
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "JOHN GREEN STARS FAULT INOUR",
+        "author": "THE",
+        "full": "JOHN GREEN THE FAULT INOUR NOWA FROM TWENTIETH STARS CENTURY FOX",
+        "confidence": 0.9938731715083122
+      }
+    ],
+    "seconds": 20.8,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_015.jpg",
+    "expected_title": "Sapiens",
+    "expected_author": "Yuval Noah Harari",
+    "verdict": "correct",
+    "decision": "HIGH_CONFIDENCE",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Sapiens",
+    "top_score": 100.0,
+    "top_author_score": 29.85074626865672,
+    "best_in_list": 100.0,
+    "shown": [
+      "Sapiens",
+      "Homo sapiens",
+      "Homo Sapiens: a Captivating Guide to the History of Humans and Human Evolution",
+      "Neanderthals: a Captivating Guide to Homo Sapiens' Closest Extinct Human Relative"
+    ],
+    "shown_authors": [
+      "Book Summary, sapiens a brief history of humankind",
+      "Captivating History",
+      "Captivating History",
+      "Captivating History"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Sapiens",
+        "author": "History of",
+        "full": "Yuval Noah Harari Sapiens A Brief History of Humankind would recomnsend Sapiens to anyone who's inrerested VINTAGE in the history and fuuure of our species' BILL GATES",
+        "confidence": 0.9694394138124254
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Sapiens",
+        "author": "History of",
+        "full": "Yuval Noah Harari Sapiens A Brief History of Humankind 'I would recommend Sapiens to anyone who's interested VINTAGE in the history and future of our species BILL GATES",
+        "confidence": 0.9978929360707601
+      }
+    ],
+    "seconds": 24.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_016.jpg",
+    "expected_title": "Thinking, fast and slow",
+    "expected_author": "Daniel Kahneman",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Thinking, Fast and Slow",
+    "top_score": 50.0,
+    "top_author_score": 69.56521739130434,
+    "best_in_list": 100.0,
+    "shown": [
+      "Thinking, Fast and Slow",
+      "Christine",
+      "Firestarter"
+    ],
+    "shown_authors": [
+      "Daniel Kahneman",
+      "Stephen King",
+      "Stephen King"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "THINKING, FASTNDSLOW KAHNEMAN DANIEL",
+        "author": "\"[A]maserpiece..This is one of the reatest aed mtos ngaging colleciors of",
+        "full": "THINKING, FASTNDSLOW DANIEL KAHNEMAN \"[A]maserpiece..This is one of the reatest aed mtos ngaging colleciors of iasights isto te hrutpan mind I have Fead.\"WILLEAM LASYELY,FinanciaI Times",
+        "confidence": 0.8957111934820811
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "THINKING, FASTANDSLOW KAHNEMAN DANIEL",
+        "author": "[A] masterpieceThis is one of the greatest and most engaging collections of",
+        "full": "THINKING, FASTANDSLOW DANIEL KAHNEMAN [A] masterpieceThis is one of the greatest and most engaging collections of insights into the human mind I have read.\"\u2014wItLtAM LAsTiRLY, Financial Times",
+        "confidence": 0.966125080982844
+      }
+    ],
+    "seconds": 32.0,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_017.jpg",
+    "expected_title": "Rich Dad, Poor Dad",
+    "expected_author": "Robert T. Kiyosaki",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Rich Dad, Poor Dad",
+    "top_score": 59.25925925925925,
+    "top_author_score": 78.26086956521739,
+    "best_in_list": 100.0,
+    "shown": [
+      "Rich Dad, Poor Dad"
+    ],
+    "shown_authors": [
+      "Robert T. Kiyosaki"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ICH DAD POORDAD",
+        "author": "ROBERT T. KIYOSAKI",
+        "full": "CELEBRATING 20YEARS ASTHETPERSONAL FINANCE BOOK OFALL TIME What the Rich Teach Their Kids About Money \u2014That the Poor and Middle Class Do Not! ICH DAD POORDAD WITH UPDATES FOR TODAY'S WORLD ROBERT T. KIYOSAKI",
+        "confidence": 0.9553182423114777
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ICH DAD POORDAD",
+        "author": "ROBERT T. KIYOSAKI",
+        "full": "CELEBRATING 20 YEARS FINANCEBOOK OFALLTIME What the Rich Teach Their Kids About Money -That the Poor and Middle Class Do Not! ICH DAD POORDAD WITH UPDATES FOR TODAY'S WORLD ROBERT T. KIYOSAKI",
+        "confidence": 0.9903768530258765
+      }
+    ],
+    "seconds": 22.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_018.jpg",
+    "expected_title": "The Subtle Art of Not Giving a F*ck",
+    "expected_author": "Mark Manson",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Subtle Art of Not Giving a F_ck",
+    "top_score": 90.9090909090909,
+    "top_author_score": 48.0,
+    "best_in_list": 97.1,
+    "shown": [
+      "Subtle Art of Not Giving a F_ck",
+      "The Subtle Art of Not Giving a Fuck"
+    ],
+    "shown_authors": [
+      "Morgan Preston",
+      "Mark Manson Translated by Urmila Gupta"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "AF*CK ART OF SUBTLE NOT GIVING THE MARK MANSON",
+        "author": "Tistes",
+        "full": "THE SUBTLE ART OF NOT Miew York Tistes GIVING AF*CK A COUNTERINTUITIVE APPROACH TO LIVING A GOOD LIFE MARK MANSON",
+        "confidence": 0.9226997007023204
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "AFCK ART OF SUBTLE NOT GIVING THE MARK MANSON",
+        "author": "Times",
+        "full": "THE SUBTLE ART OF NOT New York Times GIVING AFCK A COUNTERINTUITIVE APPROACH TO LIVING A GOOD LIFE MARK MANSON",
+        "confidence": 0.9890349995006215
+      }
+    ],
+    "seconds": 22.4,
+    "error": "",
+    "strict": 90.9,
+    "loose": 91.2
+  },
+  {
+    "file": "cover_019.jpg",
+    "expected_title": "The Power of Habit",
+    "expected_author": "Charles Duhigg",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Power of Habit",
+    "top_score": 87.5,
+    "top_author_score": 66.66666666666666,
+    "best_in_list": 100.0,
+    "shown": [
+      "Power of Habit",
+      "The Power of Habit"
+    ],
+    "shown_authors": [
+      "Charles Duhigg, InstaRead Summaries Staff",
+      "Charles Duhigg"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "HABIT",
+        "author": "Charles Duhigg",
+        "full": "THE POWER OF HABIT WHY WE DO WHAT WEDO FE D BUSINESS Charles Duhigg Read by Mike Chamberlain . An Unabridged Produetion",
+        "confidence": 0.8726802989840508
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "HABIT",
+        "author": "Charles Duhigg",
+        "full": "THEPOWEROF HABIT WHY WEDOWHAT WEDO FE 4 D BUSINESS Charles Duhigg Read by Mike Chamberlain \u2022 An Unabridged Production",
+        "confidence": 0.9280193183157179
+      }
+    ],
+    "seconds": 24.6,
+    "error": "",
+    "strict": 87.5,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_020.jpg",
+    "expected_title": "Educated",
+    "expected_author": "Tara Westover",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Educated",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Educated"
+    ],
+    "shown_authors": [
+      "Tara Westover"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Educated",
+        "author": "TARA",
+        "full": "NEW YORK TIMES Educated AMEMOIR TARA WESTOVER",
+        "confidence": 0.9898248811562856
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Educated",
+        "author": "TARA",
+        "full": "NEW YORK TIMES Educated A MEMOIR TARA WESTOVER",
+        "confidence": 0.9920202791690826
+      }
+    ],
+    "seconds": 12.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_021.jpg",
+    "expected_title": "Becoming",
+    "expected_author": "Michelle Obama",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_FAILED",
+        "title": "",
+        "author": "",
+        "full": "",
+        "confidence": 0.0
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "MICHELLE ECING BMA",
+        "author": "JoIN",
+        "full": "ECING \u897f JoIN MICHELLE BMA",
+        "confidence": 0.7124511003494263
+      }
+    ],
+    "seconds": 13.7,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_022.jpg",
+    "expected_title": "The Road",
+    "expected_author": "Cormac McCarthy",
+    "verdict": "review",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Cormac McCarthy's The road",
+    "top_score": 47.05882352941176,
+    "top_author_score": 37.03703703703704,
+    "best_in_list": 100.0,
+    "shown": [
+      "Cormac McCarthy's The road",
+      "The Road by Cormac McCarthy (Book Analysis)",
+      "The Road"
+    ],
+    "shown_authors": [
+      "Harold Bloom",
+      "Bright Summaries",
+      "Cormac McCarthy"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "CORMAC McCARTHY THE ROAD",
+        "author": "",
+        "full": "CORMAC McCARTHY THE ROAD",
+        "confidence": 0.9844685643911362
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "CORMAC McCARTHY THE ROAD",
+        "author": "",
+        "full": "CORMAC McCARTHY THE ROAD",
+        "confidence": 0.9998887777328491
+      }
+    ],
+    "seconds": 9.5,
+    "error": "",
+    "strict": 47.1,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_023.jpg",
+    "expected_title": "Life of Pi",
+    "expected_author": "Yann Martel",
+    "verdict": "correct",
+    "decision": "HIGH_CONFIDENCE",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Life of Pi",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Life of Pi"
+    ],
+    "shown_authors": [
+      "Yann Martel"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "LIFEOFPI",
+        "author": "YANN MARTEL",
+        "full": "LIFEOFPI ANOVEL BY YANN MARTEL",
+        "confidence": 0.950533926486969
+      }
+    ],
+    "seconds": 9.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_024.jpg",
+    "expected_title": "The Book Thief",
+    "expected_author": "Markus Zusak",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Book Thief",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Book Thief"
+    ],
+    "shown_authors": [
+      "Markus Zusak"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "BwokThief The",
+        "author": "MARKUS",
+        "full": "NOWA MAIOR EILMEROM HENIMETHICENIRYFOX Anovdof breath-calcng scope. masierfulls told Guardian MARKUS ZUSAK The BwokThief",
+        "confidence": 0.8878909409046173
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Book Thief The",
+        "author": "MARKUS",
+        "full": "NOWAMAJORFILMFROM TWENTIETHCENTURYFOX breath-eaking scope. masterfully told' Guardian MARKUS ZUSAK The 15 Book Thief 0",
+        "confidence": 0.9029117578809912
+      }
+    ],
+    "seconds": 27.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_025.jpg",
+    "expected_title": "The Girl on the Train",
+    "expected_author": "Paula Hawkins",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Girl on the Train",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Girl on the Train"
+    ],
+    "shown_authors": [
+      "Paula Hawkins"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ON GIRL IRAIN",
+        "author": "PAULA",
+        "full": "'Gripping,enthralling-a top-notch thriller and a compulsive read. SJWATSON GIRL ON IRAIN YOU DON'T KNOW HER. BUT SHE KNOWS YOU. PAULA HAWKINS",
+        "confidence": 0.9756387695670128
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ON GIRL TRAIN",
+        "author": "PAULA",
+        "full": "'Gripping, enthralling - a top-notch thriller and a compulsive read.' SJ WATSON GIRL ON TRAIN YOU DON'T KNOW HER. BUT SHE KNOWS YOU. PAULA HAWKINS",
+        "confidence": 0.9973626956343651
+      }
+    ],
+    "seconds": 30.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_026.jpg",
+    "expected_title": "The Help",
+    "expected_author": "Kathryn Stockett",
+    "verdict": "correct",
+    "decision": "HIGH_CONFIDENCE",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Help",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Help"
+    ],
+    "shown_authors": [
+      "Kathryn Stockett"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Help The",
+        "author": "STOCKETT",
+        "full": "Help The KATHRYN STOCKETT",
+        "confidence": 0.9694386273622513
+      }
+    ],
+    "seconds": 4.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_027.jpg",
+    "expected_title": "The Martian",
+    "expected_author": "Andy Weir",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Martian",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Martian"
+    ],
+    "shown_authors": [
+      "Andy Weir"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "MARTIAN THE ANDY WEIR",
+        "author": "",
+        "full": "31111036395091 THE MARTIAN ANDY WEIR",
+        "confidence": 0.9915649056434631
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "MARTIAN THE ANDY WEIR",
+        "author": "",
+        "full": "31111036395091 THE MARTIAN ANDY WEIR",
+        "confidence": 0.9999722361564636
+      }
+    ],
+    "seconds": 11.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_028.jpg",
+    "expected_title": "Dune",
+    "expected_author": "Frank Herbert",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue_ocr_recovery",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Lord of the Rings",
+    "top_score": 24.0,
+    "top_author_score": 23.07692307692308,
+    "best_in_list": 28.6,
+    "shown": [
+      "The Lord of the Rings",
+      "The Hobbit"
+    ],
+    "shown_authors": [
+      "J. R. R. Tolkien",
+      "J. R. R. Tolkien"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "FRANK TERBERT Unique among St noeds..I know nothing",
+        "author": "comparable to it except The Lord of he Rungs",
+        "full": "Unique among St noeds..I know nothing comparable to it except The Lord of he Rungs ARTHUR C.CIARKE FRANK TERBERT",
+        "confidence": 0.869948148727417
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "FRANKHERBERT 'Unique among SF novels. ... I know nothing",
+        "author": "comparable to it except The Lord of the Rings",
+        "full": "'Unique among SF novels. ... I know nothing comparable to it except The Lord of the Rings ARTHUR C.CLARKE FRANKHERBERT",
+        "confidence": 0.9738603830337524
+      }
+    ],
+    "seconds": 13.3,
+    "error": "",
+    "strict": 24.0,
+    "loose": 28.6
+  },
+  {
+    "file": "cover_029.jpg",
+    "expected_title": "Brave New World",
+    "expected_author": "Aldous Huxley",
+    "verdict": "review",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Brave new world /by Aldous Huxley",
+    "top_score": 62.5,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Brave new world /by Aldous Huxley",
+      "Brave New World",
+      "Brave New World, a Novel by Aldous Huxley",
+      "Brave New World Revisited"
+    ],
+    "shown_authors": [
+      "Aldous Huxley",
+      "Aldous Huxley",
+      "Aldous Huxley",
+      "Aldous Huxley"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "BY ALDOUS HUXLEY BRAVE",
+        "author": "NEW WORLD",
+        "full": "BRAVE NEW WORLD BY ALDOUS HUXLEY",
+        "confidence": 0.9770587682723999
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "BY ALDOUS HUXLEY BRAVE",
+        "author": "NEW WORLD",
+        "full": "BRAVE NEW WORLD BY ALDOUS HUXLEY",
+        "confidence": 0.9997561772664388
+      }
+    ],
+    "seconds": 8.6,
+    "error": "",
+    "strict": 62.5,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_030.jpg",
+    "expected_title": "Fahrenheit 451",
+    "expected_author": "Ray Bradbury",
+    "verdict": "correct",
+    "decision": "HIGH_CONFIDENCE",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Fahrenheit 451",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Fahrenheit 451"
+    ],
+    "shown_authors": [
+      "Ray Bradbury"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "451 fahrenheit",
+        "author": "BRADBURY",
+        "full": "RAY BRADBURY HORG HOOKS fahrenheit 451 26",
+        "confidence": 0.9271228057997567
+      }
+    ],
+    "seconds": 6.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_031.jpg",
+    "expected_title": "Lord of the Flies",
+    "expected_author": "William Golding",
+    "verdict": "correct",
+    "decision": "HIGH_CONFIDENCE",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Lord of the Flies",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Lord of the Flies"
+    ],
+    "shown_authors": [
+      "William Golding"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Lord Flies of the n Golding",
+        "author": "William",
+        "full": "n Golding William Lord of the Flies Over 15.000.000 copies sold worldwide",
+        "confidence": 0.9801153441270193
+      }
+    ],
+    "seconds": 6.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_032.jpg",
+    "expected_title": "The Shining",
+    "expected_author": "Stephen King",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Stephen King",
+    "top_score": 60.86956521739131,
+    "top_author_score": 34.78260869565217,
+    "best_in_list": 60.9,
+    "shown": [
+      "Stephen King",
+      "Stephen King",
+      "Stephen King 3",
+      "Stephen King 61"
+    ],
+    "shown_authors": [
+      "Bev Vincent",
+      "Stephen King",
+      "Stephen King",
+      "Stephen King"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "STEPHEN KING",
+        "author": "",
+        "full": "STEPHEN KING",
+        "confidence": 0.9916800856590271
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "STEPHEN KING",
+        "author": "",
+        "full": "STEPHEN KING",
+        "confidence": 0.9697909951210022
+      }
+    ],
+    "seconds": 7.1,
+    "error": "",
+    "strict": 60.9,
+    "loose": 60.9
+  },
+  {
+    "file": "cover_033.jpg",
+    "expected_title": "It",
+    "expected_author": "Stephen King",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "TEPHI KING S",
+        "author": "ANov",
+        "full": "TEPHI S KING ANov",
+        "confidence": 0.9197499006986618
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "TEPHI KING S",
+        "author": "ANov",
+        "full": "TEPHI S KING ANov",
+        "confidence": 0.9663616418838501
+      }
+    ],
+    "seconds": 8.4,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_034.jpg",
+    "expected_title": "The Stand",
+    "expected_author": "Stephen King",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue_ocr_recovery",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Shining",
+    "top_score": 60.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Shining",
+      "The Stand"
+    ],
+    "shown_authors": [
+      "Stephen King",
+      "Stephen King"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_LOW_CONFIDENCE",
+        "title": "AN",
+        "author": "STEPHENKING",
+        "full": "AN THESHINING STEPHENKING",
+        "confidence": 0.9147438208262125
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ND S",
+        "author": "STEPHENKING",
+        "full": "1 I 1 ND S THESHINING STEPHENKING",
+        "confidence": 0.8147510588169098
+      }
+    ],
+    "seconds": 19.1,
+    "error": "",
+    "strict": 60.0,
+    "loose": 60.0
+  },
+  {
+    "file": "cover_035.jpg",
+    "expected_title": "Murder on the Orient Express",
+    "expected_author": "Agatha Christie",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Murder on the Orient Express",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Murder on the Orient Express",
+      "The A.B.C. Murders"
+    ],
+    "shown_authors": [
+      "Agatha Christie",
+      "Agatha Christie"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ORIENT EXPRESS MURDER ON THE AGATHA CHRISTIE",
+        "author": "GREAT READS",
+        "full": "GREAT READS MURDER ON THE ORIENT EXPRESS AGATHA CHRISTIE",
+        "confidence": 0.9528659731149673
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ORIENT EXPRESS MURDER ON THE AGATHA CHRISTIE",
+        "author": "GREATREADS",
+        "full": "GREATREADS MURDER ON THE ORIENT EXPRESS AGATHA CHRISTIE",
+        "confidence": 0.9890959858894348
+      }
+    ],
+    "seconds": 10.8,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_036.jpg",
+    "expected_title": "The Silent Patient",
+    "expected_author": "Alex Michaelides",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "SILENT PATIENT",
+    "top_score": 87.5,
+    "top_author_score": 96.96969696969697,
+    "best_in_list": 100.0,
+    "shown": [
+      "SILENT PATIENT",
+      "The Silent Patient",
+      "Pelukis Bisu (The Silent Patient)"
+    ],
+    "shown_authors": [
+      "ALEX. MICHAELIDES",
+      "Alex Michaelides",
+      "Alex Michaelides"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "SILENT",
+        "author": "ALEX MICHAELIDES",
+        "full": "THE SILENT pauaddoytoym Only I can make her speak. 'TOTALLY ORIGINAL' 'THE PERFECT THRILLER' DAVID BALDACCI AJ FINN ALEX MICHAELIDES OVER A MILLION COPIES SOLD",
+        "confidence": 0.9140344316309149
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "SILENT PATIENT",
+        "author": "ALEX MICHAELIDES",
+        "full": "THE SILENT 1 PATIENT nl  s whned. Only I can make her speak. 'TOTALLY ORIGINAL 'THE PERFECT THRILLER' DAVID BALDACCI AJ.FINN ALEX MICHAELIDES OVER A MILLION COPIES SOLD",
+        "confidence": 0.9247877470084599
+      }
+    ],
+    "seconds": 37.5,
+    "error": "",
+    "strict": 87.5,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_037.jpg",
+    "expected_title": "Where the Crawdads Sing",
+    "expected_author": "Delia Owens",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Where the crawdads sing",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Where the crawdads sing",
+      "ILL/ Where the Crawdads Sing"
+    ],
+    "shown_authors": [
+      "Delia Owens",
+      "Delia Owens"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "SING THE CRAWDADS WHERE DELIA OWENS",
+        "author": "Painfuly boautirul...At once a murder mystery.acoming-otagenarrative.",
+        "full": "WHERE EESE THE CRAWDADS SING DELIA OWENS Painfuly boautirul...At once a murder mystery.acoming-otagenarrative. and a celebration of nature.-THE NEWYORK TIMES BOOK REVIEW",
+        "confidence": 0.951627291738987
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "SING THE CRAWDADS WHERE DELIA OWENS",
+        "author": "\"Painfully beautiful ... At once a murder mystery, a coming-of-age narrative.",
+        "full": "WHERE EESE THE CRAWDADS SING DELIA OWENS \"Painfully beautiful ... At once a murder mystery, a coming-of-age narrative.",
+        "confidence": 0.990296014717647
+      }
+    ],
+    "seconds": 24.2,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_038.jpg",
+    "expected_title": "Normal People",
+    "expected_author": "Sally Rooney",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "NORMA \u4ebaENOO PEOPLE \uff2c\uff2cY",
+        "author": "s",
+        "full": "NEW YORK TIMES NORMA PEOPLE \uff2c\uff2cY \u4ebaENOO PSONaIYd s",
+        "confidence": 0.7600245736539364
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "NORMA ROY PEOPLE LLY",
+        "author": "ur o",
+        "full": "NEW YORK TIMES NORMA PEOPLE LLY ROY ur o FRRRES",
+        "confidence": 0.8925401344895363
+      }
+    ],
+    "seconds": 24.4,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_039.jpg",
+    "expected_title": "A Little Life",
+    "expected_author": "Hanya Yanagihara",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "A Little Life",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "A Little Life",
+      "Guide to Hanya Yanagihara's a Little Life"
+    ],
+    "shown_authors": [
+      "Hanya Yanagihara",
+      "Hanya Yanagihara, Eureka"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "A LITTLE LIFE YANAGIHARA HANYA",
+        "author": "anovel",
+        "full": "A LITTLE LIFE anovel HANYA YANAGIHARA",
+        "confidence": 0.986130166053772
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "A LITTLE LIFE YANAGIHARA HANYA",
+        "author": "anovel",
+        "full": "A LITTLE LIFE anovel HANYA YANAGIHARA",
+        "confidence": 0.9889155983924866
+      }
+    ],
+    "seconds": 18.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_040.jpg",
+    "expected_title": "The Goldfinch",
+    "expected_author": "Donna Tartt",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Goldfinch",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Goldfinch",
+      "The Goldfinch by Donna Tartt"
+    ],
+    "shown_authors": [
+      "Donna Tartt",
+      "Kay Perry"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "JOLDFINCH DONNA TARTT The",
+        "author": "'Astonishing",
+        "full": "The JOLDFINCH A masterpiece' THE TIMES 'Astonishing GUARDIAN 'Superb' DAILY MAIL A gripping page turner' INDEPENDENT ON SUNDAY DONNA TARTT",
+        "confidence": 0.9346919457117716
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "GOLDFINCH DONNA TARTT The",
+        "author": "'Astonishing'",
+        "full": "The GOLDFINCH 'A masterpiece' THE TIMES 'Astonishing' GUARDIAN 'Superb' DAILY MAIL 'A gripping page turner' INDEPENDENT ON SUNDAY DONNA TARTT",
+        "confidence": 0.9908057550589243
+      }
+    ],
+    "seconds": 22.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_041.jpg",
+    "expected_title": "The Night Circus",
+    "expected_author": "Erin Morgenstern",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Night Circus",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Night Circus"
+    ],
+    "shown_authors": [
+      "Erin Morgenstern"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Nig1 Circus ht",
+        "author": "ERIN MORGENSTERN",
+        "full": "THISIS A MARVELLOUS BOOK AUDREYNIFFENEGGER Nig1 ht Circus ERIN MORGENSTERN",
+        "confidence": 0.9422076940536499
+      }
+    ],
+    "seconds": 8.4,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_042.jpg",
+    "expected_title": "Circe",
+    "expected_author": "Madeline Miller",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Circe",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Circe"
+    ],
+    "shown_authors": [
+      "Madeline Miller"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "CIRCE",
+        "author": "MADELI NE MILLER",
+        "full": "CIRCE NOVIL MADELI NE MILLER",
+        "confidence": 0.9196090896924337
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "CIRCE",
+        "author": "\u516c",
+        "full": "0 CIRCE \u516c NOVEL MADELINEMILLER",
+        "confidence": 0.7814875841140747
+      }
+    ],
+    "seconds": 24.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_043.jpg",
+    "expected_title": "The Song of Achilles",
+    "expected_author": "Madeline Miller",
+    "verdict": "review",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Nyanyian Achilles (The Song of Achilles)",
+    "top_score": 66.66666666666667,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Nyanyian Achilles (The Song of Achilles)",
+      "The Song of Achilles"
+    ],
+    "shown_authors": [
+      "Madeline Miller",
+      "Madeline Miller"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ACHILLES SONG COF THE",
+        "author": "MADELINE",
+        "full": "THE SONG COF ACHILLES MADELINE MILLER LO0 .L [3",
+        "confidence": 0.8104136188824972
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ACHILLES SONG OF THE",
+        "author": "MADELINE",
+        "full": "THE SONG OF ACHILLES MADELINE MILLER 100 SL",
+        "confidence": 0.9284117445349693
+      }
+    ],
+    "seconds": 15.2,
+    "error": "",
+    "strict": 66.7,
+    "loose": 88.9
+  },
+  {
+    "file": "cover_044.jpg",
+    "expected_title": "Project Hail Mary",
+    "expected_author": "Andy Weir",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "WEIR MARY HAIL \u2234ANDY:",
+        "author": "T",
+        "full": "P R \u5c71 E C T HAIL MARY 'Original, compelling and fun' CRNESY CLINE Britliantly funny, enjoyable and plausible' TIM PEAKE \u2234ANDY: WEIR THE MARTIAN",
+        "confidence": 0.936754334717989
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "WEIR MARY HAIL :ANDY:",
+        "author": "T",
+        "full": "P R 0 J E C T HAIL MARY 'Original, compelling and fun' ERNEST CLINE 'Brilliantly funny, enjoyable and plausible' TIM PEAKE :ANDY: WEIR THEMARTIAN",
+        "confidence": 0.9899336450240191
+      }
+    ],
+    "seconds": 39.3,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_045.jpg",
+    "expected_title": "Klara and the Sun",
+    "expected_author": "Kazuo Ishiguro",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Klara and the Sun",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Klara and the Sun",
+      "Klara and the Sun by Kazuo Ishiguro",
+      "Understanding Kazuo Ishiguro"
+    ],
+    "shown_authors": [
+      "Kazuo Ishiguro",
+      "Bec Kavanagh",
+      "Brian W. Shaffer"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ISHIGURO KAZUO",
+        "author": "KLARA AND THE SUN",
+        "full": "KLARA AND THE SUN KAZUO ISHIGURO",
+        "confidence": 0.9834519028663635
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ISHIGURO KAZUO",
+        "author": "KLARA AND THE SUN",
+        "full": "f KLARA AND THE SUN KAZUO ISHIGURO",
+        "confidence": 0.9827052354812622
+      }
+    ],
+    "seconds": 20.2,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_046.jpg",
+    "expected_title": "The Midnight Library",
+    "expected_author": "Matt Haig",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "matt Haig H:Q0:00 90:00:00 QO: \u25a1Q C The MIDNIGHT LIBRARY",
+        "author": "",
+        "full": "90:00:00 matt Haig H:Q0:00 The MIDNIGHT LIBRARY QO: \u25a1Q C",
+        "confidence": 0.7705059846242269
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "OU:O:B\u76ee Matt Haig \u7528:00:\u65e50 \u65e5Q:00:00 2O:1N:00 The MIDNIGHT LIBRARY",
+        "author": "",
+        "full": "\u65e5Q:00:00 Matt Haig \u7528:00:\u65e50 The MIDNIGHT LIBRARY OU:O:B\u76ee 2O:1N:00",
+        "confidence": 0.8236634475844247
+      }
+    ],
+    "seconds": 18.3,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_047.jpg",
+    "expected_title": "Verity",
+    "expected_author": "Colleen Hoover",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "HOOVER COLLEEN",
+        "author": "g",
+        "full": "Sobtieyene g COLLEEN HOOVER",
+        "confidence": 0.7236829102039337
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "HOOVER COLLEEN",
+        "author": "ean waiting for a the ltler like this for years.\"",
+        "full": "Sublimety cre ean waiting for a the ltler like this for years.\" COLLEEN HOOVER",
+        "confidence": 0.8759897351264954
+      }
+    ],
+    "seconds": 17.7,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_048.jpg",
+    "expected_title": "It Ends With Us",
+    "expected_author": "Colleen Hoover",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ENDS US HOOVER WT COLLEEN",
+        "author": "",
+        "full": "ENDS WT US COLLEEN HOOVER",
+        "confidence": 0.9232897400856018
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ENDS US HOOVER WF COLLEEN",
+        "author": "",
+        "full": "ENDS WF US COLLEEN HOOVER",
+        "confidence": 0.9484488368034363
+      }
+    ],
+    "seconds": 17.7,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_049.jpg",
+    "expected_title": "The Seven Husbands of Evelyn Hugo",
+    "expected_author": "Taylor Jenkins Reid",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Seven Husbands of Evelyn Hugo",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Seven Husbands of Evelyn Hugo"
+    ],
+    "shown_authors": [
+      "Taylor Jenkins Reid"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "SEVEN HUSBANDS 0F THE EVELYN HUG0 TAYLOR JENKINS REID",
+        "author": "norel",
+        "full": "THE SEVEN HUSBANDS 0F EVELYN HUG0 norel TAYLOR JENKINS REID",
+        "confidence": 0.8793132305145264
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "SEVEN HUSBANDS OF THE EVELYN HUGO TAYLOR JENKINS REID",
+        "author": "novel",
+        "full": "THE SEVEN HUSBANDS OF EVELYN HUGO novel TAYLOR JENKINS REID",
+        "confidence": 0.9996844274657113
+      }
+    ],
+    "seconds": 15.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_050.jpg",
+    "expected_title": "Little Fires Everywhere",
+    "expected_author": "Celeste Ng",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Little Fires Everywhere",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Little Fires Everywhere",
+      "Little Fires Everywhere by Celeste Ng",
+      "Little Fires Everywhere by Celeste Ng"
+    ],
+    "shown_authors": [
+      "Celeste Ng",
+      "Jessica Zibung",
+      "Daily Books"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Celeste Ng Everywhere Fires Little",
+        "author": "ANOVEL",
+        "full": "Little Fires Everywhere ANOVEL Celeste Ng EVERYTHING I NEVER TOLD YOU",
+        "confidence": 0.9734045267105103
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Celeste Ng Everywhere Fires Little",
+        "author": "ANOVEL",
+        "full": "Little Fires Everywhere ANOVEL Celeste Ng EVERYTHING I NEVER TOLD YOU",
+        "confidence": 0.991746058066686
+      }
+    ],
+    "seconds": 14.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_051.jpg",
+    "expected_title": "The Nightingale",
+    "expected_author": "Kristin Hannah",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Nightingale",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Nightingale",
+      "Kristin Hannah's The Nightingale"
+    ],
+    "shown_authors": [
+      "Kristin Hannah",
+      "Honest Reviews Staff, Kristin Hannah"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "The Nightingale KRISTIN HANNAH",
+        "author": "Coporighted Material",
+        "full": "Coporighted Material KRISTIN HANNAH VEw The Nightingale",
+        "confidence": 0.8441470980644226
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "The Nightingale KRISTIN HANNAH",
+        "author": "Copyrighted Material",
+        "full": "Copyrighted Material KRISTIN HANNAH NEW The Nightingale",
+        "confidence": 0.9882778525352478
+      }
+    ],
+    "seconds": 11.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_052.jpg",
+    "expected_title": "All the Light We Cannot See",
+    "expected_author": "Anthony Doerr",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "All the Light We Cannot See",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "All the Light We Cannot See",
+      "All the Light We Cannot See"
+    ],
+    "shown_authors": [
+      "Anthony Doerr",
+      "B. F. Goodman"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ALL THE CANNOT WE LIGHT SEE ANTHONYDOERR",
+        "author": "",
+        "full": "ALL THE LIGHT WE CANNOT SEE ANTHONYDOERR",
+        "confidence": 0.9842378894488016
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ALLTHE CANNOT WE LIGHT SEE ANTHONYDOERR",
+        "author": "",
+        "full": "ALLTHE LIGHT WE CANNOT SEE ANTHONYDOERR",
+        "confidence": 0.9999885757764181
+      }
+    ],
+    "seconds": 15.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_053.jpg",
+    "expected_title": "The Giver",
+    "expected_author": "Lois Lowry",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "H\u4e0a d/XOT'SIOT",
+        "author": "OIOON",
+        "full": "H\u4e0a d/XOT'SIOT OIOON",
+        "confidence": 0.5727842251459757
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "THE GIER LOOOISWR",
+        "author": "NOAARE",
+        "full": "THE GIER LOOOISWR NOAARE",
+        "confidence": 0.8599590957164764
+      }
+    ],
+    "seconds": 14.9,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_054.jpg",
+    "expected_title": "Wonder",
+    "expected_author": "R. J. Palacio",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "R.J.PelACiO",
+        "author": "TenAnnrainnfgoe",
+        "full": "narkahla Dook! TenAnnrainnfgoe estsellraSraaeGaarOriaYooa R.J.PelACiO",
+        "confidence": 0.6368955373764038
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "R.J.Palacio",
+        "author": "\"Tem Anglenergor",
+        "full": "markable book!\" \"Tem Anglenergor R.J.Palacio",
+        "confidence": 0.8667738437652588
+      }
+    ],
+    "seconds": 14.8,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_055.jpg",
+    "expected_title": "The Maze Runner",
+    "expected_author": "James Dashner",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Maze Runner",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Maze Runner"
+    ],
+    "shown_authors": [
+      "James Dashner"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "MAZE RUNNER DASHNER JAMES THE",
+        "author": "MAJOR MOTION",
+        "full": "NOWA MAJOR MOTION PICTURE THE MAZE RUNNER JAMES DASHNER",
+        "confidence": 0.9788098484277725
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "MAZE RUNNER DASHNER JAMES THE",
+        "author": "MAJOR MOTION",
+        "full": "NOWA MAJOR MOTION PICTURE THE MAZE RUNNER JAMES DASHNER",
+        "confidence": 0.9996727705001831
+      }
+    ],
+    "seconds": 21.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_056.jpg",
+    "expected_title": "Divergent",
+    "expected_author": "Veronica Roth",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Divergent",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Divergent",
+      "The Traitor: A Divergent Story",
+      "Insurgent"
+    ],
+    "shown_authors": [
+      "Veronica Roth",
+      "Veronica Roth",
+      "Veronica Roth"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "DIVEROENT",
+        "author": "VERONICAROTH",
+        "full": "DIVEROENT VERONICAROTH",
+        "confidence": 0.9760199785232544
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "DIVERGENT",
+        "author": "VERONICAROTH",
+        "full": "DIVERGENT VERONICAROTH",
+        "confidence": 0.9851952195167542
+      }
+    ],
+    "seconds": 16.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_057.jpg",
+    "expected_title": "Twilight",
+    "expected_author": "Stephenie Meyer",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Twilight",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Twilight"
+    ],
+    "shown_authors": [
+      "Stephenie Meyer"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "twilight STEPHENIE MEYER",
+        "author": "",
+        "full": "twilight STEPHENIE MEYER",
+        "confidence": 0.9746614992618561
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "twilight STEPHENIEMEYER",
+        "author": "",
+        "full": "twilight 3 STEPHENIEMEYER",
+        "confidence": 0.8023522694905599
+      }
+    ],
+    "seconds": 16.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_058.jpg",
+    "expected_title": "The Notebook",
+    "expected_author": "Nicholas Sparks",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "El cuaderno de Noah",
+    "top_score": 38.70967741935484,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "El cuaderno de Noah",
+      "El Cuaderno de Noah / The Notebook"
+    ],
+    "shown_authors": [
+      "Nicholas Sparks",
+      "Nicholas Sparks"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "NICHOLAS SPARKS el cuaderno de noah",
+        "author": "stse",
+        "full": "NICHOLAS SPARKS el cuaderno de noah Por el autor de La ultima canci\u00f3n stse y Noches de tormenta rocabolsillol ficcion",
+        "confidence": 0.9596846401691437
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "NICHOLAS SPARKS el cuaderno de Noah t",
+        "author": "stse",
+        "full": "NICHOLAS SPARKS t el cuaderno de Noah Por el autor de La \u00faltima canci\u00f3n stse y Noches de tormenta rocabolsillo | ficci\u00f3n",
+        "confidence": 0.9508114258448283
+      }
+    ],
+    "seconds": 18.5,
+    "error": "",
+    "strict": 38.7,
+    "loose": 32.3
+  },
+  {
+    "file": "cover_059.jpg",
+    "expected_title": "The Pillars of the Earth",
+    "expected_author": "Ken Follett",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Pillars of the Earth",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Pillars of the Earth",
+      "Ken Follett's The Pillars of the Earth"
+    ],
+    "shown_authors": [
+      "Ken Follett",
+      "Matthias Kempke, Kevin Mentz, Daedalic Entertainment"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "TPILLARS IKEN OLLETT NEARIH OFTHE",
+        "author": "ANOVEL",
+        "full": "IKEN OLLETT TPILLARS ANOVEL OFTHE NEARIH",
+        "confidence": 0.9088917473951975
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "PILLARS KEN FOLLETT EARTH OFTHE",
+        "author": "ANOVEL",
+        "full": "KEN FOLLETT PILLARS ANOVEL OFTHE EARTH",
+        "confidence": 0.9829336901505789
+      }
+    ],
+    "seconds": 11.4,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_060.jpg",
+    "expected_title": "Outliers",
+    "expected_author": "Malcolm Gladwell",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Outliers",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Outliers",
+      "Outliers the Story of Success"
+    ],
+    "shown_authors": [
+      "Malcolm Gladwell",
+      "Malcolm Gladwell"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Outliers MAL COL M G L A D W E L L",
+        "author": "THE STORY OF SUCCESS",
+        "full": "Outliers THE STORY OF SUCCESS MAL COL M G L A D W E L L",
+        "confidence": 0.8930654078722
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Outliers MALCOLM GLADWELL",
+        "author": "THE STORY OF SUCCESS",
+        "full": "Outliers THE STORY OF SUCCESS MALCOLM GLADWELL",
+        "confidence": 0.9974551349878311
+      }
+    ],
+    "seconds": 15.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_061.jpg",
+    "expected_title": "The Tipping Point",
+    "expected_author": "Malcolm Gladwell",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Tipping Point : how Little Things Can Make a Big Difference",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Tipping Point : how Little Things Can Make a Big Difference",
+      "The Tipping Point: How Little Things Canmake a Big Difference"
+    ],
+    "shown_authors": [
+      "Malcolm Gladwell (1963- author)",
+      "Malcolm Gladwell"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "The TIPPING POINT How Little Things Can MALCOLM Make a Big Difference GLA DWELL",
+        "author": "",
+        "full": "The TIPPING POINT How Little Things Can Make a Big Difference MALCOLM GLA DWELL",
+        "confidence": 0.9247892300287882
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "The TIPPING POINT How LittleThings Can MALCOLM Make a Big Difference GLADWELL",
+        "author": "",
+        "full": "The TIPPING POINT How LittleThings Can Make a Big Difference MALCOLM GLADWELL",
+        "confidence": 0.9958821932474772
+      }
+    ],
+    "seconds": 13.2,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_062.jpg",
+    "expected_title": "Blink",
+    "expected_author": "Malcolm Gladwell",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Blink",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Blink",
+      "Malcolm Gladwell's Blink"
+    ],
+    "shown_authors": [
+      "Malcolm Gladwell",
+      "Ant Hive Media"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Malcolm Gladwell Blink",
+        "author": "THE POWER",
+        "full": "ZINATIONALBESTSRLLER Blink THE POWER OF THINKING WITHOUT THINKING Malcolm Gladwell Areal plessuro..Bokbeims with surpeising inssghts abontourworldandourseies-sAzoN",
+        "confidence": 0.9189605779118009
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Malcolm Gladwell Blink",
+        "author": "THE POWER",
+        "full": "Blink THE POWER OF THINKING WITHOUT THINKING Malcolm Gladwell \"A real plessure...Bl\u00f6ik brims with surprising insights about our world and ourselves.\"-sALoN",
+        "confidence": 0.9805320650339127
+      }
+    ],
+    "seconds": 34.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_063.jpg",
+    "expected_title": "Freakonomics",
+    "expected_author": "Steven D. Levitt",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Freakonomics",
+    "top_score": 100.0,
+    "top_author_score": 72.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Freakonomics",
+      "Freakonomics Intl"
+    ],
+    "shown_authors": [
+      "Steven D. Levitt, Stephen J. Dubner",
+      "Steven D. Levitt, Stephen J. Dubner"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "FREAKONOMICS STEPHEN STEVEN D. N J. DUBNER",
+        "author": "LEVITT",
+        "full": "FREAKONOMICS A ROGUE ECONOMIST EXPLORES THE HIDDEN SIDE OF EVERYTHING \"Prepare to be dazzled.\" NEW YORK TIMES STEVEN D. LEVITT AND STEPHEN N J. DUBNER",
+        "confidence": 0.9627896994352341
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "FREAKONOMICS STEPHEN STEVEN D. N J. DUBNER",
+        "author": "LEVITT",
+        "full": "FREAKONOMICS A ROGUE ECONOMIST EXPLORES THE HIDDEN SIDE OF EVERYTHING \"Prepare to be dazzled.\" NEW YORK TIMES STEVEN D. LEVITT AND STEPHEN N J. DUBNER",
+        "confidence": 0.9855324278275172
+      }
+    ],
+    "seconds": 26.4,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_064.jpg",
+    "expected_title": "Quiet",
+    "expected_author": "Susan Cain",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Quiet",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Quiet",
+      "Quiet Power"
+    ],
+    "shown_authors": [
+      "Susan Cain",
+      "Susan Cain"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "uiet",
+        "author": "Stop Talking",
+        "full": "The Power of Introverts in a World That Can't uiet Stop Talking SUSAN CAIN",
+        "confidence": 0.96511838833491
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "uiet",
+        "author": "Stop Talking",
+        "full": "The Power of Introverts in a World That Can't uiet Stop Talking SUSAN CAIN",
+        "confidence": 0.9944176177183787
+      }
+    ],
+    "seconds": 14.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_065.jpg",
+    "expected_title": "Grit",
+    "expected_author": "Angela Duckworth",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Grit",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Grit",
+      "Grit (HBR Emotional Intelligence Series)"
+    ],
+    "shown_authors": [
+      "Angela Duckworth",
+      "Harvard Business Review, Angela L. Duckworth, Misty Copeland, Shannon Huffman Polson, Tomas Chamorro-Premuzic"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "GRIT",
+        "author": "DUCKWORTH",
+        "full": "ANGELA DUCKWORTH GRIT THE POWERofPASSION and PERSEVERANCE \"Psychoiogists have spent decades searching for the secret of success, but Ducaworth is bhe one who feund it\" -DANIEL GILBERT,sUUOr o! Stumbling on Happiness htedMaterta",
+        "confidence": 0.905565415819486
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "GRIT",
+        "author": "DUCKWORTH",
+        "full": "ANGELA DUCKWORTH GRIT THE POWER of PASSION and PERSEVERANCE \"Psychologists have spent decades searching for the secret of success, but Duckworth is the one who found it.\" Stumbling on Happiness inted Materia",
+        "confidence": 0.9892348159443248
+      }
+    ],
+    "seconds": 25.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_066.jpg",
+    "expected_title": "Mindset",
+    "expected_author": "Carol S. Dweck",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Mindset",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Mindset",
+      "Mindset",
+      "Mindset"
+    ],
+    "shown_authors": [
+      "Carol Dweck",
+      "Adam Green",
+      "Morten Leth Jacobsen"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "MINDSET",
+        "author": "NEW",
+        "full": "MINDSET THE NEW PSYCHOLOGY OF SUCCESS CAROLS.DWECK,PH.D.",
+        "confidence": 0.9777773192950657
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "MINDSET",
+        "author": "NEW",
+        "full": "MINDSET THE NEW PSYCHOLOGY OF SUCCESS CAROL S.DWECK, PH.D.",
+        "confidence": 0.9949738809040615
+      }
+    ],
+    "seconds": 12.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_067.jpg",
+    "expected_title": "... Trotzdem Ja zum Leben sagen",
+    "expected_author": "Viktor E. Frankl",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "... trotzdem ja zum Leben sagen",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "... trotzdem ja zum Leben sagen"
+    ],
+    "shown_authors": [
+      "Viktor E. Frankl"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "zum Leben sagen ...trotzdem Ja dty",
+        "author": "Ein Psychologe erlebt",
+        "full": "dty ViktorE.Frankl ...trotzdem Ja zum Leben sagen Ein Psychologe erlebt das Konzentrationslager",
+        "confidence": 0.9477092822392782
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "zum Leben sagen ...trotzdem Ja dtv",
+        "author": "Ein Psychologe erlebt",
+        "full": "dtv Viktor E. Frankl ...trotzdem Ja zum Leben sagen Ein Psychologe erlebt das Konzentrationslager",
+        "confidence": 0.9977326393127441
+      }
+    ],
+    "seconds": 12.8,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_068.jpg",
+    "expected_title": "The Four Agreements",
+    "expected_author": "Don Miguel Ruiz",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Four Agreements",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Four Agreements",
+      "Don Miguel Ruiz's the Four Agreements",
+      "Don Miguel Ruiz Toltec Wisdom Series Collection 3 Books Set,(the Four Agreements: Practical Guide to Personal Freedom, the Mastery of Love and the Fifth Agreement)"
+    ],
+    "shown_authors": [
+      "Miguel Ruiz",
+      "Narielle Living",
+      "Don Miguel Ruiz, Don Jose Ruiz, Janet Mills"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "THEFOUR AGREEMENTS SON MICUEL RUIZ A Peaetiedl Ouide to Personal Freedom",
+        "author": "Wisdom",
+        "full": "A Peaetiedl Ouide to Personal Freedom THEFOUR AGREEMENTS Wisdom Book SON MICUEL RUIZ",
+        "confidence": 0.8482319911321005
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "THEFOUR AGREEMENTS DON MIGUEL RUIZ A Practical Guide to Personal Freedom",
+        "author": "Wisdom",
+        "full": "A Practical Guide to Personal Freedom THEFOUR AGREEMENTS Wisdom Book DON MIGUEL RUIZ",
+        "confidence": 0.9773730933666229
+      }
+    ],
+    "seconds": 15.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_069.jpg",
+    "expected_title": "The 7 Habits of Highly Effective People",
+    "expected_author": "Stephen R. Covey",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The 7 Habits of Highly Effective People",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The 7 Habits of Highly Effective People",
+      "7 Habits of Highly Effective People"
+    ],
+    "shown_authors": [
+      "Stephen R. Covey",
+      "Stephen R. Covey"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Stephen R.Covey EFFECTIVE PEOPLE HIGHLY HABITS OF",
+        "author": "THE",
+        "full": "OVER 4O MILLION COPIES SOLD HABITS OF THE HIGHLY EFFECTIVE PEOPLE Stephen R.Covey UPDATED WITR FRESH INSIGETSIY SEAN COVEY ATK3XATO FOREWORDBYJIM COLLINS AUTUROFGOODTORETANDCOAUEHOROMETYOLANT",
+        "confidence": 0.904958216207368
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Stephen R. Covey EFFECTIVE PEOPLE HIGHLY HABITS OF",
+        "author": "THE",
+        "full": "OVER 40 MILLION COPIES SOLD HABITS OF THE HIGHLY EFFECTIVE PEOPLE Stephen R. Covey UPDATED WITH FRESH INSIGHTS BY SEAN COVEY FOREWORD BYJIM COLLINS",
+        "confidence": 0.9927066763242086
+      }
+    ],
+    "seconds": 34.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_070.jpg",
+    "expected_title": "How to Win Friends and Influence People",
+    "expected_author": "Dale Carnegie",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Comment se faire des amis et influencer les autres",
+    "top_score": 53.93258426966292,
+    "top_author_score": 100.0,
+    "best_in_list": 49.4,
+    "shown": [
+      "Comment se faire des amis et influencer les autres",
+      "Comment se faire des amis",
+      "Dale Carnegie and Comment se faire des amis",
+      "Comment se faire des amis (Nouvelle \u00e9dition)"
+    ],
+    "shown_authors": [
+      "Dale Carnegie",
+      "Dale Carnegie",
+      "Elowen Marvek",
+      "Dale Carnegie"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Dale Carnegie DES AMIS COMMENT SE FAIRE ETINFLUENCERLES AUTRES Best-seller mondial traduit en 37 langues",
+        "author": "NO",
+        "full": "Dale Carnegie COMMENT SE FAIRE DES AMIS ETINFLUENCERLES AUTRES Best-seller mondial traduit en 37 langues D NO",
+        "confidence": 0.9444624355861119
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Dale Carnegie DES AMIS COMMENT SE FAIRE ET INFLUENCER LES AUTRES Best-seller mondial traduit en 37 langues",
+        "author": "Oures",
+        "full": "Dale Carnegie COMMENT SE FAIRE DES AMIS ET INFLUENCER LES AUTRES Best-seller mondial traduit en 37 langues D F 1 SNOI Oures",
+        "confidence": 0.8810511887073517
+      }
+    ],
+    "seconds": 22.4,
+    "error": "",
+    "strict": 53.9,
+    "loose": 49.4
+  },
+  {
+    "file": "cover_071.jpg",
+    "expected_title": "Start with why",
+    "expected_author": "Simon Sinek",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "WITH",
+        "author": "SIMONSINEK",
+        "full": "EVERYONE TO TAKE ACTION WITH SIMONSINEK",
+        "confidence": 0.9752598206202189
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "WITH",
+        "author": "SIMONSINEK",
+        "full": "1 1 E EVERYONE TO TAKE ACTION WITH SIMONSINEK 0",
+        "confidence": 0.7582128601414817
+      }
+    ],
+    "seconds": 28.9,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_072.jpg",
+    "expected_title": "Zero to One",
+    "expected_author": "Peter A. Thiel",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Zero to One",
+    "top_score": 100.0,
+    "top_author_score": 65.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Zero to One",
+      "Zero to One by Peter Thiel"
+    ],
+    "shown_authors": [
+      "Peter Thiel, Blake Masters",
+      "Peter A. Thiel"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ZERO ONE",
+        "author": "Peter Thiel",
+        "full": "ZERO to ONE NOTES ON STARTUPS. OR HOW TO BUILD THE FUTURE Peter Thiel WIth BLAKE MASTERS READBYBLAKE MASTERS AN UNAERIDGED PROOUCTION",
+        "confidence": 0.9610530667834811
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ZERO ONE",
+        "author": "Peter Thiel",
+        "full": "ZERO to ONE NOTES ON STARTUPS.OR HOW TO BUILD THE FUTURE Peter Thiel with BLAKE MASTERS READBYBLAKE MASTERS AN UNABRIDGED PRODUCTION",
+        "confidence": 0.9807604352633158
+      }
+    ],
+    "seconds": 28.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_073.jpg",
+    "expected_title": "The Lean Startup",
+    "expected_author": "Eric Ries",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Lean Startup",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Lean Startup",
+      "Eric Ries' the Lean Startup"
+    ],
+    "shown_authors": [
+      "Eric Ries",
+      "Ant Hive Media"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "STARTUP ERIC RIES THE LEAN",
+        "author": "Businesses",
+        "full": "THE LEAN STARTUP How Today's S Entrepreneur Use Continuous Innovationt to Create Radically Suecessful Businesses ERIC RIES",
+        "confidence": 0.9508767537772655
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "STARTUP ERICRIES THE LEAN",
+        "author": "Businesses",
+        "full": "THE LEAN STARTUP How Today's S Entrepreneur Use Continuous Innovation to Create Radically Successful Businesses ERICRIES",
+        "confidence": 0.9898341856896877
+      }
+    ],
+    "seconds": 21.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_074.jpg",
+    "expected_title": "Shoe Dog",
+    "expected_author": "Phil Knight",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Shoe Dog",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Shoe Dog"
+    ],
+    "shown_authors": [
+      "Phil Knight"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "SHOE DOG PHIL KNIGHT BYTHE CREATOR OF NIKE AMEMOIR",
+        "author": "",
+        "full": "SHOE DOG AMEMOIR BYTHE CREATOR OF NIKE PHIL KNIGHT",
+        "confidence": 0.9782354474067688
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "SHOE DOG PHIL KNIGHT BYTHECREATOR OFNIKE AMEMOIR",
+        "author": "",
+        "full": "SHOE DOG AMEMOIR BYTHECREATOR OFNIKE PHIL KNIGHT",
+        "confidence": 0.9845488429069519
+      }
+    ],
+    "seconds": 15.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_075.jpg",
+    "expected_title": "Steve Jobs",
+    "expected_author": "Walter Isaacson",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Steve Jobs",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Steve Jobs"
+    ],
+    "shown_authors": [
+      "Walter Isaacson"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Steve Jobspor Walter Isaacson",
+        "author": "",
+        "full": "Steve Jobspor Walter Isaacson",
+        "confidence": 0.9766350388526917
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Steve Jobspor Walter Isaacson",
+        "author": "",
+        "full": "Steve Jobspor Walter Isaacson",
+        "confidence": 0.9992944598197937
+      }
+    ],
+    "seconds": 5.0,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_076.jpg",
+    "expected_title": "The Immortal Life of Henrietta Lacks",
+    "expected_author": "Rebecca Skloot",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Immortal Life of Henrietta Lacks",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Immortal Life of Henrietta Lacks",
+      "The Immortal Life of Henrietta Lacks"
+    ],
+    "shown_authors": [
+      "Rebecca Skloot",
+      "Alexander Cooper"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "of Henrietta Life The Immortal Lacks Skloot Rebecca",
+        "author": "revolution and o multimillion-dollar industry.",
+        "full": "The Immortal Life of Henrietta Lacks Doctors took her cells without osking. Those cells never died. They lounched o medicol revolution and o multimillion-dollar industry. More thon twenty yeors loter, her children found out. Their lives would never be the same Rebecca Skloot",
+        "confidence": 0.962566310709173
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "of Henrietta Life The Immortal Lacks Skloot Rebecca",
+        "author": "revolution and a multimillion-dollar industry.",
+        "full": "The Immortal Life of Henrietta Lacks Doctors took her cells without asking. Those cells never died. They launched a medical revolution and a multimillion-dollar industry. More than twenty years later, her children found out. Their lives would never be the same. Rebecca Skloot",
+        "confidence": 0.9825024279681119
+      }
+    ],
+    "seconds": 22.1,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_077.jpg",
+    "expected_title": "A Brief History of Time",
+    "expected_author": "Stephen Hawking",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Une br\u00e8ve histoire du temps. Du Big Bang aux trous noirs",
+    "top_score": 45.56962025316456,
+    "top_author_score": 100.0,
+    "best_in_list": 47.4,
+    "shown": [
+      "Une br\u00e8ve histoire du temps. Du Big Bang aux trous noirs"
+    ],
+    "shown_authors": [
+      "Stephen Hawking"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "BREVE STEPHEN HAWKING DU UNE TEMPS HISTOIRE big bang",
+        "author": "Du",
+        "full": "STEPHEN HAWKING UNE BREVE HISTOIRE DU TEMPS Du big bang aux trous noirs Flammarion",
+        "confidence": 0.9964969328471592
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "BREVE STEPHEN HAWKING DU UNE TEMPS HISTOIRE big bang Tyd",
+        "author": "Du",
+        "full": "STEPHEN HAWKING UNE BREVE HISTOIRE DU TEMPS Du big bang aux trous noirs Tyd Flammarion",
+        "confidence": 0.980845300356547
+      }
+    ],
+    "seconds": 23.2,
+    "error": "",
+    "strict": 45.6,
+    "loose": 47.4
+  },
+  {
+    "file": "cover_078.jpg",
+    "expected_title": "Cosmos",
+    "expected_author": "Carl Sagan",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Cosmos",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Cosmos"
+    ],
+    "shown_authors": [
+      "Carl Sagan"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "COSMOS CARL SAGAN",
+        "author": "INTRODUCTION BY ANNDRUYAN",
+        "full": "CARL SAGAN COSMOS WITHANEWFOREWORDBY NEILDEGRASSETYSON INTRODUCTION BY ANNDRUYAN",
+        "confidence": 0.9712871074676513
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "COSMOS CARL SAGAN",
+        "author": "INTRODUCTION BY ANN DRUYAN",
+        "full": "CARL SAGAN COSMOS WITH A NEW FOREWORD BY NEIL DEGRASSE TYSON INTRODUCTION BY ANN DRUYAN",
+        "confidence": 0.9878718495368958
+      }
+    ],
+    "seconds": 21.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_079.jpg",
+    "expected_title": "The Selfish Gene",
+    "expected_author": "Richard Dawkins",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Selfish Gene",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Selfish Gene"
+    ],
+    "shown_authors": [
+      "Richard Dawkins"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "THE SELFISH GENE MNAN DAWKINS RICHARD",
+        "author": "30th",
+        "full": "Copyeigrted Material THE MILLION COPY INTERNATIONAL BESTSELEER RICHARD DAWKINS THE SELFISH GENE 30th Annaversary MNAN",
+        "confidence": 0.933134239912033
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "THE SELFISH GENE MAMARNN DAWKINS RICHARD",
+        "author": "30th",
+        "full": "Copyrighted Material RICHARD DAWKINS THE SELFISH GENE 30th Anniversary MAMARNN",
+        "confidence": 0.9616368876563178
+      }
+    ],
+    "seconds": 26.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_080.jpg",
+    "expected_title": "Guns, Germs, and Steel",
+    "expected_author": "Jared Diamond",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Guns, Germs, and Steel",
+    "top_score": 29.629629629629626,
+    "top_author_score": 70.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Guns, Germs, and Steel"
+    ],
+    "shown_authors": [
+      "Jared Diamond"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "GERMS STEEL GUNS, AND JARED DIAMOND NHOBT:HISTOEY O THE3SSS11",
+        "author": "LOCSLARS",
+        "full": "GUNS, GERMS AND STEEL NHOBT:HISTOEY O THE3SSS11 LOCSLARS JARED DIAMOND",
+        "confidence": 0.7979854866862297
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "GERMS STEEL GUNS, AND JAREDDIAMOND ASHORT HISTORY OL THE LASST",
+        "author": "BOCEARS",
+        "full": "GUNS, GERMS AND STEEL ASHORT HISTORY OL THE LASST BOCEARS JAREDDIAMOND",
+        "confidence": 0.9139168784022331
+      }
+    ],
+    "seconds": 16.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_081.jpg",
+    "expected_title": "The Body",
+    "expected_author": "Bill Bryson",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "THE BILLBRYSON OCCUPANTS GUIDE",
+        "author": "FOR",
+        "full": "BILLBRYSON THE GUIDE FOR OCCUPANTS",
+        "confidence": 0.9955942988395691
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "THE BILLBRYSON OCCUPANTS GUIDE",
+        "author": "FOR",
+        "full": "BILLBRYSON THE GUIDE FOR OCCUPANTS",
+        "confidence": 0.9999881029129029
+      }
+    ],
+    "seconds": 10.2,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_082.jpg",
+    "expected_title": "Born a Crime",
+    "expected_author": "Trevor Noah",
+    "verdict": "review",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "It's Trevor Noah: Born a Crime",
+    "top_score": 35.71428571428571,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "It's Trevor Noah: Born a Crime"
+    ],
+    "shown_authors": [
+      "Trevor Noah"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "TREVOR NOAH BORN ACRIME",
+        "author": "STORIES FROM",
+        "full": "TREVOR NOAH BORN ACRIME STORIES FROM A SOUTH AFRICAN CHILDHOOD",
+        "confidence": 0.9725335141023
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "TREVOR NOAH BORNACRIME",
+        "author": "9OT",
+        "full": "TREVOR NOAH BORNACRIME STORIES FROM A SOUTH AFRICAN CHILDHOOD 9OT",
+        "confidence": 0.9186446113245827
+      }
+    ],
+    "seconds": 15.4,
+    "error": "",
+    "strict": 35.7,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_083.jpg",
+    "expected_title": "Into the Wild",
+    "expected_author": "Jon Krakauer",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Into the Wild",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Into the Wild"
+    ],
+    "shown_authors": [
+      "Jon Krakauer"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "142 INTO THE WILD Jon Krakauer AN U NA B RID G ED PR O D U CTIO N Major",
+        "author": "Nowa",
+        "full": "INTO THE WILD Jon Krakauer Nowa Major UndertheBanrerof Heaven Motion Picture Read by Philip Franklin 142 AN U NA B RID G ED PR O D U CTIO N",
+        "confidence": 0.9506692588329315
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "142 INTO THE WILD Jon Krakauer AN UNABRIDGED PRODUCTION Major",
+        "author": "Nowa",
+        "full": "INTO THE WILD Jon Krakauer Nowa Major Under the Banner of Heaven Motion Picture Read by Philip Franklin 142 AN UNABRIDGED PRODUCTION",
+        "confidence": 0.992483276128769
+      }
+    ],
+    "seconds": 31.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_084.jpg",
+    "expected_title": "Wild",
+    "expected_author": "Cheryl Strayed",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Wild",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Wild"
+    ],
+    "shown_authors": [
+      "Cheryl Strayed"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "wild",
+        "author": "Cheryl Strayed",
+        "full": "wild FROM LOST TO FOUND ON THE PACIFIC CREST TRAIL Cheryl Strayed",
+        "confidence": 0.9844625194867452
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "wild",
+        "author": "Cheryl Strayed",
+        "full": "wild FROM LOST TO FOUND ON THE PACIFIC CREST TRAIL Cheryl Strayed",
+        "confidence": 0.998438278834025
+      }
+    ],
+    "seconds": 12.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_085.jpg",
+    "expected_title": "The Glass Castle",
+    "expected_author": "Jeannette Walls",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Glass Castle",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Glass Castle"
+    ],
+    "shown_authors": [
+      "Jeannette Walls"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "The Grlass Castle Jeannette Walls 8AL128",
+        "author": "'Growing up nomadic, stary-eyed and dirt",
+        "full": "The Grlass Castle Jeannette Walls 'Growing up nomadic, stary-eyed and dirt poor...incredible'xmksneyevs 8AL128",
+        "confidence": 0.8951462149620056
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "The Glass Castle Jeannette Walls 8AL128",
+        "author": "'Growing up nomadic, starry-eyed and dirt",
+        "full": "The Glass Castle Jeannette Walls 'Growing up nomadic, starry-eyed and dirt poor... incredible kinkus REviEws 8AL128",
+        "confidence": 0.9669675827026367
+      }
+    ],
+    "seconds": 15.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_086.jpg",
+    "expected_title": "Just Mercy",
+    "expected_author": "Bryan Stevenson",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Just Mercy",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Just Mercy"
+    ],
+    "shown_authors": [
+      "Bryan Stevenson"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Just Mercy Bryan Stevenson",
+        "author": "A Story of Justice and Redemption",
+        "full": "Just Mercy A Story of Justice and Redemption Bryan Stevenson \"Not since Aticus Finch has a fearless and committed lawyer made such a difference in the American South.Though larger than life, Atticus exists only in fiction. Bryan Stevenson, however, is very much alive and doing God's work fighting for the poor, the oppressed, the voiceless, the vulnerable, the outcast, and those with no hope. Just ",
+        "confidence": 0.9721625722371615
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Just Mercy Bryan Stevenson",
+        "author": "A Story of Justice and Redemption",
+        "full": "Just Mercy A Story of Justice and Redemption Bryan Stevenson \"Not since Atticus Finch has a fearless and committed lawyer made such a difference in the American South.Though larger than life, Atticus exists only in fiction. Bryan Stevenson, however, is very much alive and doing God's work fighting for the poor, the oppressed, the voiceless, the vulnerable, the outcast, and those with no hope. Just",
+        "confidence": 0.9967981485220102
+      }
+    ],
+    "seconds": 35.3,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_087.jpg",
+    "expected_title": "The Devil in the White City",
+    "expected_author": "Erik Larson",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Devil ?In The White City",
+    "top_score": 98.18181818181819,
+    "top_author_score": 100.0,
+    "best_in_list": 97.9,
+    "shown": [
+      "The Devil ?In The White City"
+    ],
+    "shown_authors": [
+      "Erik Larson"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "D IL WHITE E LARSON CITY",
+        "author": "ERIK",
+        "full": "THE IL D V E CITY WHITE MAGICAND NBNEA ATTHEFAIN THAT CHANGID AMEME ERIK LARSON beselng aathe ISAAC'S STORM",
+        "confidence": 0.8694866299629211
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "D IL WHITE E LARSON CITY",
+        "author": "ERIK",
+        "full": "THE IL D V E CITY WIUSE WHITE MAGIC AND BADNESY AT THE FAIR THAT CHANGED AMERM ERIK LARSON ISAAC'S STORM",
+        "confidence": 0.9415607537542071
+      }
+    ],
+    "seconds": 24.1,
+    "error": "",
+    "strict": 98.2,
+    "loose": 97.9
+  },
+  {
+    "file": "cover_088.jpg",
+    "expected_title": "Killers of the Flower Moon",
+    "expected_author": "David Grann",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Killers of the Flower Moon",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Killers of the Flower Moon"
+    ],
+    "shown_authors": [
+      "David Grann"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Moon Flower Killers IGrann the David of",
+        "author": "The Osage Murders and",
+        "full": "Killers of Flower the Moon The Osage Murders and the Birth of the FBI David IGrann",
+        "confidence": 0.9816732539070977
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Moon Flower Killers 1Grann the David of",
+        "author": "The Osage Murders and",
+        "full": "Killers of Flower the Moon The Osage Murders and the Birth of the FBI David 1Grann",
+        "confidence": 0.9929236570994059
+      }
+    ],
+    "seconds": 21.7,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_089.jpg",
+    "expected_title": "Unbroken",
+    "expected_author": "Laura Hillenbrand",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Unbroken",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Unbroken"
+    ],
+    "shown_authors": [
+      "Laura Hillenbrand"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "UNBROKEN LAURA HILLENBRAND",
+        "author": "A World War II Story of Survival,",
+        "full": "LAURA HILLENBRAND SEABISCUIT UNBROKEN A World War II Story of Survival, Resilience and Redemption",
+        "confidence": 0.9798343479633331
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "UNBROKEN LAURA HILLENBRAND",
+        "author": "A World War II Story of Survival,",
+        "full": "LAURA HILLENBRAND SEABISCUIT UNBROKEN A World War II Story of Survival, Resilience and Redemption",
+        "confidence": 0.9995560447374979
+      }
+    ],
+    "seconds": 19.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_090.jpg",
+    "expected_title": "Het Achterhuis",
+    "expected_author": "Anne Frank",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Het Achterhuis",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Het Achterhuis"
+    ],
+    "shown_authors": [
+      "Anne Frank"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "HET ACHTERHUIS ANNE FRANK CONTACTAVSTRDAM",
+        "author": "",
+        "full": "ANNE FRANK HET ACHTERHUIS CONTACTAVSTRDAM",
+        "confidence": 0.8990337699651718
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "HET ACHTERHUIS ANNE FRANK CONTACT&AMSTERDAM",
+        "author": "",
+        "full": "ANNE FRANK HET ACHTERHUIS CONTACT&AMSTERDAM",
+        "confidence": 0.9862410128116608
+      }
+    ],
+    "seconds": 11.6,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_091.jpg",
+    "expected_title": "La Nuit",
+    "expected_author": "Elie Wiesel",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Elie Wiesel",
+    "top_score": 33.333333333333336,
+    "top_author_score": 38.095238095238095,
+    "best_in_list": 100.0,
+    "shown": [
+      "Elie Wiesel",
+      "La Nuit"
+    ],
+    "shown_authors": [
+      "Lisa Moore",
+      "Elie Wiesel"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "LA NUIT ELIE WIESEL",
+        "author": "",
+        "full": "ELIE WIESEL LA NUIT",
+        "confidence": 0.9711415469646454
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "LA NUIT ELIE WIESEL",
+        "author": "",
+        "full": "ELIE WIESEL LA NUIT",
+        "confidence": 0.999653548002243
+      }
+    ],
+    "seconds": 7.0,
+    "error": "",
+    "strict": 33.3,
+    "loose": 33.3
+  },
+  {
+    "file": "cover_092.jpg",
+    "expected_title": "The Color Purple",
+    "expected_author": "Alice Walker",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Color Purple",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Color Purple",
+      "Color Purple",
+      "Alice Walker's the Color Purple",
+      "Alice Walker's The Color Purple",
+      "Alice Walker's 'The Color Purple'"
+    ],
+    "shown_authors": [
+      "Alice Walker",
+      "Alice Walker",
+      "Dina Benevol, Barry Spurr",
+      "Marian Picton",
+      "Nandita Sinha"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Purple The Colpr by Waker Alice",
+        "author": "ANOVEL",
+        "full": "The Colpr Purple by Alice Waker ANOVEL",
+        "confidence": 0.9522970233644757
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Purple The Color by Walker Alice",
+        "author": "ANOVEL",
+        "full": "The Color Purple by Alice Walker ANOVEL",
+        "confidence": 0.9905641845294407
+      }
+    ],
+    "seconds": 12.4,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_093.jpg",
+    "expected_title": "Beloved",
+    "expected_author": "Toni Morrison",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "ANOVEL",
+        "author": "",
+        "full": "ANOVEL",
+        "confidence": 0.9691141247749329
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "ANOVEL",
+        "author": "",
+        "full": "ANOVEL",
+        "confidence": 0.9207909107208252
+      }
+    ],
+    "seconds": 4.5,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_094.jpg",
+    "expected_title": "Their Eyes Were Watching God",
+    "expected_author": "Zora Neale Hurston",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Their Eyes Were Watching God",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "Their Eyes Were Watching God",
+      "Their Eyes Were Watching God",
+      "Zora Neale Hurston's Their Eyes Were Watching God",
+      "Zora Neale Hurston's Their Eyes Were Watching God"
+    ],
+    "shown_authors": [
+      "Zora Neale Hurston",
+      "Mary Ellen Snodgrass",
+      "Harold Bloom",
+      "Cheryl A. Wall"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Their Eyes Were Watching God Zora Neale Hurston Brock",
+        "author": "Public Domain Core Collection",
+        "full": "Their Eyes Were Watching God Zora Neale Hurston Brock Ryerson Public Domain Core Collection University",
+        "confidence": 0.980776846408844
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Their Eyes Were Watching God Zora Neale Hurston Brock",
+        "author": "Public Domain Core Collection",
+        "full": "Their Eyes Were Watching God Zora Neale Hurston Brock Ryerson Public Domain Core Collection University",
+        "confidence": 0.9954138483319964
+      }
+    ],
+    "seconds": 13.9,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_095.jpg",
+    "expected_title": "Invisible Man",
+    "expected_author": "Ralph Ellison",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue_ocr_recovery",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Outsiders",
+    "top_score": 30.76923076923077,
+    "top_author_score": 40.0,
+    "best_in_list": 30.8,
+    "shown": [
+      "The Outsiders"
+    ],
+    "shown_authors": [
+      "S. E. Hinton"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Der unsichtbareM RALPH ELLISON",
+        "author": "",
+        "full": "RALPH ELLISON Der unsichtbareM",
+        "confidence": 0.9655118882656097
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Der unsichtbare RALPH ELLISON",
+        "author": "on",
+        "full": "RALPH ELLISON Der unsichtbare SEPRE on",
+        "confidence": 0.7148519828915596
+      }
+    ],
+    "seconds": 9.5,
+    "error": "",
+    "strict": 30.8,
+    "loose": 30.8
+  },
+  {
+    "file": "cover_096.jpg",
+    "expected_title": "The Bell Jar",
+    "expected_author": "Sylvia Plath",
+    "verdict": "refused",
+    "decision": "REJECTED",
+    "tier": "none",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": null,
+    "top_score": 0,
+    "top_author_score": null,
+    "best_in_list": 0,
+    "shown": [],
+    "shown_authors": [],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "Pah Syuriaf",
+        "author": "The Bell Jar",
+        "full": "Pah Syuriaf The Bell Jar \u4ee3",
+        "confidence": 0.8069690763950348
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "Plath Sylviaf",
+        "author": "The Bell Jar",
+        "full": "Plath Sylviaf 0 The Bell Jar ff",
+        "confidence": 0.8601693034172058
+      }
+    ],
+    "seconds": 12.2,
+    "error": "",
+    "strict": 0,
+    "loose": 0
+  },
+  {
+    "file": "cover_097.jpg",
+    "expected_title": "Slaughterhouse-Five",
+    "expected_author": "Kurt Vonnegut",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_recovery_plus_external",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "Slaughterhouse Five",
+    "top_score": 94.73684210526316,
+    "top_author_score": 100.0,
+    "best_in_list": 73.7,
+    "shown": [
+      "Slaughterhouse Five",
+      "Mockingjay"
+    ],
+    "shown_authors": [
+      "Kurt Vonnegut",
+      "Suzanne Collins"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "SSE-FIVE TAnV'",
+        "author": "KURT VONNEGUT.JR.",
+        "full": "DELTA $1.95 $2.35IN CANADA OR SSE-FIVE TAnV' The Children's Crusade A NEW NOVELBY KURT VONNEGUT.JR. an extraordinary success. THE NEW YORK TINES",
+        "confidence": 0.895814836025238
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "SE-FIVE AUGE",
+        "author": "KURT VONNEGUT,JR.",
+        "full": "\u5c0f DELTA $1.95 $2.35 IN CANADA OR SE-FIVE AUGE The Children's Crusade A NEW NOVEL BY KURT VONNEGUT,JR. an extraordinary success.",
+        "confidence": 0.9426816999912262
+      }
+    ],
+    "seconds": 23.5,
+    "error": "",
+    "strict": 94.7,
+    "loose": 73.7
+  },
+  {
+    "file": "cover_098.jpg",
+    "expected_title": "Catch-22",
+    "expected_author": "Joseph Heller",
+    "verdict": "wrong",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue_ocr_recovery",
+    "ocr_tier_used": "medium",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Outsiders",
+    "top_score": 19.047619047619047,
+    "top_author_score": 32.0,
+    "best_in_list": 19.0,
+    "shown": [
+      "The Outsiders"
+    ],
+    "shown_authors": [
+      "S. E. Hinton"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "HdaSOr 83T3H The best American novel to come that has come out of f anywhere in years\" exhilarating,giantroller-coaster ofabook\" nation-wide sonsation at5.95 Worid War ll...the 75c out of novel",
+        "author": "now.compieta and unabridged",
+        "full": "nation-wide sonsation at5.95 now.compieta and unabridged 75c The best American novel to come out of Worid War ll...the best American novel that has come out of f anywhere in years\" Neisan Algran.The Matlan HdaSOr 83T3H exhilarating,giantroller-coaster ofabook\" Mer Tart Herale Triture",
+        "confidence": 0.8477421514689922
+      },
+      {
+        "tier": "medium",
+        "status": "OCR_SUCCESS",
+        "title": "JOSEPH HELER wi   ig \"The best American novel to come that has come out of fanywhere in years\" exhilarating,giantroller-coasterofabook\" anation-wide sensation at $5.95 World War Il...the 75c out of novel",
+        "author": "now complete and unabridged",
+        "full": "anation-wide sensation at $5.95 now complete and unabridged 75c \"The best American novel to come out of World War Il...the best American novel that has come out of fanywhere in years\" Neisan Algran, Thu Natian JOSEPH HELER wi   ig exhilarating,giantroller-coasterofabook\" New Tark Herald Tribuze",
+        "confidence": 0.940387084203608
+      }
+    ],
+    "seconds": 31.2,
+    "error": "",
+    "strict": 19.0,
+    "loose": 19.0
+  },
+  {
+    "file": "cover_099.jpg",
+    "expected_title": "East of Eden",
+    "expected_author": "John Steinbeck",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "East of Eden",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "East of Eden"
+    ],
+    "shown_authors": [
+      "John Steinbeck"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "STOP AST EDEN",
+        "author": "STEINBECK",
+        "full": "JOHN STEINBECK AST EDEN STOP",
+        "confidence": 0.9836751580238342
+      }
+    ],
+    "seconds": 4.0,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  },
+  {
+    "file": "cover_100.jpg",
+    "expected_title": "The Grapes of Wrath",
+    "expected_author": "John Steinbeck",
+    "verdict": "correct",
+    "decision": "NEEDS_CONFIRMATION",
+    "tier": "local_catalogue",
+    "ocr_tier_used": "mobile",
+    "ocr_status": "OCR_SUCCESS",
+    "top": "The Grapes of Wrath",
+    "top_score": 100.0,
+    "top_author_score": 100.0,
+    "best_in_list": 100.0,
+    "shown": [
+      "The Grapes of Wrath"
+    ],
+    "shown_authors": [
+      "John Steinbeck"
+    ],
+    "ocr_passes": [
+      {
+        "tier": "mobile",
+        "status": "OCR_SUCCESS",
+        "title": "THE WRATH GRAPES OF STEINBECX",
+        "author": "",
+        "full": "THE GRAPES OF WRATH STEINBECX",
+        "confidence": 0.9327880144119263
+      }
+    ],
+    "seconds": 3.5,
+    "error": "",
+    "strict": 100.0,
+    "loose": 100.0
+  }
+]

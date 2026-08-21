@@ -46,6 +46,7 @@ from whatitsabout_heuristic import (METHOD as EXTERNAL_OVERVIEW_METHOD,
 from thefuzz import fuzz
 
 from database import (CACHE_AUTHOR_MATCH, backfill_book_thumbnail,
+                      prior_engagement,
                       catalogue_subject_vocabulary,
                       get_taste_profile_books, get_user_interests,
                       set_user_interests,
@@ -1316,6 +1317,16 @@ def edition_evidence(book, scanned_isbn="", exact_isbn=None):
     }
 
 
+def already_read(user_id, title, author=""):
+    """The one line on the card that is a fact rather than a judgement.
+
+    Returned as its own field instead of being folded into for_you: taste is
+    an inference from subjects and can be wrong, this cannot, and the card
+    must be able to say so with different weight.
+    """
+    return prior_engagement(user_id, title, author)
+
+
 def taste_for_client(user_id, categories, book_id=None, title=""):
     """The "Is this for you?" block for one scan result.
 
@@ -1369,6 +1380,9 @@ def cache_hit_response(book_row, extracted_title, extracted_author,
         # Evidence from the user's own library. See taste_profile.py.
         "for_you": taste_for_client(user_id, book.get("categories", ""),
                                     book.get("id"), book.get("title", "")),
+        # A fact, not an inference -- see already_read().
+        "already_read": already_read(user_id, book.get("title", ""),
+                                     book.get("author", "")),
         # Identity and page-count provenance, kept separate. See edition_evidence.
         "edition_evidence": edition_evidence(book, scanned_isbn),
         # Which history row this scan created, so the UI can remove it again
@@ -1482,6 +1496,9 @@ def summarize_and_save(current_user, api_result, extracted_title,
         "for_you": taste_for_client(current_user["id"],
                                     book_data.get("categories", ""), book_id,
                                     book_data.get("title", "")),
+        "already_read": already_read(current_user["id"],
+                                     book_data.get("title", ""),
+                                     book_data.get("author", "")),
         "edition_evidence": edition_evidence(book_data, isbn),
         # Which history row this scan created, so the UI can remove it again
         # if the user rejects a medium-confidence match.
@@ -1739,6 +1756,8 @@ def finalize_candidate(current_user, attempt_id, candidate_id,
         "for_you": taste_for_client(current_user["id"],
                                     row.get("categories", ""), row.get("id"),
                                     row.get("title", "")),
+        "already_read": already_read(current_user["id"], row.get("title", ""),
+                                     row.get("author", "")),
         "edition_evidence": edition_evidence(
             row, stored.get("attempt_query_isbn", ""),
             # score_candidate() in the frozen matching core already decided
@@ -1874,6 +1893,12 @@ def begin_candidate_funnel(current_user, evidence, ranked, input_method):
     candidate_ids = save_candidate_matches(attempt_id, candidates)
     client_candidates = [candidate_for_client(c, cid)
                          for c, cid in zip(candidates, candidate_ids)]
+    # Every option, not just the first. The chooser is where most scans land,
+    # and "you have already read that one" is the single most useful thing the
+    # app can say while someone is deciding between three similar covers.
+    for shown in client_candidates:
+        shown["already_read"] = already_read(
+            current_user["id"], shown.get("title", ""), shown.get("author", ""))
 
     if decision == HIGH_CONFIDENCE and candidate_ids:
         return finalize_candidate(current_user, attempt_id, candidate_ids[0], input_method)
@@ -1888,6 +1913,7 @@ def begin_candidate_funnel(current_user, evidence, ranked, input_method):
             top["for_you"] = taste_for_client(
                 current_user["id"], top.get("categories", ""), None,
                 top.get("title", ""))
+
             top["edition_evidence"] = edition_evidence(
                 top, evidence.get("query_isbn", ""),
                 exact_isbn=(top.get("score_breakdown") or {}).get("exact_isbn"))
@@ -2424,6 +2450,8 @@ def catalogue_detail(current_user, record_id):
         "book": book,
         "for_you": taste_for_client(current_user["id"], book["categories"],
                                     None, book["title"]),
+        "already_read": already_read(current_user["id"], book["title"],
+                                     book.get("author", "")),
     })
 
 

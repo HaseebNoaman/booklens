@@ -776,6 +776,65 @@ def revoke_user_tokens(user_id):
     conn.close()
 
 
+def prior_engagement(user_id, title, author=""):
+    """Has this reader already read the book now in their hands?
+
+    The only answer in the product that is a FACT rather than a judgement --
+    no thresholds, no similarity, no chance of being wrong -- which is why it
+    belongs at the top of the card.
+
+    TWO RULES MAKE IT TRUE RATHER THAN CIRCULAR:
+
+    1. Only deliberate signals count. Identifying a cover WRITES a history row,
+       so counting every row would mean the second scan of a book announced
+       "you have read this" purely because of the first scan. finished,
+       currently reading and favourited are choices; a scan is not. Same rule
+       as taste_profile.is_profile_signal(), for the same reason.
+
+    2. Match on title and author, not on book id. The same work legitimately
+       exists as several rows -- a different edition, or a second provider's
+       record of it -- each with its own id. Matching by id would miss exactly
+       the case this feature exists for: you own one printing and are holding
+       another.
+    """
+    if not (title or "").strip():
+        return None
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT b.title, b.author, h.reading_status, h.is_favorite, h.scanned_at
+        FROM history h
+        JOIN books b ON h.book_id = b.id
+        WHERE h.user_id = ?
+        ORDER BY h.scanned_at DESC
+    """, (user_id,))
+    rows = cur.fetchall()
+    conn.close()
+
+    wanted_title = _norm_engagement(title)
+    wanted_author = _norm_engagement(author)
+    for row in rows:
+        status = (row["reading_status"] or "").strip()
+        favourite = bool(row["is_favorite"])
+        if not favourite and status not in ("finished", "reading"):
+            continue
+        if _norm_engagement(row["title"]) != wanted_title:
+            continue
+        # An author on both sides must roughly agree; a missing one on either
+        # side is not evidence against, because providers omit it often.
+        row_author = _norm_engagement(row["author"])
+        if wanted_author and row_author and                 fuzz.token_set_ratio(wanted_author, row_author) < CACHE_AUTHOR_MATCH:
+            continue
+        return {"status": status or ("favourite" if favourite else ""),
+                "is_favorite": favourite,
+                "when": row["scanned_at"]}
+    return None
+
+
+def _norm_engagement(value):
+    return " ".join((value or "").strip().lower().split())
+
+
 # ---------- One-time links: verification and password reset ----------
 # The raw token goes in the email and is never stored. We keep only its
 # SHA-256, so reading the database gives an attacker nothing usable -- exactly

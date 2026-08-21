@@ -34,6 +34,35 @@ function refusalGuidance(failureReason, ocrStatus) {
   };
 }
 
+// "You have already read this."
+//
+// The only line on the card that is a FACT rather than an inference. Everything
+// else here is the matcher's judgement or the taste profile's inference, both
+// of which can be wrong; this one is a record of something the reader did. It
+// goes above the title because in a shop it is the question being asked, and
+// because a reader who has already read the book does not need the rest.
+//
+// A bare scan never produces this -- see database.prior_engagement(). Counting
+// scans would mean the second look at a book announced "you have read this"
+// purely because of the first.
+function AlreadyRead({ record }) {
+  if (!record) return null;
+  const when = (record.when || "").slice(0, 10);
+  const label = record.status === "reading"
+    ? "You are reading this"
+    : record.status === "finished"
+      ? "You have read this"
+      : "This is in your library";
+  return (
+    <p className="already-read" role="status">
+      <Icon name="check" size={16} />
+      <span>{label}{when ? ` — added ${when}` : ""}</span>
+      {record.is_favorite && <span className="already-read-fav">Favourite</span>}
+    </p>
+  );
+}
+
+
 function RefusalPanel({ result, onRetake, onBarcode, onTypeTitle }) {
   const guidance = refusalGuidance(result.failure_reason,
                                    (result.ocr || {}).status);
@@ -185,6 +214,7 @@ function CandidateSelection({ result, token, onResolved, onReset }) {
             <BookCover src={candidate.thumbnail} alt={`Cover of ${candidate.title}`} />
             <div className="candidate-copy">
               {sameWorkDifferentEditions && <span className="edition-option">Edition option {index + 1}</span>}
+              <AlreadyRead record={candidate.already_read} />
               <h4 className="candidate-title">{candidate.title}</h4>
               <p className="book-author">by {candidate.author || "Unknown author"}</p>
               <dl className="candidate-facts">
@@ -484,6 +514,7 @@ function SingleCandidateCard({ result, token, scanImage, onResolved, onReset }) 
                      fallback={scanImage} alt={`Cover of ${candidate.title}`} />
         </div>
         <div className="result-content">
+          <AlreadyRead record={candidate.already_read} />
           <span className="eyebrow">Best match</span>
           <h2 className="book-title" id="confirm-title">{candidate.title}</h2>
           <p className="book-author">by {candidate.author || "Unknown author"}</p>
@@ -663,6 +694,7 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
               the title, so the card opened with two labels telling the reader
               something the title already tells them. The badge carries the
               part that is actually informative: who vouched for this. */}
+          <AlreadyRead record={result.already_read} />
           <h2 className="book-title" id="result-title">{book.title}</h2>
           <p className="book-author">by {book.author || "Unknown author"}</p>
           {/* Subjects are shown ONCE, inside "Is this for you?", where they

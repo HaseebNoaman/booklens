@@ -1546,3 +1546,27 @@ h1, h2, h3,
   text-transform: uppercase;
   color: var(--muted-text);
 }
+
+/* "You have already read this" — the one card line that is a record rather
+   than an inference, so it sits above the title and is the first thing read.
+   Success colouring, not warning: finding out you own it already is a useful
+   answer, not a problem. */
+.already-read {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm, 8px);
+  background: #e7f4ec;
+  color: #17553a;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.already-read-fav {
+  margin-left: auto;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}

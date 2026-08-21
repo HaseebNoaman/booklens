@@ -2,6 +2,14 @@ import os
 import sys
 import types
 
+# The test suite must never send real email. A developer .env with a working
+# SMTP password would otherwise make every registration test open a socket to
+# Gmail -- which is slow, flaky, and mails strangers. Forced empty (not
+# setdefault) so a configured .env cannot override it: mailer.send_mail then
+# logs the link and returns "logged", which is what the tests assert against.
+os.environ["MAIL_PROVIDER"] = ""
+os.environ["MAIL_API_KEY"] = ""
+
 os.environ.setdefault("SECRET_KEY", "test-secret-key-not-for-production")
 os.environ.setdefault("ADMIN_PASSWORD", "test-admin-password")
 
