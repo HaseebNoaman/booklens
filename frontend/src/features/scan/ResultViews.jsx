@@ -63,6 +63,61 @@ function AlreadyRead({ record }) {
 }
 
 
+// What Open Library says about this book today.
+//
+// THREE WORDING DECISIONS, EACH CLOSING AN OBJECTION.
+//
+// The source is named inside the sentence -- "from 140 Open Library readers",
+// never a bare "4.1 / 5". Those are Open Library's own users, not Goodreads and
+// not the world, and saying so removes the overclaim rather than defending it.
+//
+// The shelf count is a FALLBACK, not a row. Next to a rating it adds nothing
+// and invites the obvious objection: those are intentions, not readers. Shown
+// only when there is no rating, it stops being redundant and becomes the one
+// real signal a book published this year has -- measured, 86% of 2026 titles
+// are known to Open Library and NONE are rated.
+//
+// The "~" before the page count is doing real work. This is a median across
+// editions, not the copy in the reader's hand, and the card must not claim an
+// exactness it does not have.
+function LiveSignals({ live, exactLength }) {
+  if (!live) return null;
+  const { rating, n_ratings: raters, on_shelves: shelves,
+          page_count: pages, rating_is_thin: thin, freshness } = live;
+  const rows = [];
+
+  if (rating) {
+    rows.push(
+      <p className="live-row" key="rating">
+        <b>{rating} / 5</b> from {raters.toLocaleString()} Open Library reader{raters === 1 ? "" : "s"}
+        {thin && <span className="live-caveat"> — too few to lean on</span>}
+        {freshness && <span className="live-freshness">{freshness}</span>}
+      </p>
+    );
+  } else if (shelves > 0) {
+    rows.push(
+      <p className="live-row" key="shelves">
+        No rating yet. <b>{shelves.toLocaleString()}</b> people have it on a shelf
+        <span className="live-caveat"> — that is interest, not a verdict</span>
+      </p>
+    );
+  }
+
+  // Never contradict an exact figure the reader's own edition already gave.
+  if (pages > 0 && !exactLength) {
+    rows.push(
+      <p className="live-row" key="pages">
+        ~{pages.toLocaleString()} pages · about {Math.max(1, Math.round(pages / 40))} hours
+        <span className="live-caveat"> — median across editions</span>
+      </p>
+    );
+  }
+
+  if (!rows.length) return null;
+  return <div className="live-signals">{rows}</div>;
+}
+
+
 function RefusalPanel({ result, onRetake, onBarcode, onTypeTitle }) {
   const guidance = refusalGuidance(result.failure_reason,
                                    (result.ocr || {}).status);
@@ -700,6 +755,7 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
           <AlreadyRead record={result.already_read} />
           <h2 className="book-title" id="result-title">{book.title}</h2>
           <p className="book-author">by {book.author || "Unknown author"}</p>
+          <LiveSignals live={result.live} exactLength={Boolean(readingLength)} />
           {/* Subjects are shown ONCE, inside "Is this for you?", where they
               carry meaning. Repeating them here as decoration made the card
               say the same thing twice. */}

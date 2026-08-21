@@ -7,6 +7,11 @@ import types
 # Gmail -- which is slow, flaky, and mails strangers. Forced empty (not
 # setdefault) so a configured .env cannot override it: mailer.send_mail then
 # logs the link and returns "logged", which is what the tests assert against.
+# Nor may it reach Open Library. Left on, every card built in a test made a
+# real HTTP round-trip, which stretched the suite by 80 seconds and made it
+# depend on a third party's uptime.
+os.environ["BOOKLENS_NO_LIVE_FETCH"] = "1"
+
 os.environ["MAIL_PROVIDER"] = ""
 os.environ["MAIL_API_KEY"] = ""
 

@@ -1570,3 +1570,14 @@ h1, h2, h3,
   letter-spacing: 0.04em;
   opacity: 0.75;
 }
+
+/* Open Library's numbers, checked today. Quiet by design: they are useful
+   context, not the headline, and the caveats have to stay legible rather than
+   being hidden in a tooltip nobody opens. */
+.live-signals { margin: 10px 0 4px; display: flex; flex-direction: column; gap: 4px; }
+.live-row { margin: 0; font-size: 0.95rem; color: var(--ink, #222); }
+.live-caveat { color: #6b6b6b; font-size: 0.85rem; }
+.live-freshness {
+  margin-left: 8px; font-size: 0.75rem; color: #6b6b6b;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}

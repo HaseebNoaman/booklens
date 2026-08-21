@@ -94,6 +94,28 @@ def init_db():
     """)
     cur.execute("CREATE INDEX IF NOT EXISTS idx_auth_tokens_hash ON auth_tokens(token_hash)")
 
+    # What Open Library says about a book TODAY: a rating, how many people
+    # shelved it, and a page count taken as a median across editions rather
+    # than from whichever single edition a provider happened to hold.
+    #
+    # One row per book, refreshed rather than appended, because the value of
+    # this data is that it is current -- keeping history would only invite
+    # someone to average a stale row into a fresh one.
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS live_signals (
+            book_id INTEGER PRIMARY KEY,
+            rating REAL,
+            n_ratings INTEGER DEFAULT 0,
+            want_to_read INTEGER DEFAULT 0,
+            already_read INTEGER DEFAULT 0,
+            on_shelves INTEGER DEFAULT 0,
+            page_count INTEGER DEFAULT 0,
+            source TEXT DEFAULT 'openlibrary',
+            fetched_at INTEGER DEFAULT 0,
+            FOREIGN KEY (book_id) REFERENCES books (id)
+        )
+    """)
+
     # Table 2: books -> stores book info, also works as a cache
     cur.execute("""
         CREATE TABLE IF NOT EXISTS books (
