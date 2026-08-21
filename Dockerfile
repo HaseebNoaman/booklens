@@ -27,9 +27,27 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY *.py ./
-COPY bookfinder.seed.db ./
-COPY --from=frontend /build/dist ./frontend/dist
+# Installed as root, before the USER switch below: /usr/local/bin is root-owned.
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Run as a normal user, not root.
+#
+# This is not a hardening nicety, it is what makes the image start at all on
+# Hugging Face Spaces, which runs every container as uid 1000. Built as root,
+# /app and /data belong to root, so at runtime the entrypoint cannot create the
+# database directory, its fallback directory is unwritable too, and `set -e`
+# kills the container during boot -- before a single log line about the app.
+# Everything below therefore belongs to this user, including HOME.
+RUN useradd --create-home --uid 1000 booklens \
+    && mkdir -p /data \
+    && chown -R booklens:booklens /app /data
+USER booklens
+ENV HOME=/home/booklens
+
+COPY --chown=booklens:booklens *.py ./
+COPY --chown=booklens:booklens bookfinder.seed.db ./
+COPY --from=frontend --chown=booklens:booklens /build/dist ./frontend/dist
 
 # Pre-bake the OCR weights into the IMAGE.
 #
@@ -43,6 +61,10 @@ COPY --from=frontend /build/dist ./frontend/dist
 #
 # Warming both readers here moves all of it to build time. Runtime is then
 # offline for OCR.
+#
+# This runs AFTER the USER switch on purpose: PaddleOCR caches into $HOME, so
+# baking as root would leave 134 MB in /root/.paddlex that uid 1000 cannot read,
+# and the download would happen again on the first live scan anyway.
 RUN python -c "import ocrpp; ocrpp._get_reader(ocrpp.OCR_DET_TIER, ocrpp.OCR_ESCALATE_REC_TIER)"
 
 # The database lives here. Point BOOKLENS_DB_PATH at a mounted volume to make
@@ -53,8 +75,6 @@ ENV BOOKLENS_ENV=production
 ENV HOST=0.0.0.0
 VOLUME /data
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 # NOT gunicorn. app.py creates the tables and the admin account inside its
