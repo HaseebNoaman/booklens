@@ -1,0 +1,170 @@
+/* Panels
+
+   The panels added on top of the result card: 'you have already read
+   this', Open Library's numbers, the starter shelf and the closest shelf.
+
+   Part 7 of 7 of the stylesheet. The order is not decorative -- later files
+   depend on the tokens and base rules earlier ones set, so they are imported
+   in numbered order from app.css and must stay that way.
+*/
+
+/* ---- shared refinements ---- */
+
+.brand { letter-spacing: -0.02em; }
+
+.btn, .btn-outline {
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.text-link {
+  font-weight: 600;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+
+.sec-title { letter-spacing: -0.02em; }
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+
+/* Display face on everything that is a statement rather than a label. The
+   redesign block set headings to var(--sans), so they inherited the body
+   grotesque and every heading looked like bold body copy. */
+h1, h2, h3,
+.hero h1, .sec-title, .book-title, .brand,
+.value-item h3, .hero-aside-quote {
+  font-family: var(--serif);
+  font-weight: 600;
+}
+
+
+/* Footer column labels use the same treatment as .eyebrow. They are labels,
+   not statements, which is why they are the only headings not set in the
+   display face. */
+.footer h4 {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-text);
+}
+
+/* "You have already read this" — the one card line that is a record rather
+   than an inference, so it sits above the title and is the first thing read.
+   Success colouring, not warning: finding out you own it already is a useful
+   answer, not a problem. */
+.already-read {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm, 8px);
+  background: #e7f4ec;
+  color: #17553a;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.already-read-fav {
+  margin-left: auto;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+/* Open Library's numbers, checked today. Quiet by design: they are useful
+   context, not the headline, and the caveats have to stay legible rather than
+   being hidden in a tooltip nobody opens. */
+.live-signals { margin: 10px 0 4px; display: flex; flex-direction: column; gap: 4px; }
+.live-row { margin: 0; font-size: 0.95rem; color: var(--ink, #222); }
+.live-caveat { color: #6b6b6b; font-size: 0.85rem; }
+.live-freshness {
+  margin-left: 8px; font-size: 0.75rem; color: #6b6b6b;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* The starter shelf: the cold-start way out, inside the result card.
+   It borrows .browse-grid and .browse-card so a book looks the same wherever
+   the reader meets it -- only the affordance differs, because here a card is a
+   question ("have you read this?") rather than a link. */
+.starter-shelf { margin-top: 0.6rem; }
+
+.starter-grid {
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.starter-grid .browse-card { padding: 0.45rem; }
+.starter-grid .browse-card-title { font-size: 0.86rem; }
+.starter-grid .browse-card-author { font-size: 0.78rem; }
+
+.starter-cta {
+  margin-top: 0.15rem;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.starter-grid .browse-card:disabled { opacity: 0.55; cursor: default; }
+
+/* Undo sits next to what it undoes. A single tap writes to a real library, so
+   the way back has to be where the tap was, not in another screen. */
+.starter-undo {
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
+.starter-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-dark);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.starter-link:disabled { opacity: 0.55; cursor: default; }
+
+/* Closest on our shelf. Shown where the reader would otherwise leave with
+   nothing: after a refusal, and after a "none of your books share these
+   subjects". Never headed "Recommendations" -- it is 250 books, and each card
+   carries the reason so the claim can be checked. */
+.closest-shelf {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.closest-grid {
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 0.7rem;
+}
+
+.closest-card { padding: 0.45rem; cursor: default; }
+.closest-grid .browse-card-title { font-size: 0.86rem; }
+.closest-grid .browse-card-author { font-size: 0.78rem; }
+
+/* The reason is not decoration. It is what separates this from a black box. */
+.closest-reason {
+  margin-top: 0.2rem;
+  color: var(--muted-text);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}

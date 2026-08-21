@@ -1,0 +1,41 @@
+/* Typefaces
+
+   The two faces the whole product is set in, and nothing else.
+   Kept first because @font-face has to be declared before anything asks
+   for the family.
+
+   Part 1 of 7 of the stylesheet. The order is not decorative -- later files
+   depend on the tokens and base rules earlier ones set, so they are imported
+   in numbered order from app.css and must stay that way.
+*/
+
+/* ============ Typefaces ============
+   Self-hosted on purpose. The app sends style-src 'self' with no font-src, so
+   a Google Fonts link is blocked by our own CSP -- which is why --serif and
+   --sans previously named 'Crimson Pro' and 'Atkinson Hyperlegible' and then
+   silently rendered as Georgia and Arial. Latin subsets only: 94 KB for four
+   faces.
+
+   Fraunces for display: an old-style serif with real character, right for a
+   product about books. Karla for interface text: a grotesque with enough
+   quirk to avoid the anonymous look of the usual defaults. */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('../assets/fonts/fraunces-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('../assets/fonts/fraunces-600.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Karla';
+  src: url('../assets/fonts/karla-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Karla';
+  src: url('../assets/fonts/karla-600.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}

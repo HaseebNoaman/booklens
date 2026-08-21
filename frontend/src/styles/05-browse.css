@@ -1,0 +1,146 @@
+/* Browse
+
+   Browsing the verified books without holding one, the detail overlay,
+   and the reading-interest picker in the profile.
+
+   Part 5 of 7 of the stylesheet. The order is not decorative -- later files
+   depend on the tokens and base rules earlier ones set, so they are imported
+   in numbered order from app.css and must stay that way.
+*/
+
+/* Browse the verified books. A quiet grid: the reader is scanning for a title
+   they recognise, not reading a table. */
+.browse-search {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 26rem;
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.browse-search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.browse-status {
+  margin: 0 0 1rem;
+  color: var(--muted-text);
+  font-size: 0.92rem;
+}
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 1rem;
+}
+
+.browse-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.browse-card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+}
+
+.browse-card-title { font-weight: 600; font-size: 0.94rem; }
+.browse-card-author { color: var(--muted-text); font-size: 0.86rem; }
+
+/* Detail overlay. Same evidence a scan would give, without the scan. */
+.browse-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.45);
+  overflow-y: auto;
+}
+
+.browse-detail-inner {
+  width: min(44rem, 100%);
+  padding: 1.4rem;
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.browse-detail-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.browse-detail-layout .result-cover {
+  width: 9rem;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--r-md);
+}
+
+.browse-close { float: right; }
+
+.browse-foryou { margin: 0.6rem 0 0.8rem; }
+.browse-foryou-line { margin: 0 0 0.5rem; font-weight: 600; }
+.browse-foryou-examples { margin: 0.5rem 0 0; color: var(--muted-text); font-size: 0.9rem; }
+.browse-foryou.empty { color: var(--muted-text); }
+.browse-detail-facts { margin-top: 0.9rem; color: var(--muted-text); font-size: 0.9rem; }
+
+/* Reading interests, editable from the profile. Deliberately presented as a
+   secondary control: it is a cold-start crutch, not the profile itself. */
+.interest-editor { margin: 1.2rem 0; }
+
+.interest-help {
+  margin: 0 0 0.7rem;
+  color: var(--muted-text);
+  font-size: 0.9rem;
+}
+
+.interest-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+
+.interest-option {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  font: inherit;
+}
+
+.interest-option.chosen {
+  border-color: currentColor;
+  font-weight: 600;
+}
+
+.interest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.interest-saved { color: var(--muted-text); font-size: 0.9rem; }
+
+.for-you-action { display: inline-block; margin-top: 0.35rem; }
+.browse-detail-actions { margin: 0.9rem 0; }
