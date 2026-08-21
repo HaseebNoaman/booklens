@@ -418,3 +418,115 @@ def _spread_across_subjects(rows, subjects_of, subject_counts, catalogue_size,
                    key=lambda s: subject_weight(s, subject_counts, catalogue_size))
         buckets.setdefault(lead, []).append(row)
     return _round_robin(buckets, subject_counts, catalogue_size, limit)
+
+
+# ----- the same score, run backwards -----
+#
+# WHY THIS EXISTS. When identification refuses, the reader leaves with nothing
+# at all -- which is the honest answer to "what book is this", and a poor
+# answer to "I am standing in a shop". The profile that answers "is this for
+# you?" can also answer "what on our shelf is closest to what you have read",
+# and it is the same arithmetic pointed the other way.
+#
+# It is called "closest on our shelf", never "recommendations". Two reasons,
+# both measured:
+#
+#   1. There are 250 books. A recommender chooses from everything published.
+#   2. The catalogue's genre lists come from a source that mixes a book's
+#      primary genre with its peripheral ones. House of Leaves -- a horror
+#      novel -- is filed under "Romance novel" and "Chivalric romance", so a
+#      reader of Emma and Pride and Prejudice was offered it, first.
+#
+# THE TWO RULES THAT MAKE IT WORK, and the measurements behind them:
+#
+#   Lead with the reason the MOST of the reader's books support. Ranking by
+#   rarity alone put "Mockingjay, because adventure novel" above "A Feast for
+#   Crows, because fantasy" for someone who had read The Hobbit and A Game of
+#   Thrones -- rarer, and plainly worse.
+#
+#   Then prefer the book whose OWN subjects that reason actually accounts for.
+#   A record claiming seven genres matches half the shelf; it is a hub, not a
+#   neighbour. Dracula lists 7 subjects and House of Leaves 5, against a median
+#   of 2. Dividing by the candidate's own subject count is what removed House
+#   of Leaves from a Jane Austen reader's list and put Sense and Sensibility
+#   and The Age of Innocence there instead.
+#
+# A stricter rule was tried first and measured: requiring two shared subjects
+# instead of one. It cost 34 points of coverage (44% of one-book profiles left
+# with nothing, against 10%) and it did NOT fix House of Leaves, which shares
+# two. Rejected on the numbers.
+#
+# Coverage, over 500 random profiles at each size: one book 10% get nothing,
+# two books 1%, three books 0%. When there is nothing, the caller shows
+# nothing -- an empty panel promising neighbours is worse than no panel.
+#
+# NOT collaborative filtering, and it must not become it: 10 users, 23 history
+# rows, no ratings table. Nothing here is derived from another reader.
+
+CLOSEST_PER_REASON = 2      # never four books for one reason
+
+
+def closest_from_shelf(history_rows, catalogue_rows, limit=4,
+                       per_reason=CLOSEST_PER_REASON,
+                       subject_counts=None, catalogue_size=0):
+    """Books on our own shelf nearest to what this reader has read.
+
+    Returns a list of {"book", "reason", "because"} -- the catalogue row, the
+    subject that earned it a place, and the reader's own titles carrying that
+    subject. The reason travels WITH the book because the reader has to be able
+    to check it: "because you read The Shining and It" is auditable, a score
+    out of five is not.
+
+    catalogue_rows are passed in, like subject_counts, so this module keeps
+    working without a database.
+    """
+    profile = build_profile(history_rows)
+    support = {label: titles for label, titles in profile["subjects"].items()
+               if not too_common_to_be_evidence(label, subject_counts,
+                                                catalogue_size)}
+    if not support:
+        return []
+
+    already = {" ".join((r.get("title") or "").strip().lower().split())
+               for r in history_rows}
+    already.discard("")
+
+    ranked = []
+    for row in catalogue_rows:
+        title = " ".join((row.get("title") or "").strip().lower().split())
+        if not title or title in already:
+            continue
+        own = {s for s in normalize_subjects(row.get("categories") or
+                                            row.get("genres"))
+               if not too_common_to_be_evidence(s, subject_counts,
+                                                catalogue_size)}
+        shared = own & set(support)
+        if not shared:
+            continue
+        reason = max(shared, key=lambda s: (len(support[s]),
+                                            subject_weight(s, subject_counts,
+                                                           catalogue_size), s))
+        ranked.append((
+            -len(support[reason]),                  # backed by most of your books
+            -len(shared) / float(len(own)),         # and it is what this book IS
+            -subject_weight(reason, subject_counts, catalogue_size),
+            row.get("title") or "",
+            row, reason))
+
+    ranked.sort(key=lambda item: item[:4])
+
+    picked, used = [], {}
+    for item in ranked:
+        row, reason = item[4], item[5]
+        # per_reason=None means "order everything, cap nothing" -- what Browse
+        # needs, where the whole shelf is on screen and variety in the first
+        # four is not the point.
+        if per_reason is not None and used.get(reason, 0) >= per_reason:
+            continue
+        used[reason] = used.get(reason, 0) + 1
+        picked.append({"book": row,
+                       "reason": display_subject(reason),
+                       "because": support[reason][:MAX_EXAMPLES_SHOWN]})
+        if limit and len(picked) == limit:
+            break
+    return picked

@@ -1628,3 +1628,31 @@ h1, h2, h3,
 }
 
 .starter-link:disabled { opacity: 0.55; cursor: default; }
+
+/* Closest on our shelf. Shown where the reader would otherwise leave with
+   nothing: after a refusal, and after a "none of your books share these
+   subjects". Never headed "Recommendations" -- it is 250 books, and each card
+   carries the reason so the claim can be checked. */
+.closest-shelf {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.closest-grid {
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 0.7rem;
+}
+
+.closest-card { padding: 0.45rem; cursor: default; }
+.closest-grid .browse-card-title { font-size: 0.86rem; }
+.closest-grid .browse-card-author { font-size: 0.78rem; }
+
+/* The reason is not decoration. It is what separates this from a black box. */
+.closest-reason {
+  margin-top: 0.2rem;
+  color: var(--muted-text);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}

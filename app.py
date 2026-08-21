@@ -2434,6 +2434,25 @@ def browse_catalogue(current_user):
     """
     query = (request.args.get("q") or "").strip()[:120]
     rows = list_catalogue("VERIFIED", query)
+
+    # With no search term the order was updated_at DESC -- which is to say, the
+    # order the review pipeline happened to touch them in. For a reader who has
+    # told us what they read, the shelf can open somewhere better: nearest
+    # first, by the same score the card uses. A SEARCH is left alone; someone
+    # typing "Gatsby" wants Gatsby, not something like it.
+    if not query:
+        counts, catalogue_size = catalogue_subject_counts()
+        history = [dict(r) for r in get_taste_profile_books(current_user["id"])]
+        nearest = taste_profile.closest_from_shelf(
+            history, [dict(r) for r in rows], limit=0, per_reason=None,
+            subject_counts=counts, catalogue_size=catalogue_size)
+        if nearest:
+            order = {item["book"]["id"]: position
+                     for position, item in enumerate(nearest)}
+            # Everything the score cannot rank keeps its existing place, after
+            # what it can. Nothing is dropped from the shelf.
+            rows = sorted(rows, key=lambda r: order.get(r["id"], len(order)))
+
     limit = 60
     return jsonify({
         "total": len(rows),
@@ -2560,6 +2579,39 @@ def for_you(current_user):
 
     return jsonify({"for_you": assessment, "starters": starters,
                     "targeted": targeted})
+
+
+@app.route("/api/closest", methods=["GET"])
+@token_required
+def closest_on_our_shelf(current_user):
+    """The nearest books on our own shelf to what this reader has read.
+
+    Exists for the moment identification refuses. "I do not know what this is"
+    is the honest answer and it leaves the reader holding nothing, which is a
+    poor place to end -- the profile that answers "is this for you?" can also
+    answer "then what here is close to what you like", and it is the same
+    arithmetic pointed backwards. See taste_profile.closest_from_shelf.
+
+    Deliberately NOT called recommendations, and deliberately not derived from
+    any other account: 10 users and 23 history rows cannot support that, and
+    pretending otherwise would be the one claim in this product that no
+    measurement backs.
+    """
+    counts, catalogue_size = catalogue_subject_counts()
+    history = [dict(r) for r in get_taste_profile_books(current_user["id"])]
+    picked = taste_profile.closest_from_shelf(
+        history, [dict(r) for r in list_catalogue("VERIFIED")],
+        subject_counts=counts, catalogue_size=catalogue_size)
+
+    books = []
+    for item in picked:
+        book = catalogue_for_reader(item["book"])
+        # The reason travels with the book. A suggestion the reader cannot
+        # check is exactly the kind of claim this product does not make.
+        book["reason"] = item["reason"]
+        book["because"] = item["because"]
+        books.append(book)
+    return jsonify({"books": books, "profile_books": len(history)})
 
 
 @app.route("/api/books/<int:book_id>/summary", methods=["GET"])

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "../../components/ui.jsx";
 import { StarterShelf } from "./StarterShelf.jsx";
+import { ClosestShelf } from "./ClosestShelf.jsx";
 import { authFetch, readJson } from "../../services/api.js";
 import { BookCover } from "../../components/ui.jsx";
 import { QuickOverview, ReadingTools, externalProvider, providerRecordUrl, sourceLabel, sourceTextFor } from "./BookOverview.jsx";
@@ -119,7 +120,7 @@ function LiveSignals({ live, exactLength }) {
 }
 
 
-function RefusalPanel({ result, onRetake, onBarcode, onTypeTitle }) {
+function RefusalPanel({ result, onRetake, onBarcode, onTypeTitle, token }) {
   const guidance = refusalGuidance(result.failure_reason,
                                    (result.ocr || {}).status);
   const detected = (result.ocr || {}).extracted_title || "";
@@ -153,6 +154,12 @@ function RefusalPanel({ result, onRetake, onBarcode, onTypeTitle }) {
           Type the title
         </button>
       </div>
+
+      {/* Refusing is the product working, but it still ends with the reader
+          holding nothing. This is the one thing that can still be said
+          truthfully when the book in their hand is unknown -- and it renders
+          nothing at all when there is nothing honest to show. */}
+      <ClosestShelf token={token} />
     </div>
   );
 }
@@ -215,6 +222,7 @@ function CandidateSelection({ result, token, onResolved, onReset }) {
   // while. The busiest screen now offers them too.
   if (declined) {
     return <RefusalPanel result={{ ...result, failure_reason: "user_rejected_candidate" }}
+                         token={token}
                          onRetake={() => onReset()}
                          onBarcode={() => onReset("barcode")}
                          onTypeTitle={() => onReset("type")} />;
@@ -465,6 +473,10 @@ function ForYou({ forYou, token, title, categories, bookId, onAnswered }) {
             None of the {bookCount} books in your library share these subjects.
           </p>
           {tags}
+          {/* Told "not for you" and left there. The shelf turns a verdict into
+              a next step, and it is the same evidence read backwards. */}
+          <ClosestShelf token={token}
+                        heading="Closer to what you have read, from our shelf" />
         </>
       );
     }
@@ -571,6 +583,7 @@ function SingleCandidateCard({ result, token, scanImage, onResolved, onReset }) 
   // chooser would be a dead end -- send them to the things they can actually do.
   if (declined) {
     return <RefusalPanel result={{ ...result, failure_reason: "user_rejected_candidate" }}
+                         token={token}
                          onRetake={() => onReset()}
                          onBarcode={() => onReset("barcode")}
                          onTypeTitle={() => onReset("type")} />;
@@ -696,7 +709,7 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
 
   // Refused, and the reader has not asked to type a title yet.
   if (!book && !correcting && !typingTitle) {
-    return <RefusalPanel result={result}
+    return <RefusalPanel result={result} token={token}
                          onRetake={onRetry || onReset}
                          onBarcode={() => onReset("barcode")}
                          onTypeTitle={() => setTypingTitle(true)} />;
