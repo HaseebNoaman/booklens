@@ -1,0 +1,2252 @@
+[
+  {
+    "id": 250,
+    "title": "The Tale of Despereaux",
+    "isbn_13": "9781400099139",
+    "olid": "OL34914000M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL34914000M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 249,
+    "title": "The Lost World",
+    "isbn_13": "9788811602286",
+    "olid": "OL60466130M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60466130M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 248,
+    "title": "To the Lighthouse",
+    "isbn_13": "9781973851257",
+    "olid": "OL58341406M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL58341406M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 247,
+    "title": "The Horse and His Boy",
+    "isbn_13": "9780062246394",
+    "olid": "OL58686161M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 246,
+    "title": "The Wise Man's Fear",
+    "isbn_13": "9788580410327",
+    "olid": "OL48134158M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788580410327-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 245,
+    "title": "The Vampire Lestat",
+    "isbn_13": "9788466642613",
+    "olid": "OL9544951M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL9544951M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 244,
+    "title": "One Flew Over the Cuckoo's Nest",
+    "isbn_13": "9780453008150",
+    "olid": "OL62085247M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62085247M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 243,
+    "title": "The Price of Salt",
+    "isbn_13": "9781626543102",
+    "olid": "OL33498530M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781626543102-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 242,
+    "title": "Othello",
+    "isbn_13": "9789626347065",
+    "olid": "OL61499282M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61499282M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 241,
+    "title": "Darkly Dreaming Dexter",
+    "isbn_13": "9785551465881",
+    "olid": "OL43698342M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 240,
+    "title": "Cosmos",
+    "isbn_13": "9789752107830",
+    "olid": "OL62374702M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62374702M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 239,
+    "title": "The Drawing of the Three",
+    "isbn_13": "9781471232299",
+    "olid": "OL9163466M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL9163466M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 238,
+    "title": "Lonesome Dove",
+    "isbn_13": "9780684857527",
+    "olid": "OL12086552M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780684857527-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 237,
+    "title": "Walden",
+    "isbn_13": "9781724673176",
+    "olid": "OL44271275M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 236,
+    "title": "The Sun Also Rises",
+    "isbn_13": "9798532977518",
+    "olid": "OL58442581M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 235,
+    "title": "Stardust",
+    "isbn_13": "9781594970979",
+    "olid": "OL61365270M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61365270M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 234,
+    "title": "The Time Traveler's Wife",
+    "isbn_13": "9785699150472",
+    "olid": "OL28010674M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL28010674M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 233,
+    "title": "Gerald's Game",
+    "isbn_13": "9783453057036",
+    "olid": "OL47152187M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47152187M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 232,
+    "title": "We Have Always Lived in the Castle",
+    "isbn_13": "9780143039976",
+    "olid": "OL48590007M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL48590007M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 231,
+    "title": "White Fang",
+    "isbn_13": "9798515079307",
+    "olid": "OL55621477M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 230,
+    "title": "Cat's Cradle",
+    "isbn_13": "9783499124495",
+    "olid": "OL60568527M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 229,
+    "title": "Treasure",
+    "isbn_13": "9780606234689",
+    "olid": "OL47356064M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47356064M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 228,
+    "title": "The Joy Luck Club",
+    "isbn_13": "9788472238800",
+    "olid": "OL54206336M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788472238800-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 227,
+    "title": "Wide Sargasso Sea",
+    "isbn_13": "9780241281901",
+    "olid": "OL28375936M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL28375936M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 226,
+    "title": "Firestarter",
+    "isbn_13": "9788440220677",
+    "olid": "OL61745557M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61745557M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 225,
+    "title": "The New Girl",
+    "isbn_13": "9781439116050",
+    "olid": "OL32615914M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL32615914M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 224,
+    "title": "Half of a Yellow Sun",
+    "isbn_13": "9780007225347",
+    "olid": "OL53495859M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 223,
+    "title": "George's Marvelous Medicine",
+    "isbn_13": "9780573700323",
+    "olid": "OL51737882M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51737882M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 222,
+    "title": "Into the Wild",
+    "isbn_13": "9788571647879",
+    "olid": "OL53142069M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788571647879-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 221,
+    "title": "The Awakening",
+    "isbn_13": "9788466400763",
+    "olid": "OL61647958M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61647958M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 220,
+    "title": "A Farewell to Arms",
+    "isbn_13": "9798847960106",
+    "olid": "OL61462206M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61462206M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 219,
+    "title": "The Witching Hour",
+    "isbn_13": "9782221072486",
+    "olid": "OL28248503M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL28248503M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 218,
+    "title": "A Storm of Swords",
+    "isbn_13": "9781415902523",
+    "olid": "OL61375220M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61375220M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 217,
+    "title": "Kindred",
+    "isbn_13": "9780807006924",
+    "olid": "OL40478931M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780807006924-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 216,
+    "title": "Wolves of the Calla",
+    "isbn_13": "9780743533515",
+    "olid": "OL60415595M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60415595M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 215,
+    "title": "Eldest",
+    "isbn_13": "9780552216647",
+    "olid": "OL41394029M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 214,
+    "title": "The Fountainhead",
+    "isbn_13": "9780451118103",
+    "olid": "OL35695583M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35695583M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 213,
+    "title": "A Feast for Crows",
+    "isbn_13": "9780002247436",
+    "olid": "OL60616963M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60616963M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 212,
+    "title": "Mrs Dalloway",
+    "isbn_13": "9798703477670",
+    "olid": "OL26005810M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL26005810M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 211,
+    "title": "Christine",
+    "isbn_13": "9780812407082",
+    "olid": "OL60775649M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60775649M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 210,
+    "title": "The Man in the High Castle",
+    "isbn_13": "9782290302484",
+    "olid": "OL62232901M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9782290302484-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 209,
+    "title": "Uglies",
+    "isbn_13": "9780689865381",
+    "olid": "OL58313142M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL58313142M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 208,
+    "title": "Demian",
+    "isbn_13": "9781306425902",
+    "olid": "OL59218662M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 207,
+    "title": "The Age of Innocence",
+    "isbn_13": "9798529767566",
+    "olid": "OL58545784M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 206,
+    "title": "My Side of the Mountain",
+    "isbn_13": "9780333345092",
+    "olid": "OL49653934M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 205,
+    "title": "The Screwtape Letters",
+    "isbn_13": "9781557483157",
+    "olid": "OL30069364M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781557483157-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 204,
+    "title": "Deception Point",
+    "isbn_13": "9780743539470",
+    "olid": "OL59095204M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL59095204M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 203,
+    "title": "The Dead Zone",
+    "isbn_13": "9788484505693",
+    "olid": "OL43056469M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL43056469M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 202,
+    "title": "The Left Hand of Darkness",
+    "isbn_13": "9788419206671",
+    "olid": "OL12509193M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788419206671-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 201,
+    "title": "The Red Pyramid",
+    "isbn_13": "9781613836606",
+    "olid": "OL60434030M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60434030M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 200,
+    "title": "Red Dragon",
+    "isbn_13": "9788440630148",
+    "olid": "OL60416844M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60416844M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 199,
+    "title": "Hyperion",
+    "isbn_13": "9780553283686",
+    "olid": "OL61173945M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61173945M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 198,
+    "title": "The Graveyard Book",
+    "isbn_13": "9780062364463",
+    "olid": "OL57082365M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57082365M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 197,
+    "title": "Prince Caspian",
+    "isbn_13": "9789584224316",
+    "olid": "OL43566002M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL43566002M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 196,
+    "title": "The Clan of the Cave Bear",
+    "isbn_13": "9780340839898",
+    "olid": "OL27281985M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL27281985M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 195,
+    "title": "Atonement",
+    "isbn_13": "9780099555551",
+    "olid": "OL60609285M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60609285M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 194,
+    "title": "Purple Hibiscus",
+    "isbn_13": "9786050961010",
+    "olid": "OL61428011M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61428011M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 193,
+    "title": "Watership Down",
+    "isbn_13": "9780812416916",
+    "olid": "OL58633726M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL58633726M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 192,
+    "title": "The Wind in the Willows",
+    "isbn_13": "9781847496386",
+    "olid": "OL50418961M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 191,
+    "title": "The 33 Strategies of War",
+    "isbn_13": "9786075278162",
+    "olid": "OL39819219M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9786075278162-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 190,
+    "title": "Julius Caesar",
+    "isbn_13": "9781973147060",
+    "olid": "OL62009590M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 189,
+    "title": "Needful Things",
+    "isbn_13": "9782226059475",
+    "olid": "OL60561812M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60561812M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 188,
+    "title": "The Exorcist",
+    "isbn_13": "9788498721980",
+    "olid": "OL57624515M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57624515M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 187,
+    "title": "Giovanni's Room",
+    "isbn_13": "9788535931327",
+    "olid": "OL36681450M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL36681450M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 186,
+    "title": "The Autobiography of Benjamin Franklin",
+    "isbn_13": "9798655573161",
+    "olid": "OL43458114M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 185,
+    "title": "World War Z",
+    "isbn_13": "9780307346605",
+    "olid": "OL50558771M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780307346605-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 184,
+    "title": "Redeeming Love",
+    "isbn_13": "9781782640691",
+    "olid": "OL39576746M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 183,
+    "title": "The Satanic Verses",
+    "isbn_13": "9781299036406",
+    "olid": "OL60836849M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 182,
+    "title": "Carmilla",
+    "isbn_13": "9781691385249",
+    "olid": "OL56501905M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 181,
+    "title": "For Whom the Bell Tolls",
+    "isbn_13": "9787500129851",
+    "olid": "OL40335810M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9787500129851-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 180,
+    "title": "The Hound of the Baskervilles",
+    "isbn_13": "9798471239531",
+    "olid": "OL61714275M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61714275M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 179,
+    "title": "Paradise Lost",
+    "isbn_13": "9780786148042",
+    "olid": "OL61158732M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61158732M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 178,
+    "title": "Peter Pan",
+    "isbn_13": "9781484102824",
+    "olid": "OL58982642M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781484102824-M.jpg?default=false",
+    "bytes": 4098
+  },
+  {
+    "id": 177,
+    "title": "Paper Towns",
+    "isbn_13": "9788362478910",
+    "olid": "OL62408388M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62408388M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 176,
+    "title": "The Crucible",
+    "isbn_13": "9780141182551",
+    "olid": "OL43089663M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL43089663M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 175,
+    "title": "The Wealth of Nations",
+    "isbn_13": "9781432625467",
+    "olid": "OL51158350M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781432625467-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 174,
+    "title": "The Night Circus",
+    "isbn_13": "9780307947857",
+    "olid": "OL53484670M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL53484670M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 173,
+    "title": "A Study in Scarlet",
+    "isbn_13": "9781513265933",
+    "olid": "OL61027614M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61027614M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 172,
+    "title": "Sula",
+    "isbn_13": "9780553138450",
+    "olid": "OL60957141M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 171,
+    "title": "The Notebook",
+    "isbn_13": "9781568652429",
+    "olid": "OL61242874M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61242874M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 170,
+    "title": "Women in Love",
+    "isbn_13": "9780451525918",
+    "olid": "OL58634945M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780451525918-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 169,
+    "title": "The Adventures of Captain Underpants",
+    "isbn_13": "9788466149693",
+    "olid": "OL61118494M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61118494M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 168,
+    "title": "Cell",
+    "isbn_13": "9782226172181",
+    "olid": "OL47250530M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47250530M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 167,
+    "title": "Under the Dome",
+    "isbn_13": "9781442345508",
+    "olid": "OL60416101M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60416101M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 166,
+    "title": "The Bluest Eye",
+    "isbn_13": "9781583425381",
+    "olid": "OL61375209M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61375209M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 165,
+    "title": "Miss Peregrine's Home for Peculiar Children",
+    "isbn_13": "9788427901650",
+    "olid": "OL35699016M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35699016M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 164,
+    "title": "On the Road",
+    "isbn_13": "9780140274158",
+    "olid": "OL58723189M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL58723189M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 163,
+    "title": "1st to Die",
+    "isbn_13": "9780446610032",
+    "olid": "OL55000502M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780446610032-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 162,
+    "title": "Gone with the Wind",
+    "isbn_13": "9783548256252",
+    "olid": "OL61416055M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61416055M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 161,
+    "title": "American Gods",
+    "isbn_13": "9786053756637",
+    "olid": "OL57449857M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57449857M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 160,
+    "title": "Go Ask Alice",
+    "isbn_13": "9788427002012",
+    "olid": "OL8890530M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL8890530M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 159,
+    "title": "Goodnight Moon",
+    "isbn_13": "9780616015988",
+    "olid": "OL9766637M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 158,
+    "title": "Fight Club",
+    "isbn_13": "9780099552154",
+    "olid": "OL47338036M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47338036M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 157,
+    "title": "The Pillars of the Earth",
+    "isbn_13": "9780451232816",
+    "olid": "OL62342091M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62342091M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 156,
+    "title": "The Haunting of Hill House",
+    "isbn_13": "9798620428533",
+    "olid": "OL62381786M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62381786M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 155,
+    "title": "The Long Walk",
+    "isbn_13": "9788401474699",
+    "olid": "OL61745538M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61745538M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 154,
+    "title": "Cujo",
+    "isbn_13": "9780708981238",
+    "olid": "OL60561783M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60561783M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 153,
+    "title": "The Silence of the Lambs",
+    "isbn_13": "9782724253269",
+    "olid": "OL53513124M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL53513124M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 152,
+    "title": "The Mysterious Affair at Styles",
+    "isbn_13": "9798788898469",
+    "olid": "OL53694014M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 151,
+    "title": "Death on the Nile",
+    "isbn_13": "9789504916123",
+    "olid": "OL61027652M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61027652M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 150,
+    "title": "The Artist's Way",
+    "isbn_13": "9781585421473",
+    "olid": "OL47403227M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47403227M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 149,
+    "title": "The Phantom Tollbooth",
+    "isbn_13": "9780745109626",
+    "olid": "OL50264744M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 148,
+    "title": "The Lost Symbol",
+    "isbn_13": "9780307736925",
+    "olid": "OL51345186M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51345186M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 147,
+    "title": "Are You There, God? It's Me, Margaret",
+    "isbn_13": "9781447223955",
+    "olid": "OL61194637M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61194637M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 146,
+    "title": "Parable of the Sower",
+    "isbn_13": "9788592795399",
+    "olid": "OL51578284M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51578284M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 145,
+    "title": "Gulliver's Travels",
+    "isbn_13": "9798472617970",
+    "olid": "OL35665010M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35665010M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 144,
+    "title": "Contact",
+    "isbn_13": "9788401321788",
+    "olid": "OL50013524M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL50013524M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 143,
+    "title": "The Colour of Magic",
+    "isbn_13": "9780385608640",
+    "olid": "OL53229561M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780385608640-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 142,
+    "title": "A Clash of Kings",
+    "isbn_13": "9780008115418",
+    "olid": "OL60598948M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60598948M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 141,
+    "title": "The Call of the Wild",
+    "isbn_13": "9781687631497",
+    "olid": "OL61449628M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61449628M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 140,
+    "title": "Never Let Me Go",
+    "isbn_13": "9788806231774",
+    "olid": "OL62330757M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62330757M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 139,
+    "title": "The Magician's Nephew",
+    "isbn_13": "9780062246684",
+    "olid": "OL51492786M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51492786M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 138,
+    "title": "Esperanza Rising",
+    "isbn_13": "9780807217696",
+    "olid": "OL33027252M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL33027252M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 137,
+    "title": "A Midsummer Night's Dream",
+    "isbn_13": "9781708405205",
+    "olid": "OL60461127M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60461127M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 136,
+    "title": "Push",
+    "isbn_13": "9781784877361",
+    "olid": "OL45635882M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781784877361-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 135,
+    "title": "Les Misérables",
+    "isbn_13": "9780141392608",
+    "olid": "OL27299181M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL27299181M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 134,
+    "title": "The Coldest Winter Ever",
+    "isbn_13": "9780613213639",
+    "olid": "OL12679449M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL12679449M-M.jpg?default=false",
+    "bytes": 5055
+  },
+  {
+    "id": 133,
+    "title": "A Christmas Carol",
+    "isbn_13": "9781974075980",
+    "olid": "OL62372164M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 132,
+    "title": "The Murder of Roger Ackroyd",
+    "isbn_13": "9788492966660",
+    "olid": "OL56503571M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788492966660-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 131,
+    "title": "Rebecca",
+    "isbn_13": "9780575052734",
+    "olid": "OL60338585M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 130,
+    "title": "Neuromancer",
+    "isbn_13": "9780736638364",
+    "olid": "OL60610680M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780736638364-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 129,
+    "title": "The Help",
+    "isbn_13": "9780241972229",
+    "olid": "OL42911311M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL42911311M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 128,
+    "title": "Insomnia",
+    "isbn_13": "9781797107325",
+    "olid": "OL61745651M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61745651M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 127,
+    "title": "A Wizard of Earthsea",
+    "isbn_13": "9788376485652",
+    "olid": "OL62170595M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62170595M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 126,
+    "title": "Eclipse",
+    "isbn_13": "9789022559901",
+    "olid": "OL42006686M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9789022559901-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 125,
+    "title": "House of Leaves",
+    "isbn_13": "9781407011936",
+    "olid": "OL35320076M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35320076M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 124,
+    "title": "The Gruffalo",
+    "isbn_13": "9781509851867",
+    "olid": "OL47862919M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781509851867-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 123,
+    "title": "Guns, Germs, and Steel",
+    "isbn_13": "9780307932426",
+    "olid": "OL61057994M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780307932426-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 122,
+    "title": "Where the Red Fern Grows",
+    "isbn_13": "9780786273126",
+    "olid": "OL60408282M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780786273126-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 121,
+    "title": "The Witches",
+    "isbn_13": "9788372982940",
+    "olid": "OL40356892M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788372982940-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 120,
+    "title": "Where The Wild Things Are",
+    "isbn_13": "9780006640868",
+    "olid": "OL53339132M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 119,
+    "title": "Life of Pi",
+    "isbn_13": "9782892613674",
+    "olid": "OL61898482M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61898482M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 118,
+    "title": "The Way of Kings",
+    "isbn_13": "9783453317109",
+    "olid": "OL61245450M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61245450M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 117,
+    "title": "The Silmarillion",
+    "isbn_13": "9780007322565",
+    "olid": "OL60833860M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 116,
+    "title": "Northern Lights",
+    "isbn_13": "9781407106373",
+    "olid": "OL61327537M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781407106373-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 115,
+    "title": "City of Bones",
+    "isbn_13": "9781742337968",
+    "olid": "OL51593180M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781742337968-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 114,
+    "title": "Sense and Sensibility",
+    "isbn_13": "9781542989473",
+    "olid": "OL61147591M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 113,
+    "title": "A Clockwork Orange",
+    "isbn_13": "9781624902949",
+    "olid": "OL47508347M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47508347M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 112,
+    "title": "New Moon",
+    "isbn_13": "9788420471136",
+    "olid": "OL47007177M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47007177M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 111,
+    "title": "Smile",
+    "isbn_13": "9780545132060",
+    "olid": "OL30624459M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780545132060-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 110,
+    "title": "The Road",
+    "isbn_13": "9788499300023",
+    "olid": "OL62234436M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62234436M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 109,
+    "title": "Because of Winn-Dixie",
+    "isbn_13": "9789575706593",
+    "olid": "OL25444873M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL25444873M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 108,
+    "title": "Treasure Island",
+    "isbn_13": "9781306335416",
+    "olid": "OL40895089M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 107,
+    "title": "Thirteen Reasons Why",
+    "isbn_13": "9789655526790",
+    "olid": "OL61126554M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61126554M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 106,
+    "title": "Outlander",
+    "isbn_13": "9782258061828",
+    "olid": "OL47319915M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47319915M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 105,
+    "title": "The Mark of Athena",
+    "isbn_13": "9783646922837",
+    "olid": "OL7563238M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL7563238M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 104,
+    "title": "Heart of Darkness",
+    "isbn_13": "9781412160124",
+    "olid": "OL62086492M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62086492M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 103,
+    "title": "East of Eden",
+    "isbn_13": "9781436241434",
+    "olid": "OL60190774M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60190774M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 102,
+    "title": "The A.B.C. Murders",
+    "isbn_13": "9781611731613",
+    "olid": "OL50213108M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL50213108M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 101,
+    "title": "The Grapes of Wrath",
+    "isbn_13": "9798588563581",
+    "olid": "OL56892192M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 100,
+    "title": "Catch-22",
+    "isbn_13": "9780099552185",
+    "olid": "OL43711752M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 99,
+    "title": "Howl's Moving Castle",
+    "isbn_13": "9782266138826",
+    "olid": "OL57505296M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9782266138826-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 98,
+    "title": "Siddhartha",
+    "isbn_13": "9780330234818",
+    "olid": "OL61409480M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61409480M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 97,
+    "title": "Emma",
+    "isbn_13": "9781719882538",
+    "olid": "OL61352545M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61352545M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 96,
+    "title": "Good Omens",
+    "isbn_13": "9783807702476",
+    "olid": "OL57726548M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57726548M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 95,
+    "title": "Speak",
+    "isbn_13": "9780374391645",
+    "olid": "OL35648734M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35648734M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 94,
+    "title": "I Know Why the Caged Bird Sings",
+    "isbn_13": "9780394558127",
+    "olid": "OL54566131M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 93,
+    "title": "Flowers in the Attic",
+    "isbn_13": "9780007833269",
+    "olid": "OL51481730M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51481730M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 92,
+    "title": "The Immortals of Meluha",
+    "isbn_13": "9789385152696",
+    "olid": "OL28315718M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 91,
+    "title": "The God of Small Things",
+    "isbn_13": "9780007258024",
+    "olid": "OL47364549M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47364549M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 90,
+    "title": "The War of the Worlds",
+    "isbn_13": "9782070500178",
+    "olid": "OL59157015M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL59157015M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 89,
+    "title": "Macbeth",
+    "isbn_13": "9798799528836",
+    "olid": "OL62372162M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 88,
+    "title": "The Two Towers",
+    "isbn_13": "9789172633421",
+    "olid": "OL60344695M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 87,
+    "title": "The 4-Hour Workweek",
+    "isbn_13": "9780307394392",
+    "olid": "OL62223183M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 86,
+    "title": "The Last Olympian",
+    "isbn_13": "9786555606515",
+    "olid": "OL47552534M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47552534M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 85,
+    "title": "Anne of Green Gables",
+    "isbn_13": "9798596727654",
+    "olid": "OL40981101M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 84,
+    "title": "Fantastic Mr. Fox",
+    "isbn_13": "9780141376967",
+    "olid": "OL44247403M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL44247403M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 83,
+    "title": "The Secret Garden",
+    "isbn_13": "9798764553290",
+    "olid": "OL39830393M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 82,
+    "title": "The Stand",
+    "isbn_13": "9781529356540",
+    "olid": "OL61439825M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61439825M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 81,
+    "title": "Mockingjay",
+    "isbn_13": "9788184776218",
+    "olid": "OL57728017M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57728017M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 80,
+    "title": "The Battle of the Labyrinth",
+    "isbn_13": "9781484444269",
+    "olid": "OL47552543M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47552543M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 79,
+    "title": "James and the Giant Peach",
+    "isbn_13": "9780141371429",
+    "olid": "OL62189777M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62189777M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 78,
+    "title": "The Son of Neptune",
+    "isbn_13": "9781368051446",
+    "olid": "OL53332561M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781368051446-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 77,
+    "title": "A Wrinkle in Time",
+    "isbn_13": "9780241618035",
+    "olid": "OL53351620M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 76,
+    "title": "The Wonderful Wizard of Oz",
+    "isbn_13": "9781709458569",
+    "olid": "OL48350308M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 75,
+    "title": "Eragon",
+    "isbn_13": "9788499182964",
+    "olid": "OL30538628M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL30538628M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 74,
+    "title": "The Boy in the Striped Pyjamas",
+    "isbn_13": "9780385610551",
+    "olid": "OL60632373M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60632373M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 73,
+    "title": "The BFG",
+    "isbn_13": "9780060852733",
+    "olid": "OL49650236M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780060852733-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 72,
+    "title": "The Name of the Wind",
+    "isbn_13": "9781423389286",
+    "olid": "OL37932805M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781423389286-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 71,
+    "title": "The Very Hungry Caterpillar",
+    "isbn_13": "9788416126835",
+    "olid": "OL56971309M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788416126835-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 70,
+    "title": "Beloved",
+    "isbn_13": "9781400033416",
+    "olid": "OL58886319M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL58886319M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 69,
+    "title": "Jurassic Park",
+    "isbn_13": "9788401325212",
+    "olid": "OL60466116M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60466116M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 68,
+    "title": "’Salem's Lot",
+    "isbn_13": "9789993089209",
+    "olid": "OL62286295M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62286295M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 67,
+    "title": "The Curious Incident of the Dog in the Night-time",
+    "isbn_13": "9780606302395",
+    "olid": "OL57160430M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780606302395-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 66,
+    "title": "The Green Mile",
+    "isbn_13": "9789024534067",
+    "olid": "OL53484077M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL53484077M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 65,
+    "title": "Ender's Game",
+    "isbn_13": "9780784839065",
+    "olid": "OL57622046M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57622046M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 64,
+    "title": "The Lion, the Witch and the Wardrobe",
+    "isbn_13": "9788804436775",
+    "olid": "OL51492676M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51492676M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 63,
+    "title": "Murder on the Orient Express",
+    "isbn_13": "9781978383401",
+    "olid": "OL60758577M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL60758577M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 62,
+    "title": "The Time Machine",
+    "isbn_13": "9781726017640",
+    "olid": "OL35664452M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 61,
+    "title": "The Titan's Curse",
+    "isbn_13": "9781480614949",
+    "olid": "OL47552538M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47552538M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 60,
+    "title": "Things Fall Apart",
+    "isbn_13": "9782708701915",
+    "olid": "OL61521550M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61521550M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 59,
+    "title": "Foundation",
+    "isbn_13": "9780553451146",
+    "olid": "OL61647182M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61647182M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 58,
+    "title": "The Secret History",
+    "isbn_13": "9782259025935",
+    "olid": "OL57346246M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9782259025935-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 57,
+    "title": "American Psycho",
+    "isbn_13": "9780330372480",
+    "olid": "OL51326614M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780330372480-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 56,
+    "title": "Hamlet",
+    "isbn_13": "9781419185519",
+    "olid": "OL56046284M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781419185519-M.jpg?default=false",
+    "bytes": 5204
+  },
+  {
+    "id": 55,
+    "title": "The Invisible Man",
+    "isbn_13": "9798589452563",
+    "olid": "OL55801070M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL55801070M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 54,
+    "title": "The Maze Runner",
+    "isbn_13": "9780553511536",
+    "olid": "OL59675012M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL59675012M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 53,
+    "title": "The Sea of Monsters",
+    "isbn_13": "9783551310590",
+    "olid": "OL25438718M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9783551310590-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 52,
+    "title": "Hatchet",
+    "isbn_13": "9781581180558",
+    "olid": "OL22965003M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781581180558-M.jpg?default=false",
+    "bytes": 4133
+  },
+  {
+    "id": 51,
+    "title": "The Picture of Dorian Gray",
+    "isbn_13": "9786053243113",
+    "olid": "OL61374738M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61374738M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 50,
+    "title": "The Outsiders",
+    "isbn_13": "9780606309912",
+    "olid": "OL43848772M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 49,
+    "title": "Alice's Adventures in Wonderland",
+    "isbn_13": "9798846242654",
+    "olid": "OL61996158M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61996158M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 48,
+    "title": "Of Mice and Men",
+    "isbn_13": "9783150092538",
+    "olid": "OL61317727M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 47,
+    "title": "And Then There Were None",
+    "isbn_13": "9780671801519",
+    "olid": "OL62085778M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62085778M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 46,
+    "title": "The Lost Hero",
+    "isbn_13": "9780545477963",
+    "olid": "OL27629307M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL27629307M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 45,
+    "title": "The Old Man and the Sea",
+    "isbn_13": "9780099273967",
+    "olid": "OL61711396M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61711396M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 44,
+    "title": "A Thousand Splendid Suns",
+    "isbn_13": "9781594483851",
+    "olid": "OL37753690M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781594483851-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 43,
+    "title": "The Fellowship of the Ring",
+    "isbn_13": "9780345248275",
+    "olid": "OL62417661M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62417661M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 42,
+    "title": "The Hitchhiker's Guide to the Galaxy",
+    "isbn_13": "9781400052929",
+    "olid": "OL47362323M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47362323M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 41,
+    "title": "Pet Sematary",
+    "isbn_13": "9782290307762",
+    "olid": "OL61225810M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61225810M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 40,
+    "title": "The Lord of the Rings",
+    "isbn_13": "9780395595114",
+    "olid": "OL58959679M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL58959679M-M.jpg?default=false",
+    "bytes": 7235
+  },
+  {
+    "id": 39,
+    "title": "Dracula",
+    "isbn_13": "9788502132535",
+    "olid": "OL56646936M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788502132535-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 38,
+    "title": "The Perks of Being a Wallflower",
+    "isbn_13": "9785389061606",
+    "olid": "OL61173914M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9785389061606-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 37,
+    "title": "The Kite Runner",
+    "isbn_13": "9781526679673",
+    "olid": "OL61140725M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61140725M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 36,
+    "title": "Carrie",
+    "isbn_13": "9789685957007",
+    "olid": "OL62084230M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62084230M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 35,
+    "title": "The Giver",
+    "isbn_13": "9780786271535",
+    "olid": "OL57945037M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57945037M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 34,
+    "title": "Little Women",
+    "isbn_13": "9781727746082",
+    "olid": "OL47231367M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47231367M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 33,
+    "title": "Charlie and the Chocolate Factory",
+    "isbn_13": "9780140279207",
+    "olid": "OL61212885M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61212885M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 32,
+    "title": "Coraline",
+    "isbn_13": "9788374801171",
+    "olid": "OL58660045M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788374801171-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 31,
+    "title": "Romeo and Juliet",
+    "isbn_13": "9780874130386",
+    "olid": "OL54611847M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9780874130386-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 30,
+    "title": "Matilda",
+    "isbn_13": "9780670824397",
+    "olid": "OL47337290M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47337290M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 29,
+    "title": "The Handmaid's Tale",
+    "isbn_13": "9789643114190",
+    "olid": "OL62245420M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62245420M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 28,
+    "title": "Lord of the Flies",
+    "isbn_13": "9783883891651",
+    "olid": "OL61027672M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61027672M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 27,
+    "title": "The Da Vinci Code",
+    "isbn_13": "9788497870801",
+    "olid": "OL61268598M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9788497870801-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 26,
+    "title": "Brave New World",
+    "isbn_13": "9789681500566",
+    "olid": "OL59758117M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL59758117M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 25,
+    "title": "The Eye of the World",
+    "isbn_13": "9783860475348",
+    "olid": "OL59253777M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL59253777M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 24,
+    "title": "The Shining",
+    "isbn_13": "9788466357319",
+    "olid": "OL61252496M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61252496M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 23,
+    "title": "Harry Potter and the Half-Blood Prince",
+    "isbn_13": "9780307283658",
+    "olid": "OL61362457M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61362457M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 22,
+    "title": "Charlotte's Web",
+    "isbn_13": "9780333294888",
+    "olid": "OL47665349M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL47665349M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 21,
+    "title": "Fahrenheit 451",
+    "isbn_13": "9788445008546",
+    "olid": "OL62233363M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62233363M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 20,
+    "title": "The Fault in Our Stars",
+    "isbn_13": "9786053430933",
+    "olid": "OL62084450M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62084450M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 19,
+    "title": "Harry Potter and the Order of the Phoenix",
+    "isbn_13": "9789544467616",
+    "olid": "OL61362448M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61362448M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 18,
+    "title": "Harry Potter and the Goblet of Fire",
+    "isbn_13": "9788532512529",
+    "olid": "OL61202088M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61202088M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 17,
+    "title": "The Hobbit",
+    "isbn_13": "9782253183822",
+    "olid": "OL62190138M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62190138M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 16,
+    "title": "Animal Farm",
+    "isbn_13": "9780914834533",
+    "olid": "OL62253548M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62253548M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 15,
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "isbn_13": "9781338179934",
+    "olid": "OL61362446M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61362446M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 14,
+    "title": "The Art of Seduction",
+    "isbn_13": "9780670891924",
+    "olid": "OL26204896M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL26204896M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 13,
+    "title": "Harry Potter and the Deathly Hallows",
+    "isbn_13": "9785353029076",
+    "olid": "OL51155207M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL51155207M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 12,
+    "title": "To Kill a Mockingbird",
+    "isbn_13": "9789999589604",
+    "olid": "OL61995434M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61995434M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 11,
+    "title": "Twilight",
+    "isbn_13": "9781905654406",
+    "olid": "OL51062926M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781905654406-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 10,
+    "title": "Harry Potter and the Chamber of Secrets",
+    "isbn_13": "9781408812785",
+    "olid": "OL61362442M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61362442M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 9,
+    "title": "The Lightning Thief",
+    "isbn_13": "9786068044422",
+    "olid": "OL61044580M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9786068044422-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 8,
+    "title": "The Hunger Games",
+    "isbn_13": "9781481903219",
+    "olid": "OL57727932M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL57727932M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 7,
+    "title": "Pride and Prejudice",
+    "isbn_13": "9781549784255",
+    "olid": "OL49198652M",
+    "route": "none",
+    "url": "",
+    "bytes": 0
+  },
+  {
+    "id": 6,
+    "title": "Diary of a Wimpy Kid",
+    "isbn_13": "9780143774266",
+    "olid": "OL24371206M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL24371206M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 5,
+    "title": "Nineteen Eighty-Four",
+    "isbn_13": "9781839642401",
+    "olid": "OL55257669M",
+    "route": "isbn",
+    "url": "https://covers.openlibrary.org/b/isbn/9781839642401-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 4,
+    "title": "It",
+    "isbn_13": "9780451149510",
+    "olid": "OL35596476M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35596476M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 3,
+    "title": "A Game of Thrones",
+    "isbn_13": "9788418196508",
+    "olid": "OL62287051M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL62287051M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 2,
+    "title": "Harry Potter and the Philosopher's Stone",
+    "isbn_13": "9788869183157",
+    "olid": "OL61716306M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL61716306M-M.jpg?default=false",
+    "bytes": 8192
+  },
+  {
+    "id": 1,
+    "title": "The 48 Laws of Power",
+    "isbn_13": "9780670881468",
+    "olid": "OL59050604M",
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL59050604M-M.jpg?default=false",
+    "bytes": 8192
+  }
+]

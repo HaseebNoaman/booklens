@@ -120,8 +120,15 @@ def titles_agree(asked, returned, author=""):
     # This cannot reopen the Dune / Dune Messiah hole, because "Messiah" is not
     # the author's name. Only the author's own tokens are removed, and only
     # from the side that added them.
+    # Only the author words Open Library ADDED, though -- not the ones the book
+    # is actually called. Stripping the author's name unconditionally rejected
+    # "The Autobiography of Benjamin Franklin" against ITSELF: the returned
+    # title lost both names and became "the autobiography of", which no longer
+    # resembled what we asked for. Any book with its author in the title lost
+    # its rating that way.
     author_tokens = set(normalise_title(author).split()) if author else set()
-    drop = _SUBTITLE_NOISE | author_tokens
+    added_by_provider = author_tokens - set(a.split())
+    drop = _SUBTITLE_NOISE | added_by_provider
     strip = lambda t, extra: " ".join(w for w in t.split() if w not in extra)
     return fuzz.token_sort_ratio(strip(a, _SUBTITLE_NOISE),
                                  strip(b, drop)) >= TITLE_AGREEMENT

@@ -2395,11 +2395,30 @@ def scan(current_user):
         prune_uploads(UPLOAD_FOLDER, keep=KEEP_UPLOADS)
 
 
+OL_COVER = "https://covers.openlibrary.org/b/%s/%s-M.jpg?default=false"
+
+
 def catalogue_cover(row):
-    """Same derivation verified_catalogue_candidates() uses, for browse rows."""
+    """The cover of the EDITION we stored, which is right 64% of the time."""
     olid = (row.get("open_library_edition_id") or "").strip()
-    return ("https://covers.openlibrary.org/b/olid/%s-M.jpg?default=false" % olid
-            if olid else "")
+    return OL_COVER % ("olid", olid) if olid else ""
+
+
+def catalogue_cover_fallback(row):
+    """The same book asked for by ISBN instead.
+
+    Audited over all 250 verified books: the edition cover 404s for 90 of them,
+    and 48 of those 90 have a perfectly good cover filed under the ISBN --
+    The Da Vinci Code among them. So a third of Browse and a third of the
+    starter shelf were showing "Cover unavailable" for books whose cover we
+    were simply asking for the wrong way. 64% -> 83% for one extra URL.
+
+    It goes to the client as a fallback rather than being resolved here because
+    BookCover already walks src -> fallback -> placeholder, and resolving it
+    server-side would mean an HTTP request per row while rendering a grid.
+    """
+    isbn = (row.get("isbn_13") or row.get("isbn_10") or "").strip()
+    return OL_COVER % ("isbn", isbn) if isbn else ""
 
 
 def catalogue_for_reader(row):
@@ -2420,6 +2439,7 @@ def catalogue_for_reader(row):
         "categories": row.get("genres", ""),
         "isbn_13": row.get("isbn_13", ""),
         "thumbnail": catalogue_cover(row),
+        "thumbnail_fallback": catalogue_cover_fallback(row),
     }
 
 

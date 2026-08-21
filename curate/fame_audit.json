@@ -1,0 +1,2502 @@
+[
+  {
+    "id": 250,
+    "title": "The Tale of Despereaux",
+    "author": "Kate DiCamillo",
+    "on_shelves": 539,
+    "n_ratings": 52,
+    "rating": 4.08,
+    "matched_title": "The Tale of Despereaux",
+    "rejected": false
+  },
+  {
+    "id": 249,
+    "title": "The Lost World",
+    "author": "Michael Crichton",
+    "on_shelves": 646,
+    "n_ratings": 45,
+    "rating": 3.98,
+    "matched_title": "The Lost World",
+    "rejected": false
+  },
+  {
+    "id": 248,
+    "title": "To the Lighthouse",
+    "author": "Virginia Woolf",
+    "on_shelves": 548,
+    "n_ratings": 29,
+    "rating": 3.76,
+    "matched_title": "To the Lighthouse",
+    "rejected": false
+  },
+  {
+    "id": 247,
+    "title": "The Horse and His Boy",
+    "author": "C. S. Lewis",
+    "on_shelves": 545,
+    "n_ratings": 82,
+    "rating": 3.93,
+    "matched_title": "The Horse and His Boy",
+    "rejected": false
+  },
+  {
+    "id": 246,
+    "title": "The Wise Man's Fear",
+    "author": "Patrick Rothfuss",
+    "on_shelves": 547,
+    "n_ratings": 161,
+    "rating": 4.36,
+    "matched_title": "The Wise Man's Fear",
+    "rejected": false
+  },
+  {
+    "id": 245,
+    "title": "The Vampire Lestat",
+    "author": "Anne Rice",
+    "on_shelves": 550,
+    "n_ratings": 48,
+    "rating": 4.29,
+    "matched_title": "The Vampire Lestat",
+    "rejected": false
+  },
+  {
+    "id": 244,
+    "title": "One Flew Over the Cuckoo's Nest",
+    "author": "Ken Kesey",
+    "on_shelves": 551,
+    "n_ratings": 29,
+    "rating": 4.14,
+    "matched_title": "One Flew Over the Cuckoo's Nest",
+    "rejected": false
+  },
+  {
+    "id": 243,
+    "title": "The Price of Salt",
+    "author": "Patricia Highsmith",
+    "on_shelves": 551,
+    "n_ratings": 27,
+    "rating": 4.56,
+    "matched_title": "The Price of Salt",
+    "rejected": false
+  },
+  {
+    "id": 242,
+    "title": "Othello",
+    "author": "William Shakespeare",
+    "on_shelves": 559,
+    "n_ratings": 42,
+    "rating": 3.81,
+    "matched_title": "Othello",
+    "rejected": false
+  },
+  {
+    "id": 241,
+    "title": "Darkly Dreaming Dexter",
+    "author": "Jeff Lindsay",
+    "on_shelves": 556,
+    "n_ratings": 15,
+    "rating": 4.47,
+    "matched_title": "Darkly Dreaming Dexter",
+    "rejected": false
+  },
+  {
+    "id": 240,
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "on_shelves": 578,
+    "n_ratings": 24,
+    "rating": 4.58,
+    "matched_title": "Cosmos",
+    "rejected": false
+  },
+  {
+    "id": 239,
+    "title": "The Drawing of the Three",
+    "author": "Stephen King",
+    "on_shelves": 572,
+    "n_ratings": 105,
+    "rating": 4.18,
+    "matched_title": "The Drawing of the Three",
+    "rejected": false
+  },
+  {
+    "id": 238,
+    "title": "Lonesome Dove",
+    "author": "Larry McMurtry",
+    "on_shelves": 565,
+    "n_ratings": 51,
+    "rating": 4.33,
+    "matched_title": "Lonesome Dove",
+    "rejected": false
+  },
+  {
+    "id": 237,
+    "title": "Walden",
+    "author": "Henry David Thoreau",
+    "on_shelves": 572,
+    "n_ratings": 34,
+    "rating": 3.94,
+    "matched_title": "Walden",
+    "rejected": false
+  },
+  {
+    "id": 236,
+    "title": "The Sun Also Rises",
+    "author": "Ernest Hemingway",
+    "on_shelves": 576,
+    "n_ratings": 34,
+    "rating": 3.79,
+    "matched_title": "The Sun Also Rises",
+    "rejected": false
+  },
+  {
+    "id": 235,
+    "title": "Stardust",
+    "author": "Neil Gaiman",
+    "on_shelves": 576,
+    "n_ratings": 84,
+    "rating": 3.9,
+    "matched_title": "Stardust",
+    "rejected": false
+  },
+  {
+    "id": 234,
+    "title": "The Time Traveler's Wife",
+    "author": "Audrey Niffenegger",
+    "on_shelves": 583,
+    "n_ratings": 56,
+    "rating": 3.98,
+    "matched_title": "The Time Traveler's Wife",
+    "rejected": false
+  },
+  {
+    "id": 233,
+    "title": "Gerald's Game",
+    "author": "Stephen King",
+    "on_shelves": 581,
+    "n_ratings": 34,
+    "rating": 3.68,
+    "matched_title": "Gerald's Game",
+    "rejected": false
+  },
+  {
+    "id": 232,
+    "title": "We Have Always Lived in the Castle",
+    "author": "Shirley Jackson",
+    "on_shelves": 581,
+    "n_ratings": 56,
+    "rating": 4.32,
+    "matched_title": "We Have Always Lived in the Castle",
+    "rejected": false
+  },
+  {
+    "id": 231,
+    "title": "White Fang",
+    "author": "Jack London",
+    "on_shelves": 593,
+    "n_ratings": 67,
+    "rating": 4.01,
+    "matched_title": "White Fang",
+    "rejected": false
+  },
+  {
+    "id": 230,
+    "title": "Cat's Cradle",
+    "author": "Kurt Vonnegut",
+    "on_shelves": 585,
+    "n_ratings": 106,
+    "rating": 3.96,
+    "matched_title": "Cat's Cradle",
+    "rejected": false
+  },
+  {
+    "id": 229,
+    "title": "Treasure",
+    "author": "Clive Cussler",
+    "on_shelves": 589,
+    "n_ratings": 163,
+    "rating": 4.03,
+    "matched_title": "Treasure",
+    "rejected": false
+  },
+  {
+    "id": 228,
+    "title": "The Joy Luck Club",
+    "author": "Amy Tan",
+    "on_shelves": 589,
+    "n_ratings": 45,
+    "rating": 3.96,
+    "matched_title": "The Joy Luck Club",
+    "rejected": false
+  },
+  {
+    "id": 227,
+    "title": "Wide Sargasso Sea",
+    "author": "Jean Rhys",
+    "on_shelves": 589,
+    "n_ratings": 17,
+    "rating": 4.0,
+    "matched_title": "Wide Sargasso Sea",
+    "rejected": false
+  },
+  {
+    "id": 226,
+    "title": "Firestarter",
+    "author": "Stephen King",
+    "on_shelves": 590,
+    "n_ratings": 27,
+    "rating": 3.93,
+    "matched_title": "Firestarter",
+    "rejected": false
+  },
+  {
+    "id": 225,
+    "title": "The New Girl",
+    "author": "R. L. Stine",
+    "on_shelves": 608,
+    "n_ratings": 25,
+    "rating": 4.0,
+    "matched_title": "The New Girl",
+    "rejected": false
+  },
+  {
+    "id": 224,
+    "title": "Half of a Yellow Sun",
+    "author": "Chimamanda Ngozi Adichie",
+    "on_shelves": 596,
+    "n_ratings": 35,
+    "rating": 4.26,
+    "matched_title": "Half of a Yellow Sun",
+    "rejected": false
+  },
+  {
+    "id": 223,
+    "title": "George's Marvelous Medicine",
+    "author": "Roald Dahl",
+    "on_shelves": 604,
+    "n_ratings": 51,
+    "rating": 3.65,
+    "matched_title": "George's Marvelous Medicine",
+    "rejected": false
+  },
+  {
+    "id": 222,
+    "title": "Into the Wild",
+    "author": "Jon Krakauer",
+    "on_shelves": 617,
+    "n_ratings": 83,
+    "rating": 3.88,
+    "matched_title": "Into the Wild",
+    "rejected": false
+  },
+  {
+    "id": 221,
+    "title": "The Awakening",
+    "author": "Kate Chopin",
+    "on_shelves": 608,
+    "n_ratings": 39,
+    "rating": 3.56,
+    "matched_title": "The Awakening",
+    "rejected": false
+  },
+  {
+    "id": 220,
+    "title": "A Farewell to Arms",
+    "author": "Ernest Hemingway",
+    "on_shelves": 607,
+    "n_ratings": 61,
+    "rating": 3.66,
+    "matched_title": "A Farewell to Arms",
+    "rejected": false
+  },
+  {
+    "id": 219,
+    "title": "The Witching Hour",
+    "author": "Anne Rice",
+    "on_shelves": 607,
+    "n_ratings": 28,
+    "rating": 4.32,
+    "matched_title": "The Witching Hour",
+    "rejected": false
+  },
+  {
+    "id": 218,
+    "title": "A Storm of Swords",
+    "author": "George R. R. Martin",
+    "on_shelves": 614,
+    "n_ratings": 108,
+    "rating": 4.44,
+    "matched_title": "A Storm of Swords",
+    "rejected": false
+  },
+  {
+    "id": 217,
+    "title": "Kindred",
+    "author": "Octavia E. Butler",
+    "on_shelves": 628,
+    "n_ratings": 48,
+    "rating": 4.42,
+    "matched_title": "Kindred",
+    "rejected": false
+  },
+  {
+    "id": 216,
+    "title": "Wolves of the Calla",
+    "author": "Stephen King",
+    "on_shelves": 624,
+    "n_ratings": 195,
+    "rating": 4.05,
+    "matched_title": "Wolves of the Calla",
+    "rejected": false
+  },
+  {
+    "id": 215,
+    "title": "Eldest",
+    "author": "Christopher Paolini",
+    "on_shelves": 624,
+    "n_ratings": 81,
+    "rating": 4.1,
+    "matched_title": "Eldest",
+    "rejected": false
+  },
+  {
+    "id": 214,
+    "title": "The Fountainhead",
+    "author": "Ayn Rand",
+    "on_shelves": 625,
+    "n_ratings": 42,
+    "rating": 3.76,
+    "matched_title": "The Fountainhead",
+    "rejected": false
+  },
+  {
+    "id": 213,
+    "title": "A Feast for Crows",
+    "author": "George R. R. Martin",
+    "on_shelves": 626,
+    "n_ratings": 153,
+    "rating": 4.07,
+    "matched_title": "A Feast for Crows",
+    "rejected": false
+  },
+  {
+    "id": 212,
+    "title": "Mrs Dalloway",
+    "author": "Virginia Woolf",
+    "on_shelves": 628,
+    "n_ratings": 51,
+    "rating": 3.67,
+    "matched_title": "Mrs Dalloway",
+    "rejected": false
+  },
+  {
+    "id": 211,
+    "title": "Christine",
+    "author": "Stephen King",
+    "on_shelves": 635,
+    "n_ratings": 50,
+    "rating": 4.02,
+    "matched_title": "Christine",
+    "rejected": false
+  },
+  {
+    "id": 210,
+    "title": "The Man in the High Castle",
+    "author": "Philip K. Dick",
+    "on_shelves": 640,
+    "n_ratings": 126,
+    "rating": 3.56,
+    "matched_title": "The Man in the High Castle",
+    "rejected": false
+  },
+  {
+    "id": 209,
+    "title": "Uglies",
+    "author": "Scott Westerfeld",
+    "on_shelves": 648,
+    "n_ratings": 45,
+    "rating": 3.62,
+    "matched_title": "Uglies",
+    "rejected": false
+  },
+  {
+    "id": 208,
+    "title": "Demian",
+    "author": "Hermann Hesse",
+    "on_shelves": 652,
+    "n_ratings": 57,
+    "rating": 4.21,
+    "matched_title": "Demian",
+    "rejected": false
+  },
+  {
+    "id": 207,
+    "title": "The Age of Innocence",
+    "author": "Edith Wharton",
+    "on_shelves": 654,
+    "n_ratings": 48,
+    "rating": 3.54,
+    "matched_title": "The Age of Innocence",
+    "rejected": false
+  },
+  {
+    "id": 206,
+    "title": "My Side of the Mountain",
+    "author": "Jean Craighead George",
+    "on_shelves": 672,
+    "n_ratings": 44,
+    "rating": 4.14,
+    "matched_title": "My Side of the Mountain",
+    "rejected": false
+  },
+  {
+    "id": 205,
+    "title": "The Screwtape Letters",
+    "author": "C. S. Lewis",
+    "on_shelves": 668,
+    "n_ratings": 29,
+    "rating": 4.14,
+    "matched_title": "The Screwtape Letters",
+    "rejected": false
+  },
+  {
+    "id": 204,
+    "title": "Deception Point",
+    "author": "Dan Brown",
+    "on_shelves": 719,
+    "n_ratings": 116,
+    "rating": 3.34,
+    "matched_title": "Deception Point",
+    "rejected": false
+  },
+  {
+    "id": 203,
+    "title": "The Dead Zone",
+    "author": "Stephen King",
+    "on_shelves": 683,
+    "n_ratings": 46,
+    "rating": 4.11,
+    "matched_title": "The Dead Zone",
+    "rejected": false
+  },
+  {
+    "id": 202,
+    "title": "The Left Hand of Darkness",
+    "author": "Ursula K. Le Guin",
+    "on_shelves": 690,
+    "n_ratings": 56,
+    "rating": 4.27,
+    "matched_title": "The Left Hand of Darkness",
+    "rejected": false
+  },
+  {
+    "id": 201,
+    "title": "The Red Pyramid",
+    "author": "Rick Riordan",
+    "on_shelves": 692,
+    "n_ratings": 51,
+    "rating": 4.22,
+    "matched_title": "The Red Pyramid",
+    "rejected": false
+  },
+  {
+    "id": 200,
+    "title": "Red Dragon",
+    "author": "Thomas Harris",
+    "on_shelves": 694,
+    "n_ratings": 35,
+    "rating": 4.29,
+    "matched_title": "Red Dragon",
+    "rejected": false
+  },
+  {
+    "id": 199,
+    "title": "Hyperion",
+    "author": "Dan Simmons",
+    "on_shelves": 714,
+    "n_ratings": 155,
+    "rating": 4.19,
+    "matched_title": "Hyperion",
+    "rejected": false
+  },
+  {
+    "id": 198,
+    "title": "The Graveyard Book",
+    "author": "Neil Gaiman",
+    "on_shelves": 718,
+    "n_ratings": 123,
+    "rating": 4.2,
+    "matched_title": "The Graveyard Book",
+    "rejected": false
+  },
+  {
+    "id": 197,
+    "title": "Prince Caspian",
+    "author": "C. S. Lewis",
+    "on_shelves": 708,
+    "n_ratings": 98,
+    "rating": 3.93,
+    "matched_title": "Prince Caspian",
+    "rejected": false
+  },
+  {
+    "id": 196,
+    "title": "The Clan of the Cave Bear",
+    "author": "Jean M. Auel",
+    "on_shelves": 713,
+    "n_ratings": 75,
+    "rating": 4.08,
+    "matched_title": "The Clan of the Cave Bear",
+    "rejected": false
+  },
+  {
+    "id": 195,
+    "title": "Atonement",
+    "author": "Ian McEwan",
+    "on_shelves": 705,
+    "n_ratings": 49,
+    "rating": 3.73,
+    "matched_title": "Atonement",
+    "rejected": false
+  },
+  {
+    "id": 194,
+    "title": "Purple Hibiscus",
+    "author": "Chimamanda Ngozi Adichie",
+    "on_shelves": 709,
+    "n_ratings": 34,
+    "rating": 4.12,
+    "matched_title": "Purple Hibiscus",
+    "rejected": false
+  },
+  {
+    "id": 193,
+    "title": "Watership Down",
+    "author": "Richard Adams",
+    "on_shelves": 716,
+    "n_ratings": 106,
+    "rating": 4.15,
+    "matched_title": "Watership Down",
+    "rejected": false
+  },
+  {
+    "id": 192,
+    "title": "The Wind in the Willows",
+    "author": "Kenneth Grahame",
+    "on_shelves": 720,
+    "n_ratings": 55,
+    "rating": 4.05,
+    "matched_title": "The Wind in the Willows",
+    "rejected": false
+  },
+  {
+    "id": 191,
+    "title": "The 33 Strategies of War",
+    "author": "Robert Greene",
+    "on_shelves": 781,
+    "n_ratings": 21,
+    "rating": 3.81,
+    "matched_title": "The 33 Strategies of War",
+    "rejected": false
+  },
+  {
+    "id": 190,
+    "title": "Julius Caesar",
+    "author": "William Shakespeare",
+    "on_shelves": 726,
+    "n_ratings": 58,
+    "rating": 3.64,
+    "matched_title": "Julius Caesar",
+    "rejected": false
+  },
+  {
+    "id": 189,
+    "title": "Needful Things",
+    "author": "Stephen King",
+    "on_shelves": 748,
+    "n_ratings": 32,
+    "rating": 4.16,
+    "matched_title": "Needful Things",
+    "rejected": false
+  },
+  {
+    "id": 188,
+    "title": "The Exorcist",
+    "author": "William Peter Blatty",
+    "on_shelves": 749,
+    "n_ratings": 24,
+    "rating": 4.12,
+    "matched_title": "The Exorcist",
+    "rejected": false
+  },
+  {
+    "id": 187,
+    "title": "Giovanni's Room",
+    "author": "James Baldwin",
+    "on_shelves": 751,
+    "n_ratings": 37,
+    "rating": 4.22,
+    "matched_title": "Giovanni's Room",
+    "rejected": false
+  },
+  {
+    "id": 186,
+    "title": "The Autobiography of Benjamin Franklin",
+    "author": "Benjamin Franklin",
+    "on_shelves": null,
+    "n_ratings": null,
+    "rating": null,
+    "matched_title": "The Autobiography of Benjamin Franklin",
+    "rejected": true
+  },
+  {
+    "id": 185,
+    "title": "World War Z",
+    "author": "Max Brooks",
+    "on_shelves": 737,
+    "n_ratings": 138,
+    "rating": 3.9,
+    "matched_title": "World War Z",
+    "rejected": false
+  },
+  {
+    "id": 184,
+    "title": "Redeeming Love",
+    "author": "Francine Rivers",
+    "on_shelves": 739,
+    "n_ratings": 41,
+    "rating": 4.37,
+    "matched_title": "Redeeming Love",
+    "rejected": false
+  },
+  {
+    "id": 183,
+    "title": "The Satanic Verses",
+    "author": "Salman Rushdie",
+    "on_shelves": 741,
+    "n_ratings": 28,
+    "rating": 3.68,
+    "matched_title": "The Satanic Verses",
+    "rejected": false
+  },
+  {
+    "id": 182,
+    "title": "Carmilla",
+    "author": "Sheridan Le Fanu",
+    "on_shelves": 747,
+    "n_ratings": 65,
+    "rating": 3.92,
+    "matched_title": "Carmilla",
+    "rejected": false
+  },
+  {
+    "id": 181,
+    "title": "For Whom the Bell Tolls",
+    "author": "Ernest Hemingway",
+    "on_shelves": 746,
+    "n_ratings": 25,
+    "rating": 3.64,
+    "matched_title": "For Whom the Bell Tolls",
+    "rejected": false
+  },
+  {
+    "id": 180,
+    "title": "The Hound of the Baskervilles",
+    "author": "Arthur Conan Doyle",
+    "on_shelves": 758,
+    "n_ratings": 62,
+    "rating": 4.0,
+    "matched_title": "The Hound of the Baskervilles",
+    "rejected": false
+  },
+  {
+    "id": 179,
+    "title": "Paradise Lost",
+    "author": "John Milton",
+    "on_shelves": 754,
+    "n_ratings": 38,
+    "rating": 3.84,
+    "matched_title": "Paradise Lost",
+    "rejected": false
+  },
+  {
+    "id": 178,
+    "title": "Peter Pan",
+    "author": "J. M. Barrie",
+    "on_shelves": 754,
+    "n_ratings": 45,
+    "rating": 3.6,
+    "matched_title": "Peter Pan",
+    "rejected": false
+  },
+  {
+    "id": 177,
+    "title": "Paper Towns",
+    "author": "John Green",
+    "on_shelves": 755,
+    "n_ratings": 77,
+    "rating": 3.84,
+    "matched_title": "Paper Towns",
+    "rejected": false
+  },
+  {
+    "id": 176,
+    "title": "The Crucible",
+    "author": "Arthur Miller",
+    "on_shelves": 765,
+    "n_ratings": 85,
+    "rating": 3.42,
+    "matched_title": "The Crucible",
+    "rejected": false
+  },
+  {
+    "id": 175,
+    "title": "The Wealth of Nations",
+    "author": "Adam Smith",
+    "on_shelves": 772,
+    "n_ratings": 31,
+    "rating": 4.1,
+    "matched_title": "The Wealth of Nations",
+    "rejected": false
+  },
+  {
+    "id": 174,
+    "title": "The Night Circus",
+    "author": "Erin Morgenstern",
+    "on_shelves": 781,
+    "n_ratings": 68,
+    "rating": 4.09,
+    "matched_title": "The Night Circus",
+    "rejected": false
+  },
+  {
+    "id": 173,
+    "title": "A Study in Scarlet",
+    "author": "Arthur Conan Doyle",
+    "on_shelves": 801,
+    "n_ratings": 120,
+    "rating": 3.98,
+    "matched_title": "A Study in Scarlet",
+    "rejected": false
+  },
+  {
+    "id": 172,
+    "title": "Sula",
+    "author": "Toni Morrison",
+    "on_shelves": 810,
+    "n_ratings": 43,
+    "rating": 3.81,
+    "matched_title": "Sula",
+    "rejected": false
+  },
+  {
+    "id": 171,
+    "title": "The Notebook",
+    "author": "Nicholas Sparks",
+    "on_shelves": 810,
+    "n_ratings": 23,
+    "rating": 3.57,
+    "matched_title": "The Notebook",
+    "rejected": false
+  },
+  {
+    "id": 170,
+    "title": "Women in Love",
+    "author": "D. H. Lawrence",
+    "on_shelves": 812,
+    "n_ratings": 20,
+    "rating": 3.6,
+    "matched_title": "Women in Love",
+    "rejected": false
+  },
+  {
+    "id": 169,
+    "title": "The Adventures of Captain Underpants",
+    "author": "Dav Pilkey",
+    "on_shelves": 805,
+    "n_ratings": 67,
+    "rating": 4.27,
+    "matched_title": "The Adventures of Captain Underpants",
+    "rejected": false
+  },
+  {
+    "id": 168,
+    "title": "Cell",
+    "author": "Stephen King",
+    "on_shelves": 824,
+    "n_ratings": 123,
+    "rating": 3.63,
+    "matched_title": "Cell",
+    "rejected": false
+  },
+  {
+    "id": 167,
+    "title": "Under the Dome",
+    "author": "Stephen King",
+    "on_shelves": 825,
+    "n_ratings": 59,
+    "rating": 3.78,
+    "matched_title": "Under the Dome",
+    "rejected": false
+  },
+  {
+    "id": 166,
+    "title": "The Bluest Eye",
+    "author": "Toni Morrison",
+    "on_shelves": 837,
+    "n_ratings": 31,
+    "rating": 4.19,
+    "matched_title": "The Bluest Eye",
+    "rejected": false
+  },
+  {
+    "id": 165,
+    "title": "Miss Peregrine's Home for Peculiar Children",
+    "author": "Ransom Riggs",
+    "on_shelves": 841,
+    "n_ratings": 46,
+    "rating": 4.43,
+    "matched_title": "Miss Peregrine's Home for Peculiar Children",
+    "rejected": false
+  },
+  {
+    "id": 164,
+    "title": "On the Road",
+    "author": "Jack Kerouac",
+    "on_shelves": 843,
+    "n_ratings": 86,
+    "rating": 3.51,
+    "matched_title": "On the Road",
+    "rejected": false
+  },
+  {
+    "id": 163,
+    "title": "1st to Die",
+    "author": "James Patterson",
+    "on_shelves": 858,
+    "n_ratings": 30,
+    "rating": 4.1,
+    "matched_title": "1st to Die",
+    "rejected": false
+  },
+  {
+    "id": 162,
+    "title": "Gone with the Wind",
+    "author": "Margaret Mitchell",
+    "on_shelves": 846,
+    "n_ratings": 52,
+    "rating": 3.71,
+    "matched_title": "Gone with the Wind",
+    "rejected": false
+  },
+  {
+    "id": 161,
+    "title": "American Gods",
+    "author": "Neil Gaiman",
+    "on_shelves": 851,
+    "n_ratings": 60,
+    "rating": 4.22,
+    "matched_title": "American Gods",
+    "rejected": false
+  },
+  {
+    "id": 160,
+    "title": "Go Ask Alice",
+    "author": "Beatrice Sparks",
+    "on_shelves": 852,
+    "n_ratings": 54,
+    "rating": 3.69,
+    "matched_title": "Go Ask Alice",
+    "rejected": false
+  },
+  {
+    "id": 159,
+    "title": "Goodnight Moon",
+    "author": "Margaret Wise Brown",
+    "on_shelves": 852,
+    "n_ratings": 69,
+    "rating": 4.04,
+    "matched_title": "Goodnight Moon",
+    "rejected": false
+  },
+  {
+    "id": 158,
+    "title": "Fight Club",
+    "author": "Chuck Palahniuk",
+    "on_shelves": 857,
+    "n_ratings": 136,
+    "rating": 4.0,
+    "matched_title": "Fight Club",
+    "rejected": false
+  },
+  {
+    "id": 157,
+    "title": "The Pillars of the Earth",
+    "author": "Ken Follett",
+    "on_shelves": 862,
+    "n_ratings": 72,
+    "rating": 4.22,
+    "matched_title": "The Pillars of the Earth",
+    "rejected": false
+  },
+  {
+    "id": 156,
+    "title": "The Haunting of Hill House",
+    "author": "Shirley Jackson",
+    "on_shelves": 869,
+    "n_ratings": 77,
+    "rating": 3.95,
+    "matched_title": "The Haunting of Hill House",
+    "rejected": false
+  },
+  {
+    "id": 155,
+    "title": "The Long Walk",
+    "author": "Stephen King",
+    "on_shelves": 870,
+    "n_ratings": 50,
+    "rating": 3.84,
+    "matched_title": "The Long Walk",
+    "rejected": false
+  },
+  {
+    "id": 154,
+    "title": "Cujo",
+    "author": "Stephen King",
+    "on_shelves": 873,
+    "n_ratings": 49,
+    "rating": 3.73,
+    "matched_title": "Cujo",
+    "rejected": false
+  },
+  {
+    "id": 153,
+    "title": "The Silence of the Lambs",
+    "author": "Thomas Harris",
+    "on_shelves": 874,
+    "n_ratings": 50,
+    "rating": 4.22,
+    "matched_title": "The Silence of the Lambs",
+    "rejected": false
+  },
+  {
+    "id": 152,
+    "title": "The Mysterious Affair at Styles",
+    "author": "Agatha Christie",
+    "on_shelves": 905,
+    "n_ratings": 88,
+    "rating": 4.02,
+    "matched_title": "The Mysterious Affair at Styles",
+    "rejected": false
+  },
+  {
+    "id": 151,
+    "title": "Death on the Nile",
+    "author": "Agatha Christie",
+    "on_shelves": 896,
+    "n_ratings": 25,
+    "rating": 4.2,
+    "matched_title": "Death on the Nile",
+    "rejected": false
+  },
+  {
+    "id": 150,
+    "title": "The Artist's Way",
+    "author": "Julia Cameron",
+    "on_shelves": 904,
+    "n_ratings": 25,
+    "rating": 3.64,
+    "matched_title": "The Artist's Way",
+    "rejected": false
+  },
+  {
+    "id": 149,
+    "title": "The Phantom Tollbooth",
+    "author": "Norton Juster",
+    "on_shelves": 918,
+    "n_ratings": 104,
+    "rating": 4.13,
+    "matched_title": "The Phantom Tollbooth",
+    "rejected": false
+  },
+  {
+    "id": 148,
+    "title": "The Lost Symbol",
+    "author": "Dan Brown",
+    "on_shelves": 965,
+    "n_ratings": 102,
+    "rating": 3.63,
+    "matched_title": "The Lost Symbol",
+    "rejected": false
+  },
+  {
+    "id": 147,
+    "title": "Are You There, God? It's Me, Margaret",
+    "author": "Judy Blume",
+    "on_shelves": 939,
+    "n_ratings": 39,
+    "rating": 4.18,
+    "matched_title": "Are You There, God? It's Me, Margaret",
+    "rejected": false
+  },
+  {
+    "id": 146,
+    "title": "Parable of the Sower",
+    "author": "Octavia E. Butler",
+    "on_shelves": 938,
+    "n_ratings": 56,
+    "rating": 4.36,
+    "matched_title": "Parable of the Sower",
+    "rejected": false
+  },
+  {
+    "id": 145,
+    "title": "Gulliver's Travels",
+    "author": "Jonathan Swift",
+    "on_shelves": 954,
+    "n_ratings": 89,
+    "rating": 3.62,
+    "matched_title": "Gulliver's Travels",
+    "rejected": false
+  },
+  {
+    "id": 144,
+    "title": "Contact",
+    "author": "Carl Sagan",
+    "on_shelves": 958,
+    "n_ratings": 102,
+    "rating": 4.18,
+    "matched_title": "Contact",
+    "rejected": false
+  },
+  {
+    "id": 143,
+    "title": "The Colour of Magic",
+    "author": "Terry Pratchett",
+    "on_shelves": 960,
+    "n_ratings": 153,
+    "rating": 3.98,
+    "matched_title": "The Colour of Magic",
+    "rejected": false
+  },
+  {
+    "id": 142,
+    "title": "A Clash of Kings",
+    "author": "George R. R. Martin",
+    "on_shelves": 963,
+    "n_ratings": 191,
+    "rating": 4.32,
+    "matched_title": "A Clash of Kings",
+    "rejected": false
+  },
+  {
+    "id": 141,
+    "title": "The Call of the Wild",
+    "author": "Jack London",
+    "on_shelves": 974,
+    "n_ratings": 82,
+    "rating": 3.93,
+    "matched_title": "The Call of the Wild",
+    "rejected": false
+  },
+  {
+    "id": 140,
+    "title": "Never Let Me Go",
+    "author": "Kazuo Ishiguro",
+    "on_shelves": 983,
+    "n_ratings": 74,
+    "rating": 3.82,
+    "matched_title": "Never Let Me Go",
+    "rejected": false
+  },
+  {
+    "id": 139,
+    "title": "The Magician's Nephew",
+    "author": "C. S. Lewis",
+    "on_shelves": 980,
+    "n_ratings": 108,
+    "rating": 4.02,
+    "matched_title": "The Magician's Nephew",
+    "rejected": false
+  },
+  {
+    "id": 138,
+    "title": "Esperanza Rising",
+    "author": "Pam Muñoz Ryan",
+    "on_shelves": 986,
+    "n_ratings": 43,
+    "rating": 3.93,
+    "matched_title": "Esperanza Rising",
+    "rejected": false
+  },
+  {
+    "id": 137,
+    "title": "A Midsummer Night's Dream",
+    "author": "William Shakespeare",
+    "on_shelves": 996,
+    "n_ratings": 107,
+    "rating": 3.92,
+    "matched_title": "A Midsummer Night's Dream",
+    "rejected": false
+  },
+  {
+    "id": 136,
+    "title": "Push",
+    "author": "Sapphire",
+    "on_shelves": 1090,
+    "n_ratings": 19,
+    "rating": 3.89,
+    "matched_title": "Push",
+    "rejected": false
+  },
+  {
+    "id": 135,
+    "title": "Les Misérables",
+    "author": "Victor Hugo",
+    "on_shelves": 1038,
+    "n_ratings": 56,
+    "rating": 4.25,
+    "matched_title": "Les Misérables",
+    "rejected": false
+  },
+  {
+    "id": 134,
+    "title": "The Coldest Winter Ever",
+    "author": "Sister Souljah",
+    "on_shelves": 1029,
+    "n_ratings": 26,
+    "rating": 4.19,
+    "matched_title": "The Coldest Winter Ever",
+    "rejected": false
+  },
+  {
+    "id": 133,
+    "title": "A Christmas Carol",
+    "author": "Charles Dickens",
+    "on_shelves": 1014,
+    "n_ratings": 113,
+    "rating": 3.96,
+    "matched_title": "A Christmas Carol",
+    "rejected": false
+  },
+  {
+    "id": 132,
+    "title": "The Murder of Roger Ackroyd",
+    "author": "Agatha Christie",
+    "on_shelves": 1015,
+    "n_ratings": 80,
+    "rating": 4.24,
+    "matched_title": "The Murder of Roger Ackroyd",
+    "rejected": false
+  },
+  {
+    "id": 131,
+    "title": "Rebecca",
+    "author": "Daphne du Maurier",
+    "on_shelves": 1044,
+    "n_ratings": 52,
+    "rating": 4.19,
+    "matched_title": "Rebecca",
+    "rejected": false
+  },
+  {
+    "id": 130,
+    "title": "Neuromancer",
+    "author": "William Gibson",
+    "on_shelves": 1025,
+    "n_ratings": 81,
+    "rating": 4.06,
+    "matched_title": "Neuromancer",
+    "rejected": false
+  },
+  {
+    "id": 129,
+    "title": "The Help",
+    "author": "Kathryn Stockett",
+    "on_shelves": 1101,
+    "n_ratings": 112,
+    "rating": 4.28,
+    "matched_title": "The Help",
+    "rejected": false
+  },
+  {
+    "id": 128,
+    "title": "Insomnia",
+    "author": "Stephen King",
+    "on_shelves": 1055,
+    "n_ratings": 104,
+    "rating": 3.86,
+    "matched_title": "Insomnia",
+    "rejected": false
+  },
+  {
+    "id": 127,
+    "title": "A Wizard of Earthsea",
+    "author": "Ursula K. Le Guin",
+    "on_shelves": 1062,
+    "n_ratings": 118,
+    "rating": 3.95,
+    "matched_title": "A Wizard of Earthsea",
+    "rejected": false
+  },
+  {
+    "id": 126,
+    "title": "Eclipse",
+    "author": "Stephenie Meyer",
+    "on_shelves": 1067,
+    "n_ratings": 117,
+    "rating": 3.49,
+    "matched_title": "Eclipse",
+    "rejected": false
+  },
+  {
+    "id": 125,
+    "title": "House of Leaves",
+    "author": "Mark Z. Danielewski",
+    "on_shelves": 1080,
+    "n_ratings": 65,
+    "rating": 4.31,
+    "matched_title": "House of Leaves",
+    "rejected": false
+  },
+  {
+    "id": 124,
+    "title": "The Gruffalo",
+    "author": "Julia Donaldson",
+    "on_shelves": 1075,
+    "n_ratings": 86,
+    "rating": 4.31,
+    "matched_title": "The Gruffalo",
+    "rejected": false
+  },
+  {
+    "id": 123,
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "on_shelves": 1075,
+    "n_ratings": 151,
+    "rating": 4.13,
+    "matched_title": "Guns, Germs, and Steel",
+    "rejected": false
+  },
+  {
+    "id": 122,
+    "title": "Where the Red Fern Grows",
+    "author": "Wilson Rawls",
+    "on_shelves": 1085,
+    "n_ratings": 97,
+    "rating": 4.16,
+    "matched_title": "Where the Red Fern Grows",
+    "rejected": false
+  },
+  {
+    "id": 121,
+    "title": "The Witches",
+    "author": "Roald Dahl",
+    "on_shelves": 1092,
+    "n_ratings": 94,
+    "rating": 4.16,
+    "matched_title": "The Witches",
+    "rejected": false
+  },
+  {
+    "id": 120,
+    "title": "Where The Wild Things Are",
+    "author": "Maurice Sendak",
+    "on_shelves": 1104,
+    "n_ratings": 108,
+    "rating": 4.13,
+    "matched_title": "Where The Wild Things Are",
+    "rejected": false
+  },
+  {
+    "id": 119,
+    "title": "Life of Pi",
+    "author": "Yann Martel",
+    "on_shelves": 1113,
+    "n_ratings": 151,
+    "rating": 3.96,
+    "matched_title": "Life of Pi",
+    "rejected": false
+  },
+  {
+    "id": 118,
+    "title": "The Way of Kings",
+    "author": "Brandon Sanderson",
+    "on_shelves": 1141,
+    "n_ratings": 160,
+    "rating": 4.51,
+    "matched_title": "The Way of Kings",
+    "rejected": false
+  },
+  {
+    "id": 117,
+    "title": "The Silmarillion",
+    "author": "J. R. R. Tolkien",
+    "on_shelves": 1137,
+    "n_ratings": 118,
+    "rating": 3.97,
+    "matched_title": "The Silmarillion",
+    "rejected": false
+  },
+  {
+    "id": 116,
+    "title": "Northern Lights",
+    "author": "Philip Pullman",
+    "on_shelves": 1163,
+    "n_ratings": 228,
+    "rating": 3.93,
+    "matched_title": "Northern Lights",
+    "rejected": false
+  },
+  {
+    "id": 115,
+    "title": "City of Bones",
+    "author": "Cassandra Clare",
+    "on_shelves": 1184,
+    "n_ratings": 94,
+    "rating": 3.88,
+    "matched_title": "City of Bones",
+    "rejected": false
+  },
+  {
+    "id": 114,
+    "title": "Sense and Sensibility",
+    "author": "Jane Austen",
+    "on_shelves": 1172,
+    "n_ratings": 52,
+    "rating": 3.88,
+    "matched_title": "Sense and Sensibility",
+    "rejected": false
+  },
+  {
+    "id": 113,
+    "title": "A Clockwork Orange",
+    "author": "Anthony Burgess",
+    "on_shelves": 1175,
+    "n_ratings": 69,
+    "rating": 4.01,
+    "matched_title": "A Clockwork Orange",
+    "rejected": false
+  },
+  {
+    "id": 112,
+    "title": "New Moon",
+    "author": "Stephenie Meyer",
+    "on_shelves": 1186,
+    "n_ratings": 77,
+    "rating": 3.94,
+    "matched_title": "New Moon",
+    "rejected": false
+  },
+  {
+    "id": 111,
+    "title": "Smile",
+    "author": "Raina Telgemeier",
+    "on_shelves": 1197,
+    "n_ratings": 103,
+    "rating": 4.46,
+    "matched_title": "Smile",
+    "rejected": false
+  },
+  {
+    "id": 110,
+    "title": "The Road",
+    "author": "Cormac McCarthy",
+    "on_shelves": 1195,
+    "n_ratings": 172,
+    "rating": 3.88,
+    "matched_title": "The Road",
+    "rejected": false
+  },
+  {
+    "id": 109,
+    "title": "Because of Winn-Dixie",
+    "author": "Kate DiCamillo",
+    "on_shelves": 1231,
+    "n_ratings": 100,
+    "rating": 4.21,
+    "matched_title": "Because of Winn-Dixie",
+    "rejected": false
+  },
+  {
+    "id": 108,
+    "title": "Treasure Island",
+    "author": "Robert Louis Stevenson",
+    "on_shelves": 1226,
+    "n_ratings": 102,
+    "rating": 3.77,
+    "matched_title": "Treasure Island",
+    "rejected": false
+  },
+  {
+    "id": 107,
+    "title": "Thirteen Reasons Why",
+    "author": "Jay Asher",
+    "on_shelves": 1234,
+    "n_ratings": 87,
+    "rating": 3.74,
+    "matched_title": "Thirteen Reasons Why",
+    "rejected": false
+  },
+  {
+    "id": 106,
+    "title": "Outlander",
+    "author": "Diana Gabaldon",
+    "on_shelves": 1269,
+    "n_ratings": 63,
+    "rating": 4.06,
+    "matched_title": "Outlander",
+    "rejected": false
+  },
+  {
+    "id": 105,
+    "title": "The Mark of Athena",
+    "author": "Rick Riordan",
+    "on_shelves": 1237,
+    "n_ratings": 123,
+    "rating": 4.46,
+    "matched_title": "The Mark of Athena",
+    "rejected": false
+  },
+  {
+    "id": 104,
+    "title": "Heart of Darkness",
+    "author": "Joseph Conrad",
+    "on_shelves": 1249,
+    "n_ratings": 138,
+    "rating": 3.59,
+    "matched_title": "Heart of Darkness",
+    "rejected": false
+  },
+  {
+    "id": 103,
+    "title": "East of Eden",
+    "author": "John Steinbeck",
+    "on_shelves": 1282,
+    "n_ratings": 97,
+    "rating": 4.08,
+    "matched_title": "East of Eden",
+    "rejected": false
+  },
+  {
+    "id": 102,
+    "title": "The A.B.C. Murders",
+    "author": "Agatha Christie",
+    "on_shelves": 1256,
+    "n_ratings": 60,
+    "rating": 4.03,
+    "matched_title": "The A.B.C. Murders",
+    "rejected": false
+  },
+  {
+    "id": 101,
+    "title": "The Grapes of Wrath",
+    "author": "John Steinbeck",
+    "on_shelves": 1257,
+    "n_ratings": 110,
+    "rating": 3.94,
+    "matched_title": "The Grapes of Wrath",
+    "rejected": false
+  },
+  {
+    "id": 100,
+    "title": "Catch-22",
+    "author": "Joseph Heller",
+    "on_shelves": 1276,
+    "n_ratings": 204,
+    "rating": 4.12,
+    "matched_title": "Catch-22",
+    "rejected": false
+  },
+  {
+    "id": 99,
+    "title": "Howl's Moving Castle",
+    "author": "Diana Wynne Jones",
+    "on_shelves": 1317,
+    "n_ratings": 108,
+    "rating": 4.41,
+    "matched_title": "Howl's Moving Castle",
+    "rejected": false
+  },
+  {
+    "id": 98,
+    "title": "Siddhartha",
+    "author": "Hermann Hesse",
+    "on_shelves": 1304,
+    "n_ratings": 64,
+    "rating": 4.05,
+    "matched_title": "Siddhartha",
+    "rejected": false
+  },
+  {
+    "id": 97,
+    "title": "Emma",
+    "author": "Jane Austen",
+    "on_shelves": 1318,
+    "n_ratings": 64,
+    "rating": 3.97,
+    "matched_title": "Emma",
+    "rejected": false
+  },
+  {
+    "id": 96,
+    "title": "Good Omens",
+    "author": "Neil Gaiman",
+    "on_shelves": 1317,
+    "n_ratings": 88,
+    "rating": 4.43,
+    "matched_title": "Good Omens",
+    "rejected": false
+  },
+  {
+    "id": 95,
+    "title": "Speak",
+    "author": "Laurie Halse Anderson",
+    "on_shelves": 1328,
+    "n_ratings": 96,
+    "rating": 3.94,
+    "matched_title": "Speak",
+    "rejected": false
+  },
+  {
+    "id": 94,
+    "title": "I Know Why the Caged Bird Sings",
+    "author": "Maya Angelou",
+    "on_shelves": 1335,
+    "n_ratings": 48,
+    "rating": 4.1,
+    "matched_title": "I Know Why the Caged Bird Sings",
+    "rejected": false
+  },
+  {
+    "id": 93,
+    "title": "Flowers in the Attic",
+    "author": "V. C. Andrews",
+    "on_shelves": 1342,
+    "n_ratings": 73,
+    "rating": 4.04,
+    "matched_title": "Flowers in the Attic",
+    "rejected": false
+  },
+  {
+    "id": 92,
+    "title": "The Immortals of Meluha",
+    "author": "Amish Tripathi",
+    "on_shelves": 1373,
+    "n_ratings": 42,
+    "rating": 3.83,
+    "matched_title": "The Immortals of Meluha",
+    "rejected": false
+  },
+  {
+    "id": 91,
+    "title": "The God of Small Things",
+    "author": "Arundhati Roy",
+    "on_shelves": 1385,
+    "n_ratings": 71,
+    "rating": 3.83,
+    "matched_title": "The God of Small Things",
+    "rejected": false
+  },
+  {
+    "id": 90,
+    "title": "The War of the Worlds",
+    "author": "H. G. Wells",
+    "on_shelves": 1406,
+    "n_ratings": 164,
+    "rating": 3.82,
+    "matched_title": "The War of the Worlds",
+    "rejected": false
+  },
+  {
+    "id": 89,
+    "title": "Macbeth",
+    "author": "William Shakespeare",
+    "on_shelves": 1435,
+    "n_ratings": 149,
+    "rating": 3.99,
+    "matched_title": "Macbeth",
+    "rejected": false
+  },
+  {
+    "id": 88,
+    "title": "The Two Towers",
+    "author": "J. R. R. Tolkien",
+    "on_shelves": 1430,
+    "n_ratings": 232,
+    "rating": 4.35,
+    "matched_title": "The Two Towers",
+    "rejected": false
+  },
+  {
+    "id": 87,
+    "title": "The 4-Hour Workweek",
+    "author": "Timothy Ferriss",
+    "on_shelves": null,
+    "n_ratings": null,
+    "rating": null,
+    "matched_title": "Summary of Timothy Ferriss's the 4-Hour Workweek, Expanded and Updated",
+    "rejected": true
+  },
+  {
+    "id": 86,
+    "title": "The Last Olympian",
+    "author": "Rick Riordan",
+    "on_shelves": 1530,
+    "n_ratings": 157,
+    "rating": 4.41,
+    "matched_title": "The Last Olympian",
+    "rejected": false
+  },
+  {
+    "id": 85,
+    "title": "Anne of Green Gables",
+    "author": "Lucy Maud Montgomery",
+    "on_shelves": 1467,
+    "n_ratings": 101,
+    "rating": 4.28,
+    "matched_title": "Anne of Green Gables",
+    "rejected": false
+  },
+  {
+    "id": 84,
+    "title": "Fantastic Mr. Fox",
+    "author": "Roald Dahl",
+    "on_shelves": 1475,
+    "n_ratings": 119,
+    "rating": 3.97,
+    "matched_title": "Fantastic Mr. Fox",
+    "rejected": false
+  },
+  {
+    "id": 83,
+    "title": "The Secret Garden",
+    "author": "Frances Hodgson Burnett",
+    "on_shelves": 1535,
+    "n_ratings": 95,
+    "rating": 3.91,
+    "matched_title": "The Secret Garden",
+    "rejected": false
+  },
+  {
+    "id": 82,
+    "title": "The Stand",
+    "author": "Stephen King",
+    "on_shelves": 1499,
+    "n_ratings": 90,
+    "rating": 4.32,
+    "matched_title": "The Stand",
+    "rejected": false
+  },
+  {
+    "id": 81,
+    "title": "Mockingjay",
+    "author": "Suzanne Collins",
+    "on_shelves": 1496,
+    "n_ratings": 273,
+    "rating": 3.79,
+    "matched_title": "Mockingjay",
+    "rejected": false
+  },
+  {
+    "id": 80,
+    "title": "The Battle of the Labyrinth",
+    "author": "Rick Riordan",
+    "on_shelves": 1501,
+    "n_ratings": 132,
+    "rating": 4.39,
+    "matched_title": "The Battle of the Labyrinth",
+    "rejected": false
+  },
+  {
+    "id": 79,
+    "title": "James and the Giant Peach",
+    "author": "Roald Dahl",
+    "on_shelves": 1514,
+    "n_ratings": 136,
+    "rating": 3.93,
+    "matched_title": "James and the Giant Peach",
+    "rejected": false
+  },
+  {
+    "id": 78,
+    "title": "The Son of Neptune",
+    "author": "Rick Riordan",
+    "on_shelves": 1515,
+    "n_ratings": 123,
+    "rating": 4.31,
+    "matched_title": "The Son of Neptune",
+    "rejected": false
+  },
+  {
+    "id": 77,
+    "title": "A Wrinkle in Time",
+    "author": "Madeleine L'Engle",
+    "on_shelves": 1540,
+    "n_ratings": 174,
+    "rating": 3.89,
+    "matched_title": "A Wrinkle in Time",
+    "rejected": false
+  },
+  {
+    "id": 76,
+    "title": "The Wonderful Wizard of Oz",
+    "author": "L. Frank Baum",
+    "on_shelves": 1557,
+    "n_ratings": 127,
+    "rating": 3.94,
+    "matched_title": "The Wonderful Wizard of Oz",
+    "rejected": false
+  },
+  {
+    "id": 75,
+    "title": "Eragon",
+    "author": "Christopher Paolini",
+    "on_shelves": 1560,
+    "n_ratings": 229,
+    "rating": 3.78,
+    "matched_title": "Eragon",
+    "rejected": false
+  },
+  {
+    "id": 74,
+    "title": "The Boy in the Striped Pyjamas",
+    "author": "John Boyne",
+    "on_shelves": 1598,
+    "n_ratings": 75,
+    "rating": 3.96,
+    "matched_title": "The Boy in the Striped Pyjamas",
+    "rejected": false
+  },
+  {
+    "id": 73,
+    "title": "The BFG",
+    "author": "Roald Dahl",
+    "on_shelves": 1620,
+    "n_ratings": 142,
+    "rating": 4.1,
+    "matched_title": "The BFG",
+    "rejected": false
+  },
+  {
+    "id": 72,
+    "title": "The Name of the Wind",
+    "author": "Patrick Rothfuss",
+    "on_shelves": 1639,
+    "n_ratings": 255,
+    "rating": 4.34,
+    "matched_title": "The Name of the Wind",
+    "rejected": false
+  },
+  {
+    "id": 71,
+    "title": "The Very Hungry Caterpillar",
+    "author": "Eric Carle",
+    "on_shelves": 1661,
+    "n_ratings": 103,
+    "rating": 4.02,
+    "matched_title": "The Very Hungry Caterpillar",
+    "rejected": false
+  },
+  {
+    "id": 70,
+    "title": "Beloved",
+    "author": "Toni Morrison",
+    "on_shelves": 1689,
+    "n_ratings": 75,
+    "rating": 3.91,
+    "matched_title": "Beloved",
+    "rejected": false
+  },
+  {
+    "id": 69,
+    "title": "Jurassic Park",
+    "author": "Michael Crichton",
+    "on_shelves": 1697,
+    "n_ratings": 199,
+    "rating": 4.18,
+    "matched_title": "Jurassic Park",
+    "rejected": false
+  },
+  {
+    "id": 68,
+    "title": "’Salem's Lot",
+    "author": "Stephen King",
+    "on_shelves": 1719,
+    "n_ratings": 98,
+    "rating": 4.0,
+    "matched_title": "’Salem's Lot",
+    "rejected": false
+  },
+  {
+    "id": 67,
+    "title": "The Curious Incident of the Dog in the Night-time",
+    "author": "Mark Haddon",
+    "on_shelves": 1745,
+    "n_ratings": 238,
+    "rating": 3.94,
+    "matched_title": "The Curious Incident of the Dog in the Night-time",
+    "rejected": false
+  },
+  {
+    "id": 66,
+    "title": "The Green Mile",
+    "author": "Stephen King",
+    "on_shelves": 1736,
+    "n_ratings": 110,
+    "rating": 4.31,
+    "matched_title": "The Green Mile",
+    "rejected": false
+  },
+  {
+    "id": 65,
+    "title": "Ender's Game",
+    "author": "Orson Scott Card",
+    "on_shelves": 1790,
+    "n_ratings": 415,
+    "rating": 4.35,
+    "matched_title": "Ender's Game",
+    "rejected": false
+  },
+  {
+    "id": 64,
+    "title": "The Lion, the Witch and the Wardrobe",
+    "author": "C. S. Lewis",
+    "on_shelves": 1861,
+    "n_ratings": 121,
+    "rating": 4.13,
+    "matched_title": "The Lion, the Witch and the Wardrobe",
+    "rejected": false
+  },
+  {
+    "id": 63,
+    "title": "Murder on the Orient Express",
+    "author": "Agatha Christie",
+    "on_shelves": 1835,
+    "n_ratings": 124,
+    "rating": 4.15,
+    "matched_title": "Murder on the Orient Express",
+    "rejected": false
+  },
+  {
+    "id": 62,
+    "title": "The Time Machine",
+    "author": "H. G. Wells",
+    "on_shelves": 1916,
+    "n_ratings": 130,
+    "rating": 4.05,
+    "matched_title": "The Time Machine",
+    "rejected": false
+  },
+  {
+    "id": 61,
+    "title": "The Titan's Curse",
+    "author": "Rick Riordan",
+    "on_shelves": 1934,
+    "n_ratings": 154,
+    "rating": 4.47,
+    "matched_title": "The Titan's Curse",
+    "rejected": false
+  },
+  {
+    "id": 60,
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "on_shelves": 1987,
+    "n_ratings": 94,
+    "rating": 3.91,
+    "matched_title": "Things Fall Apart",
+    "rejected": false
+  },
+  {
+    "id": 59,
+    "title": "Foundation",
+    "author": "Isaac Asimov",
+    "on_shelves": 1963,
+    "n_ratings": 306,
+    "rating": 4.1,
+    "matched_title": "Foundation",
+    "rejected": false
+  },
+  {
+    "id": 58,
+    "title": "The Secret History",
+    "author": "Donna Tartt",
+    "on_shelves": 1986,
+    "n_ratings": 86,
+    "rating": 4.01,
+    "matched_title": "The Secret History",
+    "rejected": false
+  },
+  {
+    "id": 57,
+    "title": "American Psycho",
+    "author": "Bret Easton Ellis",
+    "on_shelves": 2010,
+    "n_ratings": 101,
+    "rating": 3.82,
+    "matched_title": "American Psycho",
+    "rejected": false
+  },
+  {
+    "id": 56,
+    "title": "Hamlet",
+    "author": "William Shakespeare",
+    "on_shelves": 2048,
+    "n_ratings": 173,
+    "rating": 4.01,
+    "matched_title": "Hamlet",
+    "rejected": false
+  },
+  {
+    "id": 55,
+    "title": "The Invisible Man",
+    "author": "H. G. Wells",
+    "on_shelves": 2080,
+    "n_ratings": 108,
+    "rating": 3.8,
+    "matched_title": "The Invisible Man",
+    "rejected": false
+  },
+  {
+    "id": 54,
+    "title": "The Maze Runner",
+    "author": "James Dashner",
+    "on_shelves": 2368,
+    "n_ratings": 153,
+    "rating": 3.97,
+    "matched_title": "The Maze Runner",
+    "rejected": false
+  },
+  {
+    "id": 53,
+    "title": "The Sea of Monsters",
+    "author": "Rick Riordan",
+    "on_shelves": 2159,
+    "n_ratings": 181,
+    "rating": 4.45,
+    "matched_title": "The Sea of Monsters",
+    "rejected": false
+  },
+  {
+    "id": 52,
+    "title": "Hatchet",
+    "author": "Gary Paulsen",
+    "on_shelves": 2224,
+    "n_ratings": 156,
+    "rating": 4.18,
+    "matched_title": "Hatchet",
+    "rejected": false
+  },
+  {
+    "id": 51,
+    "title": "The Picture of Dorian Gray",
+    "author": "Oscar Wilde",
+    "on_shelves": 2249,
+    "n_ratings": 126,
+    "rating": 4.18,
+    "matched_title": "The Picture of Dorian Gray",
+    "rejected": false
+  },
+  {
+    "id": 50,
+    "title": "The Outsiders",
+    "author": "S. E. Hinton",
+    "on_shelves": 2208,
+    "n_ratings": 131,
+    "rating": 4.37,
+    "matched_title": "The Outsiders",
+    "rejected": false
+  },
+  {
+    "id": 49,
+    "title": "Alice's Adventures in Wonderland",
+    "author": "Lewis Carroll",
+    "on_shelves": 2281,
+    "n_ratings": 225,
+    "rating": 4.05,
+    "matched_title": "Alice's Adventures in Wonderland",
+    "rejected": false
+  },
+  {
+    "id": 48,
+    "title": "Of Mice and Men",
+    "author": "John Steinbeck",
+    "on_shelves": 2300,
+    "n_ratings": 302,
+    "rating": 4.0,
+    "matched_title": "Of Mice and Men",
+    "rejected": false
+  },
+  {
+    "id": 47,
+    "title": "And Then There Were None",
+    "author": "Agatha Christie",
+    "on_shelves": 2348,
+    "n_ratings": 171,
+    "rating": 4.25,
+    "matched_title": "And Then There Were None",
+    "rejected": false
+  },
+  {
+    "id": 46,
+    "title": "The Lost Hero",
+    "author": "Rick Riordan",
+    "on_shelves": 2354,
+    "n_ratings": 170,
+    "rating": 4.43,
+    "matched_title": "The Lost Hero",
+    "rejected": false
+  },
+  {
+    "id": 45,
+    "title": "The Old Man and the Sea",
+    "author": "Ernest Hemingway",
+    "on_shelves": 2382,
+    "n_ratings": 235,
+    "rating": 3.91,
+    "matched_title": "The Old Man and the Sea",
+    "rejected": false
+  },
+  {
+    "id": 44,
+    "title": "A Thousand Splendid Suns",
+    "author": "Khaled Hosseini",
+    "on_shelves": 2485,
+    "n_ratings": 129,
+    "rating": 4.38,
+    "matched_title": "A Thousand Splendid Suns",
+    "rejected": false
+  },
+  {
+    "id": 43,
+    "title": "The Fellowship of the Ring",
+    "author": "J. R. R. Tolkien",
+    "on_shelves": 2464,
+    "n_ratings": 401,
+    "rating": 4.34,
+    "matched_title": "The Fellowship of the Ring",
+    "rejected": false
+  },
+  {
+    "id": 42,
+    "title": "The Hitchhiker's Guide to the Galaxy",
+    "author": "Douglas Adams",
+    "on_shelves": 2503,
+    "n_ratings": 178,
+    "rating": 4.51,
+    "matched_title": "The Hitchhiker's Guide to the Galaxy",
+    "rejected": false
+  },
+  {
+    "id": 41,
+    "title": "Pet Sematary",
+    "author": "Stephen King",
+    "on_shelves": 2742,
+    "n_ratings": 178,
+    "rating": 4.03,
+    "matched_title": "Pet Sematary",
+    "rejected": false
+  },
+  {
+    "id": 40,
+    "title": "The Lord of the Rings",
+    "author": "J. R. R. Tolkien",
+    "on_shelves": 2747,
+    "n_ratings": 118,
+    "rating": 4.45,
+    "matched_title": "The Lord of the Rings",
+    "rejected": false
+  },
+  {
+    "id": 39,
+    "title": "Dracula",
+    "author": "Bram Stoker",
+    "on_shelves": 2740,
+    "n_ratings": 239,
+    "rating": 3.98,
+    "matched_title": "Dracula",
+    "rejected": false
+  },
+  {
+    "id": 38,
+    "title": "The Perks of Being a Wallflower",
+    "author": "Stephen Chbosky",
+    "on_shelves": 2859,
+    "n_ratings": 108,
+    "rating": 4.27,
+    "matched_title": "The Perks of Being a Wallflower",
+    "rejected": false
+  },
+  {
+    "id": 37,
+    "title": "The Kite Runner",
+    "author": "Khaled Hosseini",
+    "on_shelves": 2929,
+    "n_ratings": 140,
+    "rating": 4.09,
+    "matched_title": "The Kite Runner",
+    "rejected": false
+  },
+  {
+    "id": 36,
+    "title": "Carrie",
+    "author": "Stephen King",
+    "on_shelves": 2969,
+    "n_ratings": 168,
+    "rating": 3.99,
+    "matched_title": "Carrie",
+    "rejected": false
+  },
+  {
+    "id": 35,
+    "title": "The Giver",
+    "author": "Lois Lowry",
+    "on_shelves": 2974,
+    "n_ratings": 321,
+    "rating": 4.03,
+    "matched_title": "The Giver",
+    "rejected": false
+  },
+  {
+    "id": 34,
+    "title": "Little Women",
+    "author": "Louisa May Alcott",
+    "on_shelves": 2966,
+    "n_ratings": 123,
+    "rating": 4.05,
+    "matched_title": "Little Women",
+    "rejected": false
+  },
+  {
+    "id": 33,
+    "title": "Charlie and the Chocolate Factory",
+    "author": "Roald Dahl",
+    "on_shelves": 2963,
+    "n_ratings": 279,
+    "rating": 4.05,
+    "matched_title": "Charlie and the Chocolate Factory",
+    "rejected": false
+  },
+  {
+    "id": 32,
+    "title": "Coraline",
+    "author": "Neil Gaiman",
+    "on_shelves": 3053,
+    "n_ratings": 204,
+    "rating": 4.05,
+    "matched_title": "Coraline",
+    "rejected": false
+  },
+  {
+    "id": 31,
+    "title": "Romeo and Juliet",
+    "author": "William Shakespeare",
+    "on_shelves": 3111,
+    "n_ratings": 210,
+    "rating": 3.67,
+    "matched_title": "Romeo and Juliet",
+    "rejected": false
+  },
+  {
+    "id": 30,
+    "title": "Matilda",
+    "author": "Roald Dahl",
+    "on_shelves": 3149,
+    "n_ratings": 276,
+    "rating": 4.34,
+    "matched_title": "Matilda",
+    "rejected": false
+  },
+  {
+    "id": 29,
+    "title": "The Handmaid's Tale",
+    "author": "Margaret Atwood",
+    "on_shelves": 3203,
+    "n_ratings": 131,
+    "rating": 3.96,
+    "matched_title": "The Handmaid's Tale",
+    "rejected": false
+  },
+  {
+    "id": 28,
+    "title": "Lord of the Flies",
+    "author": "William Golding",
+    "on_shelves": 3272,
+    "n_ratings": 395,
+    "rating": 3.67,
+    "matched_title": "Lord of the Flies",
+    "rejected": false
+  },
+  {
+    "id": 27,
+    "title": "The Da Vinci Code",
+    "author": "Dan Brown",
+    "on_shelves": 3420,
+    "n_ratings": 187,
+    "rating": 3.91,
+    "matched_title": "The Da Vinci Code",
+    "rejected": false
+  },
+  {
+    "id": 26,
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "on_shelves": 3429,
+    "n_ratings": 473,
+    "rating": 3.97,
+    "matched_title": "Brave New World",
+    "rejected": false
+  },
+  {
+    "id": 25,
+    "title": "The Eye of the World",
+    "author": "Robert Jordan",
+    "on_shelves": 3550,
+    "n_ratings": 231,
+    "rating": 3.92,
+    "matched_title": "The Eye of the World",
+    "rejected": false
+  },
+  {
+    "id": 24,
+    "title": "The Shining",
+    "author": "Stephen King",
+    "on_shelves": 3699,
+    "n_ratings": 284,
+    "rating": 4.17,
+    "matched_title": "The Shining",
+    "rejected": false
+  },
+  {
+    "id": 23,
+    "title": "Harry Potter and the Half-Blood Prince",
+    "author": "J. K. Rowling",
+    "on_shelves": 3738,
+    "n_ratings": 213,
+    "rating": 4.36,
+    "matched_title": "Harry Potter and the Half-Blood Prince",
+    "rejected": false
+  },
+  {
+    "id": 22,
+    "title": "Charlotte's Web",
+    "author": "E. B. White",
+    "on_shelves": 4274,
+    "n_ratings": 422,
+    "rating": 4.04,
+    "matched_title": "Charlotte's Web",
+    "rejected": false
+  },
+  {
+    "id": 21,
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "on_shelves": 4389,
+    "n_ratings": 447,
+    "rating": 3.98,
+    "matched_title": "Fahrenheit 451",
+    "rejected": false
+  },
+  {
+    "id": 20,
+    "title": "The Fault in Our Stars",
+    "author": "John Green",
+    "on_shelves": 4503,
+    "n_ratings": 222,
+    "rating": 4.2,
+    "matched_title": "The Fault in Our Stars",
+    "rejected": false
+  },
+  {
+    "id": 19,
+    "title": "Harry Potter and the Order of the Phoenix",
+    "author": "J. K. Rowling",
+    "on_shelves": 4587,
+    "n_ratings": 317,
+    "rating": 4.23,
+    "matched_title": "Harry Potter and the Order of the Phoenix",
+    "rejected": false
+  },
+  {
+    "id": 18,
+    "title": "Harry Potter and the Goblet of Fire",
+    "author": "J. K. Rowling",
+    "on_shelves": 4905,
+    "n_ratings": 350,
+    "rating": 4.23,
+    "matched_title": "Harry Potter and the Goblet of Fire",
+    "rejected": false
+  },
+  {
+    "id": 17,
+    "title": "The Hobbit",
+    "author": "J. R. R. Tolkien",
+    "on_shelves": 5082,
+    "n_ratings": 499,
+    "rating": 4.29,
+    "matched_title": "The Hobbit",
+    "rejected": false
+  },
+  {
+    "id": 16,
+    "title": "Animal Farm",
+    "author": "George Orwell",
+    "on_shelves": 5178,
+    "n_ratings": 581,
+    "rating": 4.16,
+    "matched_title": "Animal Farm",
+    "rejected": false
+  },
+  {
+    "id": 15,
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "author": "J. K. Rowling",
+    "on_shelves": 5672,
+    "n_ratings": 637,
+    "rating": 4.24,
+    "matched_title": "Harry Potter and the Prisoner of Azkaban",
+    "rejected": false
+  },
+  {
+    "id": 14,
+    "title": "The Art of Seduction",
+    "author": "Robert Greene",
+    "on_shelves": 6084,
+    "n_ratings": 117,
+    "rating": 4.0,
+    "matched_title": "The Art of Seduction",
+    "rejected": false
+  },
+  {
+    "id": 13,
+    "title": "Harry Potter and the Deathly Hallows",
+    "author": "J. K. Rowling",
+    "on_shelves": 5953,
+    "n_ratings": 414,
+    "rating": 4.26,
+    "matched_title": "Harry Potter and the Deathly Hallows",
+    "rejected": false
+  },
+  {
+    "id": 12,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "on_shelves": 6317,
+    "n_ratings": 268,
+    "rating": 4.13,
+    "matched_title": "To Kill a Mockingbird",
+    "rejected": false
+  },
+  {
+    "id": 11,
+    "title": "Twilight",
+    "author": "Stephenie Meyer",
+    "on_shelves": 6339,
+    "n_ratings": 439,
+    "rating": 3.68,
+    "matched_title": "Twilight",
+    "rejected": false
+  },
+  {
+    "id": 10,
+    "title": "Harry Potter and the Chamber of Secrets",
+    "author": "J. K. Rowling",
+    "on_shelves": 6653,
+    "n_ratings": 459,
+    "rating": 4.18,
+    "matched_title": "Harry Potter and the Chamber of Secrets",
+    "rejected": false
+  },
+  {
+    "id": 9,
+    "title": "The Lightning Thief",
+    "author": "Rick Riordan",
+    "on_shelves": 6987,
+    "n_ratings": 407,
+    "rating": 4.29,
+    "matched_title": "The Lightning Thief",
+    "rejected": false
+  },
+  {
+    "id": 8,
+    "title": "The Hunger Games",
+    "author": "Suzanne Collins",
+    "on_shelves": 7300,
+    "n_ratings": 547,
+    "rating": 4.12,
+    "matched_title": "The Hunger Games",
+    "rejected": false
+  },
+  {
+    "id": 7,
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "on_shelves": 7560,
+    "n_ratings": 399,
+    "rating": 4.21,
+    "matched_title": "Pride and Prejudice",
+    "rejected": false
+  },
+  {
+    "id": 6,
+    "title": "Diary of a Wimpy Kid",
+    "author": "Jeff Kinney",
+    "on_shelves": 7596,
+    "n_ratings": 445,
+    "rating": 4.1,
+    "matched_title": "Diary of a Wimpy Kid",
+    "rejected": false
+  },
+  {
+    "id": 5,
+    "title": "Nineteen Eighty-Four",
+    "author": "George Orwell",
+    "on_shelves": 8433,
+    "n_ratings": 419,
+    "rating": 4.28,
+    "matched_title": "Nineteen Eighty-Four",
+    "rejected": false
+  },
+  {
+    "id": 4,
+    "title": "It",
+    "author": "Stephen King",
+    "on_shelves": 11860,
+    "n_ratings": 492,
+    "rating": 4.09,
+    "matched_title": "It",
+    "rejected": false
+  },
+  {
+    "id": 3,
+    "title": "A Game of Thrones",
+    "author": "George R. R. Martin",
+    "on_shelves": 13373,
+    "n_ratings": 759,
+    "rating": 4.22,
+    "matched_title": "A Game of Thrones",
+    "rejected": false
+  },
+  {
+    "id": 2,
+    "title": "Harry Potter and the Philosopher's Stone",
+    "author": "J. K. Rowling",
+    "on_shelves": 23612,
+    "n_ratings": 1021,
+    "rating": 4.21,
+    "matched_title": "Harry Potter and the Philosopher's Stone",
+    "rejected": false
+  },
+  {
+    "id": 1,
+    "title": "The 48 Laws of Power",
+    "author": "Robert Greene",
+    "on_shelves": 51033,
+    "n_ratings": 1193,
+    "rating": 4.03,
+    "matched_title": "The 48 Laws of Power",
+    "rejected": false
+  }
+]

@@ -184,3 +184,35 @@ def test_reconfirming_a_cached_book_heals_its_cover(client, monkeypatch):
 
     assert second["book"]["id"] == book_id, "should have reused the cached row"
     assert database.get_book_by_id(book_id)["thumbnail"] == candidate["thumbnail"]
+
+
+# ----- the cover the reader actually sees -----
+
+def test_a_book_carries_a_second_way_to_ask_for_its_cover(client):
+    """Audited over all 250 verified books: the cover of the EDITION we stored
+    404s for 90 of them, and 48 of those have a perfectly good cover filed
+    under the ISBN -- The Da Vinci Code among them. A third of Browse was
+    showing "Cover unavailable" for books whose cover we were asking for the
+    wrong way."""
+    token = register_and_login(client)
+    add_book(title="The Da Vinci Code")
+    listed = client.get("/api/catalogue", headers=auth(token)).get_json()["books"]
+    book = next(b for b in listed if b["title"] == "The Da Vinci Code")
+
+    assert "/b/olid/" in book["thumbnail"]
+    assert "/b/isbn/" in book["thumbnail_fallback"]
+    assert book["isbn_13"] in book["thumbnail_fallback"]
+
+
+def test_no_isbn_means_no_second_url_rather_than_a_broken_one(client):
+    token = register_and_login(client)
+    database.create_catalogue_book({
+        "title": "No Identifiers Here", "author": "A", "genres": "Fiction",
+        "open_library_edition_id": "OL999999M",
+        "source_dataset": "CMU Book Summary Corpus",
+        "verified_summary": "A verified summary long enough for the test to use.",
+        "short_summary": "A stored overview.", "short_summary_status": "ok",
+        "verification_status": "VERIFIED"})
+    listed = client.get("/api/catalogue", headers=auth(token)).get_json()["books"]
+    book = next(b for b in listed if b["title"] == "No Identifiers Here")
+    assert book["thumbnail_fallback"] == ""

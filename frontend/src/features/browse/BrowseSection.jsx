@@ -164,8 +164,8 @@ export function BrowseSection({ token }) {
         {books.map((book) => (
           <button className="browse-card" key={book.id} type="button"
                   onClick={() => open(book)}>
-            <BookCover src={book.thumbnail} alt={`Cover of ${book.title}`}
-                       loading="lazy" />
+            <BookCover src={book.thumbnail} fallback={book.thumbnail_fallback}
+                       alt={`Cover of ${book.title}`} loading="lazy" />
             <span className="browse-card-title">{book.title}</span>
             <span className="browse-card-author">{book.author}</span>
           </button>
@@ -180,6 +180,7 @@ export function BrowseSection({ token }) {
                     onClick={() => setSelected(null)}>Close</button>
             <div className="browse-detail-layout">
               <BookCover className="result-cover" src={selected.thumbnail}
+                         fallback={selected.thumbnail_fallback}
                          alt={`Cover of ${selected.title}`} />
               <div>
                 <h3 className="book-title">{selected.title}</h3>

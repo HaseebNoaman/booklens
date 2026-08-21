@@ -138,7 +138,8 @@ export function StarterShelf({ token, title, categories, bookId, onAnswered,
           <button className="browse-card" key={book.id} type="button"
                   disabled={busy !== 0} onClick={() => markRead(book)}
                   aria-label={`I have read ${book.title} by ${book.author}`}>
-            <BookCover src={book.thumbnail} alt="" loading="lazy" />
+            <BookCover src={book.thumbnail} fallback={book.thumbnail_fallback}
+                       alt="" loading="lazy" />
             <span className="browse-card-title">{book.title}</span>
             <span className="browse-card-author">{book.author}</span>
             <span className="starter-cta">

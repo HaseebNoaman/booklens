@@ -1,0 +1,4 @@
+# Run logs and shard intermediates. The finished audits are committed; these
+# are the noise around producing them.
+_*.log
+description_audit.part*.json

@@ -35,6 +35,25 @@ def test_an_appended_author_name_is_still_the_same_book():
     assert not ls.titles_agree("Dune", "Dune Messiah", "Frank Herbert")
 
 
+def test_a_book_named_after_its_author_still_matches_itself():
+    """The bug the catalogue audit surfaced.
+
+    Dropping the author's words from the returned title is what lets Becoming
+    match "Becoming Michelle Obama". Done unconditionally it rejected "The
+    Autobiography of Benjamin Franklin" against an identical string: both names
+    were stripped from one side only, leaving "the autobiography of" to be
+    compared with the whole title. Every book with its author in the title lost
+    its rating that way.
+    """
+    assert ls.titles_agree("The Autobiography of Benjamin Franklin",
+                           "The Autobiography of Benjamin Franklin",
+                           "Benjamin Franklin")
+    assert ls.titles_agree("The Diary of a Young Girl",
+                           "The Diary of a Young Girl", "Anne Frank")
+    # and the guard it exists to preserve still holds
+    assert not ls.titles_agree("The Shining", "Stephen King", "Stephen King")
+
+
 def test_a_biography_of_the_author_is_not_the_book():
     """The failure the 100-cover run surfaced three times: The Shining came
     back as "Stephen King" by Bev Vincent, because the largest text on the

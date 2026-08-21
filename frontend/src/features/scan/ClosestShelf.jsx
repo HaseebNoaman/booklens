@@ -51,7 +51,8 @@ export function ClosestShelf({ token, heading }) {
       <div className="browse-grid closest-grid">
         {books.map((book) => (
           <article className="browse-card closest-card" key={book.id}>
-            <BookCover src={book.thumbnail} alt="" loading="lazy" />
+            <BookCover src={book.thumbnail} fallback={book.thumbnail_fallback}
+                       alt="" loading="lazy" />
             <span className="browse-card-title">{book.title}</span>
             <span className="browse-card-author">{book.author}</span>
             {/* The reason, in the reader's own books. Without this the section
