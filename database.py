@@ -1339,6 +1339,11 @@ def create_catalogue_book(data, admin_user_id=None):
         ))
         record_id = cur.lastrowid
         conn.commit()
+        # The rarity weighting reads a cached subject census. Changing
+        # the catalogue changes that census, and nothing invalidated it:
+        # an admin could add ten books and every card would keep
+        # weighting subjects against the shelf as it was at boot.
+        reset_subject_counts()
         return record_id
     except sqlite3.IntegrityError as exc:
         raise ValueError("A catalogue record with one of these identifiers already exists") from exc
@@ -1402,6 +1407,11 @@ def update_catalogue_book(record_id, data, admin_user_id):
             record_id,
         ))
         conn.commit()
+        # The rarity weighting reads a cached subject census. Changing
+        # the catalogue changes that census, and nothing invalidated it:
+        # an admin could add ten books and every card would keep
+        # weighting subjects against the shelf as it was at boot.
+        reset_subject_counts()
         return cur.rowcount == 1
     except sqlite3.IntegrityError as exc:
         raise ValueError("A catalogue record with one of these identifiers already exists") from exc

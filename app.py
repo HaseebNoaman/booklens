@@ -2498,6 +2498,70 @@ def catalogue_detail(current_user, record_id):
     })
 
 
+@app.route("/api/for-you", methods=["POST"])
+@token_required
+def for_you(current_user):
+    """Re-answer "Is this for you?", and offer the books worth asking about.
+
+    Reads; never writes. The starter shelf writes through the existing
+    /api/catalogue/<id>/read route, so the two halves stay separable: this one
+    can be called as often as the panel needs without touching a library.
+
+    Keyed on the SUBJECTS rather than on a book id because the confirm card
+    computes for_you for a candidate that has not been saved yet -- there is no
+    id to key on at the moment the panel is on screen. The subjects came from
+    us in the first place, and they are only ever compared against this
+    reader's own history, so nothing here can reach another account.
+    """
+    payload = request.get_json(silent=True) or {}
+    title = str(payload.get("title") or "").strip()[:300]
+    categories = payload.get("categories") or ""
+    if isinstance(categories, (list, tuple)):
+        categories = [str(c)[:60] for c in categories[:40]]
+    else:
+        categories = str(categories)[:2000]
+
+    try:
+        book_id = int(payload.get("book_id"))
+    except (TypeError, ValueError):
+        book_id = None
+
+    # Which catalogue ids the panel has already shown. "I have not read any of
+    # these" is only honest if the next six are actually different ones.
+    seen = set()
+    for value in (payload.get("exclude_ids") or [])[:60]:
+        try:
+            seen.add(int(value))
+        except (TypeError, ValueError):
+            continue
+
+    wanted = payload.get("want_starters")
+    wanted = 6 if wanted is None else max(0, min(int(wanted or 0), 12))
+
+    assessment = taste_for_client(current_user["id"], categories, book_id, title)
+
+    starters, targeted = [], False
+    # The shelf belongs to the two states it can actually resolve. A book with
+    # no subjects is the PUBLISHER's gap: no amount of reading history answers
+    # it, so offering books to tap there would promise something untrue.
+    offerable = (taste_profile.STATE_COLD_START,
+                 taste_profile.STATE_INTEREST_MATCH)
+    if wanted and assessment["state"] in offerable:
+        counts, catalogue_size = catalogue_subject_counts()
+        rows = [dict(r) for r in list_catalogue("VERIFIED")
+                if r["id"] not in seen]
+        # Never offer a book this reader has already told us about -- tapping
+        # it would change nothing and would look broken.
+        mine = [r["title"] for r in get_taste_profile_books(current_user["id"])]
+        picked, targeted = taste_profile.starter_candidates(
+            categories, rows, exclude_titles=[title] + mine, limit=wanted,
+            subject_counts=counts, catalogue_size=catalogue_size)
+        starters = [catalogue_for_reader(r) for r in picked]
+
+    return jsonify({"for_you": assessment, "starters": starters,
+                    "targeted": targeted})
+
+
 @app.route("/api/books/<int:book_id>/summary", methods=["GET"])
 @token_required
 def book_summary_status(current_user, book_id):

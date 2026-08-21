@@ -308,3 +308,113 @@ def assess(book_subjects_raw, history_rows, book_title="", interests="",
         "book_count": len(matching_titles),
         "examples": examples,
     }
+
+
+# ----- the starter shelf -----
+#
+# WHY THIS EXISTS. A reader with an empty library scans a cover and gets
+# STATE_COLD_START: "nothing to compare this with yet". That state was honest
+# but it was also a dead end -- the only way out was a link that navigated away
+# from the result they had just taken a photograph of.
+#
+# So the panel asks a question instead: "have you read any of these six?" The
+# answer is a fact the reader supplies, and one answer is enough (see
+# MIN_PROFILE_BOOKS above) to turn the section into a real one.
+#
+# WHICH six is the whole design. Offering six books at random mostly asks about
+# books that cannot answer anything: measured over the 238 catalogue books that
+# carry subjects, a book shares a DISTINGUISHING subject with a median of 40
+# others, so the informative peers exist and picking them is worth doing.
+#
+# This is not rigging the answer. The panel asks whether the reader has read a
+# book; it never assumes they have, and a tap is never read as a "like". What
+# the selection chooses is which QUESTION is worth asking -- the one whose
+# answer changes what the card can say. The truth of "you have read 2 books
+# tagged Time travel" does not depend on which books we asked about.
+#
+# Measured before building: one tap produces a real match for 196 of the 238
+# catalogue books, and for 23 of the 31 real scanned books that carry subjects.
+# The other 42 carry only shelf-wide labels, and for those no peer can ever be
+# evidence -- see targeted=False at the call site, where the copy says so.
+
+
+def starter_candidates(book_subjects_raw, catalogue_rows, exclude_titles=(),
+                       limit=6, subject_counts=None, catalogue_size=0):
+    """Six books worth asking a new reader about, given the book in their hand.
+
+    catalogue_rows are passed in rather than queried, for the same reason
+    subject_counts is: this module must stay testable without a database. Each
+    row needs a "title" and a "categories" (or "genres") field.
+
+    Returns (rows, targeted). targeted is False when the scanned book has no
+    subject rare enough to be evidence -- the caller still shows a shelf, but
+    must not promise it will answer THIS book.
+    """
+    wanted = {s for s in normalize_subjects(book_subjects_raw)
+              if not too_common_to_be_evidence(s, subject_counts, catalogue_size)}
+
+    skip = {" ".join((t or "").strip().lower().split()) for t in exclude_titles}
+    skip.discard("")
+
+    def subjects_of(row):
+        return normalize_subjects(row.get("categories") or row.get("genres"))
+
+    def usable(row):
+        title = " ".join((row.get("title") or "").strip().lower().split())
+        return bool(title) and title not in skip
+
+    rows = [r for r in catalogue_rows if usable(r)]
+
+    if not wanted:
+        # Nothing about this book can be matched, so ask about the books that
+        # will distinguish the reader MOST for whatever they scan next. The
+        # profile outlives the scan; that is the honest thing this can offer.
+        return _spread_across_subjects(rows, subjects_of, subject_counts,
+                                       catalogue_size, limit), False
+
+    # Bucket by the rarest subject each candidate shares with the book in hand,
+    # then take one from each bucket in turn. Without the round robin the six
+    # are six copies of the same reason -- every Christie novel, and nothing to
+    # tap for a reader who has read none of them.
+    buckets = {}
+    for row in rows:
+        shared = subjects_of(row) & wanted
+        if not shared:
+            continue
+        lead = max(shared, key=lambda s: subject_weight(s, subject_counts,
+                                                        catalogue_size))
+        buckets.setdefault(lead, []).append(row)
+
+    if not buckets:
+        return _spread_across_subjects(rows, subjects_of, subject_counts,
+                                       catalogue_size, limit), False
+
+    return _round_robin(buckets, subject_counts, catalogue_size, limit), True
+
+
+def _round_robin(buckets, subject_counts, catalogue_size, limit):
+    order = sorted(buckets, key=lambda s: (-subject_weight(s, subject_counts,
+                                                           catalogue_size), s))
+    picked, index = [], 0
+    while len(picked) < limit and any(buckets[s] for s in order):
+        label = order[index % len(order)]
+        if buckets[label]:
+            picked.append(buckets[label].pop(0))
+        index += 1
+    return picked
+
+
+def _spread_across_subjects(rows, subjects_of, subject_counts, catalogue_size,
+                            limit):
+    """The fallback shelf: books that between them cover the most ground."""
+    buckets = {}
+    for row in rows:
+        usable_subjects = [s for s in subjects_of(row)
+                           if not too_common_to_be_evidence(s, subject_counts,
+                                                            catalogue_size)]
+        if not usable_subjects:
+            continue
+        lead = max(usable_subjects,
+                   key=lambda s: subject_weight(s, subject_counts, catalogue_size))
+        buckets.setdefault(lead, []).append(row)
+    return _round_robin(buckets, subject_counts, catalogue_size, limit)

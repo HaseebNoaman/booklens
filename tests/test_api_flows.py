@@ -19,6 +19,11 @@ def png_bytes():
 def client(tmp_path):
     database.DB_NAME = str(tmp_path / "app.db")
     database.init_db()
+    # The subject census is cached for the life of the PROCESS, which is
+    # right for a server and wrong for a suite: without this, the first
+    # test to build a card freezes its catalogue for every test after it,
+    # and the rarity weighting is then measured against the wrong shelf.
+    database.reset_subject_counts()
     app_module.app.config.update(TESTING=True, MAX_CONTENT_LENGTH=1024 * 1024)
     return app_module.app.test_client()
 

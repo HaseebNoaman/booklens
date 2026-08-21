@@ -88,6 +88,14 @@ def test_a_browsed_book_carries_the_same_taste_evidence(client):
         database.update_history_reading(user["id"], hid, "finished", "")
 
     add_book()
+    # The shelf has to be bigger than the book being asked about. A subject is
+    # only evidence if it is rare, so on a one-book catalogue "psychological"
+    # is on 100% of the shelf and the honest answer is no_match. This test used
+    # to pass on a census cached by whichever test file ran before it.
+    for title, genres in (("Emma", "Romance"), ("Dune", "Space opera"),
+                          ("Carrie", "Horror"), ("Rebecca", "Gothic"),
+                          ("Hyperion", "Science")):
+        add_book(title=title, genres=genres)
     listed = client.get("/api/catalogue", headers=auth(token)).get_json()["books"]
     record = next(b for b in listed if b["title"] == "The Silent Patient")
 
