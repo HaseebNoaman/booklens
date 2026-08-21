@@ -329,8 +329,11 @@ function ForYou({ forYou }) {
     return (
       <section className="for-you" aria-labelledby="for-you-title">
         <h3 className="facts-heading" id="for-you-title">Is this for you?</h3>
+        {/* Names the interest instead of saying "an interest you chose". A
+            reader with eight interests wants to know WHICH one this book hits;
+            the vague version told them something they already knew. */}
         <p className="for-you-evidence">
-          Matches an interest you chose
+          You picked {subjects.length === 1 ? subjects[0] : subjects.slice(0, -1).join(", ") + " and " + subjects[subjects.length - 1]} — this is one
         </p>
         <div className="tag-row">
           {subjects.map((subject) => (

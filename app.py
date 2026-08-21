@@ -46,7 +46,7 @@ from whatitsabout_heuristic import (METHOD as EXTERNAL_OVERVIEW_METHOD,
 from thefuzz import fuzz
 
 from database import (CACHE_AUTHOR_MATCH, backfill_book_thumbnail,
-                      prior_engagement,
+                      prior_engagement, catalogue_subject_counts,
                       catalogue_subject_vocabulary,
                       get_taste_profile_books, get_user_interests,
                       set_user_interests,
@@ -1334,13 +1334,21 @@ def taste_for_client(user_id, categories, book_id=None, title=""):
     never shared between accounts. A new account legitimately gets the
     cold-start state; that is the honest answer, not a bug to paper over.
     """
+    # How often each subject appears across the catalogue, so a shared label
+    # can be weighted by how much it actually distinguishes. Cached in
+    # database.py, so this is a dictionary lookup rather than a query.
+    counts, catalogue_size = catalogue_subject_counts()
     if not user_id:
         # No signed-in user means no library to compare against. Cold start is
         # the truthful answer; it must never raise and lose the whole scan.
-        return taste_profile.assess(categories, [], title)
+        return taste_profile.assess(categories, [], title,
+                                    subject_counts=counts,
+                                    catalogue_size=catalogue_size)
     history = [dict(r) for r in get_taste_profile_books(user_id, book_id)]
     return taste_profile.assess(categories, history, title,
-                                get_user_interests(user_id))
+                                get_user_interests(user_id),
+                                subject_counts=counts,
+                                catalogue_size=catalogue_size)
 
 
 def cache_hit_response(book_row, extracted_title, extracted_author,

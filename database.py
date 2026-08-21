@@ -548,13 +548,22 @@ def set_user_interests(user_id, interests):
         conn.close()
 
 
-def catalogue_subject_vocabulary(limit=24):
-    """The subjects a reader can actually choose from.
+def catalogue_subject_counts():
+    """How many verified catalogue books carry each subject, and how many books.
 
-    Drawn from the catalogue's own genres rather than a hand-written list, so
-    every option is one that real books carry. Offering "Steampunk" when no
-    book is shelved under it would guarantee an empty answer.
+    Used to weight a shared subject by how rare it is: sharing "speculative"
+    with 52% of the shelf is not evidence, sharing "time travel" with 1% is.
+    Measured on the 250-book catalogue -- 85 subjects, of which only four are
+    carried by more than a fifth of it, and the median subject appears in two
+    books.
+
+    Cached for the process: the catalogue is loaded at deploy time and does not
+    change while the server runs, and this would otherwise read 250 rows on
+    every single card.
     """
+    global _SUBJECT_COUNTS
+    if _SUBJECT_COUNTS is not None:
+        return _SUBJECT_COUNTS
     conn = get_db()
     try:
         rows = conn.execute("""
@@ -568,6 +577,28 @@ def catalogue_subject_vocabulary(limit=24):
     for row in rows:
         for label in taste_profile.normalize_subjects(row["genres"]):
             counts[label] = counts.get(label, 0) + 1
+    _SUBJECT_COUNTS = (counts, len(rows))
+    return _SUBJECT_COUNTS
+
+
+_SUBJECT_COUNTS = None
+
+
+def reset_subject_counts():
+    """Drop the cache. Called after the catalogue changes, and by tests."""
+    global _SUBJECT_COUNTS
+    _SUBJECT_COUNTS = None
+
+
+def catalogue_subject_vocabulary(limit=24):
+    """The subjects a reader can actually choose from.
+
+    Drawn from the catalogue's own genres rather than a hand-written list, so
+    every option is one that real books carry. Offering "Steampunk" when no
+    book is shelved under it would guarantee an empty answer.
+    """
+    import taste_profile
+    counts, _total = catalogue_subject_counts()
     ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
     return [taste_profile.display_subject(label) for label, _ in ranked[:limit]]
 
