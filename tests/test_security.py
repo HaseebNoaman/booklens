@@ -102,7 +102,9 @@ def test_sql_like_input_is_stored_as_data(client):
     response = client.post("/api/register", json={
         "name": "Robert'); DROP TABLE users;--",
         "email": "safe@example.com", "password": "strongpass"})
-    assert response.status_code == 201
+    assert response.status_code == 202
+    import database
+    database.mark_email_verified(database.get_user_by_email("safe@example.com")["id"])
     assert client.post("/api/login", json={"email": "safe@example.com",
                                            "password": "strongpass"}).status_code == 200
 

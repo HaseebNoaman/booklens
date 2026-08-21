@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Icon, ModalShell } from "../../components/ui.jsx";
 import { authFetch, postJson } from "../../services/api.js";
 
-    function AuthModal({ mode, setMode, onClose, onLogin, initialInfo }) {
+    function AuthModal({ mode, setMode, onClose, onLogin, initialInfo, resetToken }) {
       const [name, setName] = useState("");
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
@@ -12,16 +12,43 @@ import { authFetch, postJson } from "../../services/api.js";
       // busy = a request is in flight. We disable the button so a double
       // click cannot send the same request twice.
       const [busy, setBusy] = useState(false);
+      // Set when the server says this address exists but has never confirmed
+      // itself. It is the only case where offering to send another link is
+      // useful, so the button appears only then.
+      const [needsConfirm, setNeedsConfirm] = useState(false);
+      // What the "check your inbox" panel should say. Filled by signup, by a
+      // resend, and by a password-reset request -- all three end the same way.
+      const [sent, setSent] = useState(null);
+
+      function reachFailed() {
+        setError("Could not reach the server. Please try again.");
+      }
+
+      // The server reports whether mail actually left the building. "logged"
+      // means no provider is configured and the link went to the server log
+      // instead, which is normal on a developer machine and a serious problem
+      // anywhere else -- so it is shown rather than smoothed over.
+      function inboxPanel(data) {
+        return {
+          message: data.message,
+          devNote: data.delivery === "logged"
+            ? "No mail provider is configured on this server, so the link was written to the server log instead of being sent."
+            : "",
+        };
+      }
 
       async function submitLogin(e) {
         e.preventDefault();   // stop the browser reloading the page on submit
-        setError(""); setBusy(true);
+        setError(""); setNeedsConfirm(false); setBusy(true);
         try {
           const { ok, data } = await postJson("/login", { email, password });
           if (ok) onLogin(data.token, data.user);
-          else setError(data.error || "Login failed");
+          else {
+            setError(data.error || "Login failed");
+            if (data.code === "email_unverified") setNeedsConfirm(true);
+          }
         } catch (e) {
-          setError("Could not reach the server. Please try again.");
+          reachFailed();
         } finally {
           setBusy(false);
         }
@@ -32,22 +59,128 @@ import { authFetch, postJson } from "../../services/api.js";
         setError(""); setBusy(true);
         try {
           const { ok, data } = await postJson("/register", { name, email, password });
-          if (ok) {
-            setMode("login");
-            setInfo("Account created! Sign in below.");
-          } else {
-            setError(data.error || "Registration failed");
-          }
+          // An account now starts life unconfirmed, so there is nothing to
+          // sign in to yet. Sending the reader to a sign-in form here would
+          // hand them a password that does not work.
+          if (ok) setSent(inboxPanel(data));
+          else setError(data.error || "Registration failed");
         } catch (e) {
-          setError("Could not reach the server. Please try again.");
+          reachFailed();
         } finally {
           setBusy(false);
         }
       }
 
+      async function resendConfirmation() {
+        setError(""); setBusy(true);
+        try {
+          const { ok, data } = await postJson("/resend-verification", { email });
+          if (ok) setSent(inboxPanel(data));
+          else setError(data.error || "Could not send the email");
+        } catch (e) {
+          reachFailed();
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      async function submitForgot(e) {
+        e.preventDefault();
+        setError(""); setBusy(true);
+        try {
+          const { ok, data } = await postJson("/forgot-password", { email });
+          if (ok) setSent(inboxPanel(data));
+          else setError(data.error || "Could not send the email");
+        } catch (e) {
+          reachFailed();
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      async function submitReset(e) {
+        e.preventDefault();
+        setError(""); setBusy(true);
+        try {
+          const { ok, data } = await postJson("/reset-password", {
+            token: resetToken, password,
+          });
+          if (ok) {
+            setPassword("");
+            setMode("login");
+            setInfo(data.message);
+          } else {
+            setError(data.error || "Could not update the password");
+          }
+        } catch (e) {
+          reachFailed();
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      function goTo(next) {
+        setMode(next); setError(""); setInfo(""); setNeedsConfirm(false); setSent(null);
+      }
+
+      // One panel for every "we have emailed you" outcome. It deliberately
+      // does not say whether the address was already registered -- the server
+      // does not tell us, on purpose.
+      if (sent) {
+        return (
+          <ModalShell onClose={onClose} labelledBy="auth-dialog-title">
+            <h2 id="auth-dialog-title" className="dialog-title">Check your inbox</h2>
+            <p className="dialog-intro">{sent.message}</p>
+            {sent.devNote && <div className="error-msg" role="status">{sent.devNote}</div>}
+            <br />
+            <button className="btn full" type="button" onClick={() => goTo("login")}>
+              Back to sign in
+            </button>
+          </ModalShell>
+        );
+      }
+
       return (
         <ModalShell onClose={onClose} labelledBy="auth-dialog-title">
-            {mode === "login" ? (
+            {mode === "reset" ? (
+              <form onSubmit={submitReset}>
+                <h2 id="auth-dialog-title" className="dialog-title">Choose a new password</h2>
+                <p className="dialog-intro">
+                  You will be signed out everywhere else once this is saved.
+                </p>
+                <label htmlFor="reset-password">New password (minimum 8 characters)</label>
+                <input id="reset-password" type="password" value={password}
+                       onChange={(e) => setPassword(e.target.value)}
+                       placeholder="••••••••" autoComplete="new-password" minLength={8} required />
+                <br /><br />
+                <button className="btn full" type="submit" disabled={busy}>
+                  {busy ? "Saving..." : "Save new password"}
+                </button>
+                {error && <div className="error-msg" role="alert">{error}</div>}
+                <button type="button" className="link" onClick={() => goTo("login")}>
+                  Back to sign in
+                </button>
+              </form>
+            ) : mode === "forgot" ? (
+              <form onSubmit={submitForgot}>
+                <h2 id="auth-dialog-title" className="dialog-title">Reset your password</h2>
+                <p className="dialog-intro">
+                  Enter your email address and we will send you a link.
+                </p>
+                <label htmlFor="forgot-email">Email</label>
+                <input id="forgot-email" type="email" value={email}
+                       onChange={(e) => setEmail(e.target.value)}
+                       placeholder="you@example.com" autoComplete="email" required />
+                <br /><br />
+                <button className="btn full" type="submit" disabled={busy}>
+                  {busy ? "Sending..." : "Send reset link"}
+                </button>
+                {error && <div className="error-msg" role="alert">{error}</div>}
+                <button type="button" className="link" onClick={() => goTo("login")}>
+                  Back to sign in
+                </button>
+              </form>
+            ) : mode === "login" ? (
               // A real <form> means pressing Enter submits, like users expect.
               <form onSubmit={submitLogin}>
                 <h2 id="auth-dialog-title" className="dialog-title">Welcome back</h2>
@@ -64,14 +197,25 @@ import { authFetch, postJson } from "../../services/api.js";
                   {busy ? "Signing in..." : "Sign In"}
                 </button>
                 {error && <div className="error-msg" role="alert">{error}</div>}
-                <button type="button" className="link" onClick={() => { setMode("register"); setError(""); setInfo(""); }}>
+                {needsConfirm && (
+                  <button type="button" className="btn-outline full" disabled={busy}
+                          onClick={resendConfirmation}>
+                    Send the confirmation link again
+                  </button>
+                )}
+                <button type="button" className="link" onClick={() => goTo("forgot")}>
+                  Forgotten your password?
+                </button>
+                <button type="button" className="link" onClick={() => goTo("register")}>
                   New to BookLens? Create a free account
                 </button>
               </form>
             ) : (
               <form onSubmit={submitRegister}>
                 <h2 id="auth-dialog-title" className="dialog-title">Create your account</h2>
-                <p className="dialog-intro">Create an account and start scanning in under a minute.</p>
+                <p className="dialog-intro">
+                  We will email you a link to confirm your address.
+                </p>
                 <label htmlFor="register-name">Full name</label>
                 <input id="register-name" value={name} onChange={(e) => setName(e.target.value)}
                        placeholder="Your name" autoComplete="name" required />
@@ -86,7 +230,7 @@ import { authFetch, postJson } from "../../services/api.js";
                   {busy ? "Creating account..." : "Create Account"}
                 </button>
                 {error && <div className="error-msg" role="alert">{error}</div>}
-                <button type="button" className="link" onClick={() => { setMode("login"); setError(""); }}>
+                <button type="button" className="link" onClick={() => goTo("login")}>
                   Already have an account? Sign in
                 </button>
               </form>

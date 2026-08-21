@@ -6,7 +6,8 @@
 #   whatitsabout_heuristic.py -> select grounded external overview text
 #   database.py    -> save and read users / books / history
 
-from flask import Flask, request, jsonify, make_response, send_from_directory
+from flask import (Flask, request, jsonify, make_response,
+                   redirect, send_from_directory)
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from functools import wraps
@@ -34,14 +35,18 @@ from ocrpp import (process_book_cover, OCR_REC_TIER, OCR_ESCALATE_REC_TIER)
 from barcode_reader import read_isbn
 from api import (searchbook, search_by_isbn,
                  retrieve_ranked_candidates, hydrate_exact_candidate)
-from matching import (valid_isbn, normalize_isbn, rank_candidates,
-                      recover_ocr_candidates,
+from matching import (valid_isbn, normalize_isbn, normalize_match_text,
+                      rank_candidates, recover_ocr_candidates,
+                      UNSAFE_EDITION_RE,
                       HIGH_CONFIDENCE, NEEDS_CONFIRMATION, REJECTED)
 from result_content import language_for_client
 import taste_profile
 from whatitsabout_heuristic import (METHOD as EXTERNAL_OVERVIEW_METHOD,
                                     build_external_overview)
-from database import (backfill_book_thumbnail, catalogue_subject_vocabulary,
+from thefuzz import fuzz
+
+from database import (CACHE_AUTHOR_MATCH, backfill_book_thumbnail,
+                      catalogue_subject_vocabulary,
                       get_taste_profile_books, get_user_interests,
                       set_user_interests,
                       init_db, create_user, get_user_by_email, get_user_by_id,
@@ -65,7 +70,10 @@ from database import (backfill_book_thumbnail, catalogue_subject_vocabulary,
                       get_candidate_for_user, complete_identification,
                       list_identification_attempts, identification_counts,
                       audit_admin_action, get_admin_logs, set_user_active,
-                      update_book_verified_summary, update_book_ai_summary)
+                      update_book_verified_summary, update_book_ai_summary,
+                      create_auth_token, consume_auth_token,
+                      mark_email_verified, is_email_verified)
+import mailer
 
 # ----- Logging -----
 # logging is the grown-up version of print(): every line gets a timestamp
@@ -355,6 +363,16 @@ def frontend_index():
     return send_from_directory(FRONTEND_DIST, "index.html")
 
 
+# The two pages an email link can land on. They serve the same single-page
+# app as "/" and let the client read its own query string. These are explicit
+# routes rather than a catch-all: a catch-all would swallow unknown /api/*
+# paths and answer them with HTML instead of the JSON 404 the frontend expects.
+@app.route("/verify", methods=["GET"])
+@app.route("/reset", methods=["GET"])
+def frontend_email_landing():
+    return frontend_index()
+
+
 @app.route("/assets/<path:filename>", methods=["GET"])
 def frontend_asset(filename):
     # send_from_directory keeps asset resolution inside dist/assets and blocks
@@ -365,6 +383,68 @@ def frontend_asset(filename):
 def health():
     # Simple check to see if the server is alive.
     return jsonify({"status": "running"})
+
+
+# ----- Account verification -----
+# How long a link stays usable. Verification is generous because people read
+# email hours later; a reset is deliberately tight because it hands over an
+# account.
+VERIFY_TTL_SECONDS = 24 * 60 * 60
+RESET_TTL_SECONDS = 60 * 60
+
+# One sentence, used for every registration outcome. It is worded so that it
+# is equally true whether the address was new, already waiting to be
+# confirmed, or already had a working account -- which is what stops the
+# response from revealing which of those it was.
+REGISTERED_MESSAGE = ("If that address can receive mail, a confirmation link "
+                      "is on its way. Open it to finish setting up your "
+                      "account.")
+
+
+def registration_response(delivery):
+    """The single answer /api/register gives, whatever happened underneath.
+
+    `delivery` describes the MAIL SYSTEM, never the address: a provider outage
+    looks the same for an address that exists and one that does not, so
+    reporting it honestly leaks nothing.
+    """
+    if delivery == "failed":
+        return jsonify({
+            "code": "mail_unavailable",
+            "error": ("We could not send the confirmation email just now. "
+                      "Your account is saved -- please request the link again "
+                      "in a moment.")
+        }), 503
+    return jsonify({
+        "message": REGISTERED_MESSAGE,
+        "status": "pending_verification",
+        # "logged" means no mail provider is configured and the link went to
+        # the server log instead. The frontend shows a developer hint for it,
+        # because silently pretending an email was sent is how a broken signup
+        # goes unnoticed for a week.
+        "delivery": delivery,
+    }), 202
+
+
+def issue_verification(user):
+    """Create a fresh verification link for one user and try to send it."""
+    if user is None:
+        return "failed"
+    token = secrets.token_urlsafe(32)
+    create_auth_token(user["id"], "verify", token, VERIFY_TTL_SECONDS)
+    link = "%s/api/verify-email?token=%s" % (mailer.base_url(), token)
+    subject, body = mailer.verification_email(user["name"], link)
+    return mailer.send_mail(user["email"], subject, body)
+
+
+def issue_password_reset(user):
+    if user is None:
+        return "failed"
+    token = secrets.token_urlsafe(32)
+    create_auth_token(user["id"], "reset", token, RESET_TTL_SECONDS)
+    link = "%s/reset?token=%s" % (mailer.base_url(), token)
+    subject, body = mailer.reset_email(user["name"], link)
+    return mailer.send_mail(user["email"], subject, body)
 
 
 @app.route("/api/register", methods=["POST"])
@@ -397,11 +477,31 @@ def register():
     # Never store the real password; Werkzeug creates a salted one-way hash.
     password_hash = generate_password_hash(password)
 
+    # WHY THIS ROUTE NEVER SAYS "email already registered".
+    # It used to answer 409 with exactly that, which let anyone test an address
+    # and learn whether it had an account here -- the very thing /api/login
+    # goes out of its way not to reveal. Every path below now ends in the same
+    # response, and the address owner is the only one who learns anything,
+    # because what they learn arrives in their inbox.
+    existing = get_user_by_email(email)
+    if existing is not None:
+        if is_email_verified(existing):
+            # Someone tried to sign up with an address that already works.
+            # Telling the owner is useful; telling the sender is not.
+            subject, body = mailer.existing_account_email(existing["name"])
+            delivery = mailer.send_mail(email, subject, body)
+        else:
+            delivery = issue_verification(existing)
+        return registration_response(delivery)
+
     user_id = create_user(name, email, password_hash)
     if user_id is None:
-        return jsonify({"error": "Email already registered"}), 409
+        # Lost a race against a concurrent signup for the same address.
+        # Same answer as every other branch.
+        return registration_response(mailer.would_send())
 
-    return jsonify({"message": "Account created successfully", "user_id": user_id}), 201
+    delivery = issue_verification(get_user_by_id(user_id))
+    return registration_response(delivery)
 
 
 @app.route("/api/login", methods=["POST"])
@@ -432,6 +532,15 @@ def login():
     if not check_password_hash(user["password_hash"], password):
         record_failed_login(email)
         return jsonify({"error": "Invalid email or password"}), 401
+
+    # Only now -- after the password has been proved -- is it safe to say
+    # anything about the state of this account. Checking verification before
+    # the password would tell an attacker the address exists.
+    if not is_email_verified(user):
+        return jsonify({
+            "code": "email_unverified",
+            "error": "Confirm your email address before signing in."
+        }), 403
 
     # Successful login -> clear any failed-attempt record.
     failed_logins.pop(email, None)
@@ -469,6 +578,84 @@ def logout(current_user):
     # issued for the account) without maintaining a complicated session table.
     revoke_user_tokens(current_user["id"])
     return jsonify({"message": "Signed out successfully"})
+
+
+@app.route("/api/verify-email", methods=["GET"])
+def verify_email():
+    # The link in the email lands HERE, not on a frontend route, and then
+    # redirects. That is deliberate: this app serves only "/" and "/assets",
+    # with a 404 handler that answers JSON, so a link straight to a client-side
+    # path would have shown the user a raw JSON error.
+    user_id = consume_auth_token(request.args.get("token", ""), "verify")
+    if user_id is None:
+        return redirect("/verify?state=invalid")
+    mark_email_verified(user_id)
+    return redirect("/verify?state=ok")
+
+
+@app.route("/api/resend-verification", methods=["POST"])
+@rate_limited(3, 900)
+def resend_verification():
+    data = request.get_json(silent=True) or {}
+    email = str(data.get("email", "")).strip().lower()
+    user = get_user_by_email(email) if EMAIL_REGEX.match(email) else None
+    delivery = mailer.would_send()
+    if user is not None and not is_email_verified(user):
+        delivery = issue_verification(user)
+    # Same answer for "no such address", "already verified" and "link resent".
+    return registration_response(delivery)
+
+
+@app.route("/api/forgot-password", methods=["POST"])
+@rate_limited(3, 900)
+def forgot_password():
+    data = request.get_json(silent=True) or {}
+    email = str(data.get("email", "")).strip().lower()
+    user = get_user_by_email(email) if EMAIL_REGEX.match(email) else None
+    delivery = mailer.would_send()
+    if user is not None:
+        delivery = issue_password_reset(user)
+    if delivery == "failed":
+        return jsonify({
+            "code": "mail_unavailable",
+            "error": "We could not send the reset email just now. Please try again shortly."
+        }), 503
+    return jsonify({
+        "message": ("If that address has an account, a reset link is on its "
+                    "way. It expires in an hour."),
+        "delivery": delivery,
+    }), 202
+
+
+@app.route("/api/reset-password", methods=["POST"])
+@rate_limited(8, 900)
+def reset_password():
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"error": "Invalid request body"}), 400
+    token = str(data.get("token", ""))
+    password = str(data.get("password", ""))
+    if len(password) < 8:
+        return jsonify({"error": "Password must be at least 8 characters"}), 400
+    if len(password) > 200:
+        return jsonify({"error": "Input too long"}), 400
+
+    user_id = consume_auth_token(token, "reset")
+    if user_id is None:
+        return jsonify({
+            "code": "reset_link_invalid",
+            "error": "That link has expired or has already been used. Please request a new one."
+        }), 400
+
+    update_user_password(user_id, generate_password_hash(password))
+    # Anyone holding an old token for this account loses it. Whoever asked for
+    # the reset may well be locking somebody else out on purpose.
+    revoke_user_tokens(user_id)
+    # Completing a reset proves the address receives mail, which is the same
+    # thing verification proves -- so an account that reset its password is
+    # verified by that act.
+    mark_email_verified(user_id)
+    return jsonify({"message": "Password updated. Please sign in with your new password."})
 
 
 # Remembers when each IP address last sent a contact message.
@@ -1350,22 +1537,102 @@ def retrieve_local_candidates(title, author="", isbn="", full_text="",
         recovered = recover_ocr_candidates(
             catalogue, title, author, full_text, text_lines, limit=limit)
         if recovered["decision"] != REJECTED:
-            recovered["tier"] = "local_catalogue_ocr_recovery"
+            recovered["tier"] = RECOVERY_TIER
             return recovered
     return local
 
 
+# The tier name recover_ocr_candidates results are filed under. Kept as a
+# constant because two functions now have to agree on what "this match came
+# from scrambled text" means.
+RECOVERY_TIER = "local_catalogue_ocr_recovery"
+
+
+def candidate_identity(candidate):
+    """The same identity rule rank_candidates de-duplicates on.
+
+    Reused rather than reinvented: if the two disagreed, a book found by both
+    Google and the catalogue would appear twice in one chooser.
+    """
+    return (candidate.get("google_books_id") or
+            candidate.get("open_library_key") or
+            normalize_isbn(candidate.get("isbn_13")) or
+            "%s|%s" % (normalize_match_text(candidate.get("title")),
+                       normalize_match_text(candidate.get("author"))))
+
+
+def merge_recovery_with_external(recovery, external, limit=5):
+    """Combine a scrambled-text recovery with what the providers returned.
+
+    WHY THIS EXISTS. recover_ocr_candidates matches catalogue rows against the
+    RAW cover text, which includes the back-cover blurb. Praise quotes name
+    other books, so a cover reading "...for readers of Cormac McCarthy's The
+    Road" recovered The Road at 79.9 and, because that is not a rejection, the
+    funnel stopped and never asked Google -- the reader was shown one wrong
+    book with no way to reach the right one. Measured on the 100-cover
+    benchmark, every wrong short-circuit came from this path.
+
+    So a recovery result is now evidence, not a verdict. Its candidates are
+    kept and shown, but the providers are always consulted as well.
+    """
+    if external.get("decision") == HIGH_CONFIDENCE:
+        # An exact provider identity outranks a guess assembled from loose
+        # words on a cover.
+        external["tier"] = "external"
+        return external
+
+    external_candidates = list(external.get("candidates") or [])
+    if not external_candidates:
+        # Providers had nothing to add: behave exactly as before, so a network
+        # outage cannot make identification worse than it already was.
+        return recovery
+
+    merged = []
+    seen = set()
+    for candidate in external_candidates + list(recovery.get("candidates") or []):
+        identity = candidate_identity(candidate)
+        if identity in seen:
+            continue
+        seen.add(identity)
+        candidate = dict(candidate)
+        # Nothing in this list may auto-accept. Half of it was recovered from
+        # jumbled text, and the reader is the one who can see the cover.
+        candidate["decision"] = NEEDS_CONFIRMATION
+        merged.append(candidate)
+
+    # Recovery scores and provider scores come from the same score_candidate()
+    # scale, so they are comparable. Deliberately NOT re-ranked through
+    # rank_candidates: that would score the recovered rows against the garbled
+    # OCR title they already failed, throwing away every book recovery gets
+    # right.
+    merged.sort(key=lambda item: float(item.get("score") or 0), reverse=True)
+    return {
+        "decision": NEEDS_CONFIRMATION,
+        "candidates": merged[:max(1, int(limit))],
+        "tier": "local_recovery_plus_external",
+        "rejected_count": int(external.get("rejected_count") or 0),
+    }
+
+
 def retrieve_tiered_candidates(title, author="", isbn="", full_text="", limit=5,
                                text_lines=None):
-    """Use Tier 1 exclusively unless the verified local catalogue misses."""
+    """Use Tier 1 exclusively unless the verified local catalogue misses.
+
+    "Misses" now includes a match that only the raw-text recovery could make.
+    A confident, directly-matched catalogue row still answers on its own --
+    that is the whole speed argument for having a local catalogue.
+    """
     local = retrieve_local_candidates(title, author, isbn, full_text,
                                       text_lines, limit=limit)
-    if local["decision"] != REJECTED:
+    if local["decision"] != REJECTED and local.get("tier") != RECOVERY_TIER:
         return local
+
     external = retrieve_ranked_candidates(title, author, isbn, full_text,
                                           limit=limit, text_lines=text_lines)
-    external["tier"] = "external"
-    return external
+    if local["decision"] == REJECTED:
+        external["tier"] = "external"
+        return external
+    return merge_recovery_with_external(local, external, limit=limit)
 
 
 def finalize_candidate(current_user, attempt_id, candidate_id,
@@ -1489,13 +1756,121 @@ def finalize_candidate(current_user, attempt_id, candidate_id,
     })
 
 
+# Words that appear on covers in their own right and are never a surname. The
+# author guess below is the first block SMALLER than the title, which on a cover
+# reading "The ALCHEMIST ... PAULO COELHO" is the word "The".
+_NOT_AN_AUTHOR = {
+    "the", "a", "an", "of", "and", "by", "in", "on", "to", "for", "from",
+    "new", "no", "is", "it", "all", "with", "his", "her", "you", "your",
+}
+
+
+def usable_ocr_author(value):
+    """Return the OCR author only when it could plausibly be a name.
+
+    A WRONG author is worse than no author at all, and the difference is not
+    subtle. score_candidate subtracts 35 for an author mismatch and
+    rank_candidates rejects outright below 35 similarity, so "The" offered as
+    the author of The Alchemist does not merely fail to help -- it throws Paulo
+    Coelho's novel out of the results, and the reader is shown "The Alchemist
+    Cocktail Book" instead. Blanking it costs only the author bonus, and a
+    candidate with no author supplied is still offered for confirmation.
+
+    Measured on 100 real covers: 18 produced an author like this, and dropping
+    it recovered 3 books that had been showing the WRONG title confidently.
+    """
+    value = (value or "").strip()
+    if not value:
+        return ""
+    words = re.findall(r"[A-Za-z']+", value.lower())
+    if not words:
+        # Digits only: a price, a barcode, or an ISBN printed on the cover.
+        return ""
+    if all(word in _NOT_AN_AUTHOR or len(word) <= 2 for word in words):
+        return ""
+    return value
+
+
+def drop_derived_products(candidates, keep_when_empty=True):
+    """Remove study guides and summaries when the real book is also on offer.
+
+    score_candidate already rejects these, but rank_candidates is not the only
+    way a candidate reaches the screen: when it rejects everything,
+    retrieve_ranked_candidates falls back to recover_ocr_candidates, and the
+    recovery path applies no derived-edition gate at all. That is how
+    "Summary: Atomic Habits by James Clear" ended up in a chooser next to the
+    real Atomic Habits.
+
+    Only ever removes rows while a genuine book remains. If every candidate
+    looks derived, they are all kept: the reader can see the covers and decide,
+    and silently emptying the list would turn a poor answer into no answer.
+    """
+    kept = [c for c in candidates or []
+            if not UNSAFE_EDITION_RE.search(" ".join(filter(None, (
+                c.get("title") or "", c.get("publisher") or ""))))]
+    if kept or keep_when_empty:
+        return kept if kept else list(candidates or [])
+    return []
+
+
+def collapse_duplicate_editions(candidates):
+    """Show each book once, however many editions the providers returned.
+
+    Google gives every printing its own volume id, so the ranking layer -- which
+    de-duplicates on identity, and correctly treats two ids as two records --
+    happily hands over five rows that all say "Rich Dad Poor Dad". Measured on
+    the 100-cover benchmark, 34 choosers repeated a title that way, and to a
+    reader that does not look thorough, it looks broken.
+
+    The reader is choosing WHICH BOOK they are holding, not which printing, so
+    the highest-scoring row per title+author survives and the rest are dropped.
+    Anyone who needs an exact printing scans the barcode, which resolves by ISBN
+    and never reaches this path. Ordering is preserved: the list arrives sorted
+    by score, and keeping the first occurrence keeps the best one.
+    """
+    collapsed = []
+    for candidate in candidates or []:
+        title = normalize_match_text(candidate.get("title"))
+        author = normalize_match_text(candidate.get("author"))
+        duplicate = False
+        for kept in collapsed:
+            if normalize_match_text(kept.get("title")) != title:
+                continue
+            kept_author = normalize_match_text(kept.get("author"))
+            # Same title is not enough on its own: "The Hobbit" names both
+            # Tolkien's novel and a video-game strategy guide, and "Stephen
+            # King" is both an author and the title of a book ABOUT him. The
+            # authors have to agree too -- loosely, because providers write the
+            # same person as "F. Scott Fitzgerald", "F Scott Fitzgerald" and
+            # "Francis Scott Fitzgerald". CACHE_AUTHOR_MATCH is the threshold
+            # database.py already uses for exactly this judgement.
+            if not author or not kept_author or                     fuzz.token_set_ratio(author, kept_author) >= CACHE_AUTHOR_MATCH:
+                duplicate = True
+                break
+        if not duplicate:
+            collapsed.append(candidate)
+    return collapsed
+
+
 def begin_candidate_funnel(current_user, evidence, ranked, input_method):
     decision = ranked.get("decision", REJECTED)
     evidence = dict(evidence)
     evidence["decision"] = decision
     evidence["failure_reason"] = ranked.get("error", "") if decision == REJECTED else ""
+    # An offer made ENTIRELY of study guides and box sets is not an answer, it
+    # is a wrong answer wearing a chooser. Verity was read as "HOOVER COLLEEN"
+    # -- the author's name, not the title -- and the only candidate that came
+    # back was a Colleen Hoover ebook bundle. Refusing is the honest outcome
+    # there, and it is the outcome this product is built around.
+    candidates = collapse_duplicate_editions(
+        drop_derived_products(ranked.get("candidates", []), keep_when_empty=False))
+    if not candidates:
+        decision = REJECTED
+        evidence["decision"] = REJECTED
+        evidence["failure_reason"] = evidence.get("failure_reason") or (
+            "Only derived editions matched, not the book itself.")
+
     attempt_id = create_identification_attempt(current_user["id"], input_method, evidence)
-    candidates = ranked.get("candidates", [])
     candidate_ids = save_candidate_matches(attempt_id, candidates)
     client_candidates = [candidate_for_client(c, cid)
                          for c, cid in zip(candidates, candidate_ids)]
@@ -1605,6 +1980,9 @@ def scan_verified(current_user):
         used_tier = OCR_REC_TIER
         ocr_attempts = []
         selected = None
+        # A match that only the raw-text recovery could make is held here
+        # instead of ending the search. See merge_recovery_with_external().
+        recovery_fallback = None
         for tier in tiers:
             result = process_book_cover(filepath, rec_tier=tier)
             status = classify_ocr(result)
@@ -1624,7 +2002,9 @@ def scan_verified(current_user):
             # correctly. Verify every pass against the catalogue, including
             # its raw lines, and escalate whenever the *book match* rejects.
             pass_title = (result.get("probable_title") or "").strip()
-            pass_author = (result.get("probable_author") or "").strip()
+            # Raw value is kept for the audit trail; only the QUERY is cleaned.
+            pass_author_raw = (result.get("probable_author") or "").strip()
+            pass_author = usable_ocr_author(pass_author_raw)
             pass_text = (result.get("full_text") or "").strip()
             pass_lines = result.get("text_lines") or []
             if pass_title or pass_text or pass_lines:
@@ -1643,12 +2023,23 @@ def scan_verified(current_user):
                             candidate["decision"] = NEEDS_CONFIRMATION
                             candidate.setdefault("reasons", []).append(
                                 "OCR confidence is low; confirmation required")
-                    selected = (result, status, tier, local)
-                    best, best_status, used_tier = result, status, tier
-                    logging.info("SCAN %s | rec=%s matched tier=%s decision=%s",
-                                 filename, tier, local.get("tier"),
-                                 local.get("decision"))
-                    break
+                    if local.get("tier") == RECOVERY_TIER:
+                        # Recovered from the whole cover, blurb included, so
+                        # it is the weakest evidence the catalogue can offer.
+                        # Keep it, but let the better recogniser and then the
+                        # providers have their say before answering.
+                        if recovery_fallback is None:
+                            recovery_fallback = (result, status, tier, local)
+                        logging.info(
+                            "SCAN %s | rec=%s recovered from raw cover text; "
+                            "not answering on that alone", filename, tier)
+                    else:
+                        selected = (result, status, tier, local)
+                        best, best_status, used_tier = result, status, tier
+                        logging.info("SCAN %s | rec=%s matched tier=%s decision=%s",
+                                     filename, tier, local.get("tier"),
+                                     local.get("decision"))
+                        break
 
             # A confident but mis-grouped title is not success. Continue to
             # the complementary recogniser when the matcher cannot verify it.
@@ -1666,7 +2057,7 @@ def scan_verified(current_user):
                 "ocr_status": best_status, "ocr_title": title,
                 "ocr_author": author, "ocr_text": full_text,
                 "ocr_confidence": confidence, "ocr_tier": used_tier,
-                "query_title": title, "query_author": author,
+                "query_title": title, "query_author": usable_ocr_author(author),
             }
             return begin_candidate_funnel(current_user, evidence, ranked, "ocr")
 
@@ -1681,22 +2072,43 @@ def scan_verified(current_user):
             reverse=True)
         for result, status, tier in external_attempts:
             pass_title = (result.get("probable_title") or "").strip()
-            pass_author = (result.get("probable_author") or "").strip()
+            pass_author_raw = (result.get("probable_author") or "").strip()
+            pass_author = usable_ocr_author(pass_author_raw)
             pass_text = (result.get("full_text") or "").strip()
             ranked = retrieve_ranked_candidates(
                 pass_title, pass_author, "", pass_text,
                 text_lines=result.get("text_lines") or [])
             ranked["tier"] = "external"
+            if recovery_fallback is not None:
+                # Show both. The reader can see the cover; the funnel cannot.
+                ranked = merge_recovery_with_external(recovery_fallback[3], ranked)
             if ranked["decision"] != REJECTED:
                 evidence = {
                     "ocr_status": status, "ocr_title": pass_title,
-                    "ocr_author": pass_author, "ocr_text": pass_text,
+                    "ocr_author": pass_author_raw, "ocr_text": pass_text,
                     "ocr_confidence": float(result.get("confidence_score") or 0),
                     "ocr_tier": tier, "query_title": pass_title,
                     "query_author": pass_author,
                 }
                 return begin_candidate_funnel(current_user, evidence, ranked, "ocr")
             external_rejection = external_rejection or ranked
+
+        if recovery_fallback is not None:
+            # No OCR pass was confident enough to query a provider with, so
+            # the recovered match is all there is. Answering with it is what
+            # this code did before providers were consulted at all.
+            result, status, tier, ranked = recovery_fallback
+            evidence = {
+                "ocr_status": status,
+                "ocr_title": (result.get("probable_title") or "").strip(),
+                "ocr_author": (result.get("probable_author") or "").strip(),
+                "ocr_text": (result.get("full_text") or "").strip(),
+                "ocr_confidence": float(result.get("confidence_score") or 0),
+                "ocr_tier": tier,
+                "query_title": (result.get("probable_title") or "").strip(),
+                "query_author": usable_ocr_author(result.get("probable_author")),
+            }
+            return begin_candidate_funnel(current_user, evidence, ranked, "ocr")
 
         best = best or {}
         title = (best.get("probable_title") or "").strip()
@@ -1707,7 +2119,7 @@ def scan_verified(current_user):
             "ocr_status": best_status, "ocr_title": title,
             "ocr_author": author, "ocr_text": full_text,
             "ocr_confidence": confidence, "ocr_tier": used_tier,
-            "query_title": title, "query_author": author,
+            "query_title": title, "query_author": usable_ocr_author(author),
         }
 
         # Existing barcode support is opt-in and runs only after OCR.
@@ -1716,7 +2128,7 @@ def scan_verified(current_user):
             if isbn:
                 evidence["query_isbn"] = isbn
                 ranked = retrieve_tiered_candidates(
-                    title, author, isbn, full_text,
+                    title, usable_ocr_author(author), isbn, full_text,
                     text_lines=best.get("text_lines") or [])
                 return begin_candidate_funnel(
                     current_user, evidence, ranked, "optional_isbn_fallback")
@@ -2152,7 +2564,10 @@ def create_default_admin():
             "Administrator",
             "admin@bookai.com",
             generate_password_hash(admin_password),
-            is_admin=1
+            is_admin=1,
+            # Nobody is going to open a confirmation link for this account:
+            # it is created by the server, for the server's owner.
+            email_verified=1
         )
         logging.info("Default admin created -> email: admin@bookai.com "
                      "(password is in the .env file)")
@@ -2162,6 +2577,10 @@ def create_default_admin():
         update_user_password(admin["id"], generate_password_hash(admin_password))
         logging.warning("Admin password 'admin123' was replaced -> "
                         "new password is in the .env file")
+    admin = get_user_by_email("admin@bookai.com")
+    if admin is not None and not is_email_verified(admin):
+        # Upgrading an existing installation: this row predates verification.
+        mark_email_verified(admin["id"])
 
 
 # ----- Start the server -----

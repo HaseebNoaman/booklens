@@ -117,7 +117,23 @@ function FallbackForm({ defaultTitle, defaultAuthor, message, onSearchByTitle, o
 function CandidateSelection({ result, token, onResolved, onReset }) {
   const [busyId, setBusyId] = useState(null);
   const [error, setError] = useState("");
+  const [declined, setDeclined] = useState(false);
   const candidates = result.candidates || [];
+
+  // None of these is the book in their hand.
+  //
+  // Most scans land on this screen, and it used to have the weakest way out of
+  // the three result screens: a quiet "Search again" that returned the reader
+  // to the photo picker with no route to the barcode or to typing the title --
+  // the two things that actually work once a chooser has failed. The refusal
+  // panel and the single-candidate card have offered all three routes for a
+  // while. The busiest screen now offers them too.
+  if (declined) {
+    return <RefusalPanel result={{ ...result, failure_reason: "user_rejected_candidate" }}
+                         onRetake={() => onReset()}
+                         onBarcode={() => onReset("barcode")}
+                         onTypeTitle={() => onReset("type")} />;
+  }
   // Providers format the same author differently (for example "R.F. Kuang"
   // and "R. F. Kuang"). Ignore punctuation when deciding whether candidates
   // are editions of the same work; ISBN still distinguishes the exact edition.
@@ -193,7 +209,11 @@ function CandidateSelection({ result, token, onResolved, onReset }) {
         ))}
       </div>
       {error && <div className="error-msg" role="alert">{error}</div>}
-      <button className="btn-outline candidate-reset" onClick={onReset}>Search again</button>
+      {/* Says what the reader is actually thinking. "Search again" read like
+          they had done something wrong, and led nowhere useful. */}
+      <button className="btn-outline candidate-reset" onClick={() => setDeclined(true)}>
+        None of these is my book
+      </button>
     </div>
   );
 }

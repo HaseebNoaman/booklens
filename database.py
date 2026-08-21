@@ -3,6 +3,7 @@
 # It creates the tables and gives simple functions to add and read data.
 
 import sqlite3
+import datetime
 import logging
 import json
 import hashlib
@@ -67,6 +68,31 @@ def init_db():
         cur.execute("ALTER TABLE users ADD COLUMN interests TEXT DEFAULT ''")
     except sqlite3.OperationalError:
         pass
+    # Proof that the address belongs to whoever signed up. 0 until the link
+    # in the verification email is opened. Accounts created by the seeding
+    # scripts (admin, demo) are written as 1 directly -- there is nobody to
+    # click their link.
+    try:
+        cur.execute("ALTER TABLE users ADD COLUMN email_verified INTEGER DEFAULT 0")
+    except sqlite3.OperationalError:
+        pass
+
+    # One-time links: email verification and password reset. Only the SHA-256
+    # of the token is stored, so a leaked database cannot be used to verify or
+    # reset anything -- the same reason password_hash exists.
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS auth_tokens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            purpose TEXT NOT NULL,
+            token_hash TEXT NOT NULL,
+            expires_at TIMESTAMP NOT NULL,
+            used_at TIMESTAMP,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    """)
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_auth_tokens_hash ON auth_tokens(token_hash)")
 
     # Table 2: books -> stores book info, also works as a cache
     cur.execute("""
@@ -347,15 +373,19 @@ def init_db():
     logging.info("Database initialized (core tables plus verified catalogue and review audit)")
 
 
-def create_user(name, email, password_hash, is_admin=0):
+def create_user(name, email, password_hash, is_admin=0, email_verified=0):
     # Add a new user. Returns the new user's id, or None if the email already exists.
     # is_admin is 0 by default, so normal registration never creates an admin.
+    # email_verified is 0 by default, so normal registration never trusts an
+    # address on its own word; the seeding scripts pass 1 because no human is
+    # ever going to open a link for the admin or demo account.
     conn = get_db()
     try:
         cur = conn.cursor()
         cur.execute(
-            "INSERT INTO users (name, email, password_hash, is_admin) VALUES (?, ?, ?, ?)",
-            (name, email, password_hash, is_admin)
+            "INSERT INTO users (name, email, password_hash, is_admin, email_verified) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (name, email, password_hash, is_admin, 1 if email_verified else 0)
         )
         conn.commit()
         return cur.lastrowid
@@ -744,6 +774,105 @@ def revoke_user_tokens(user_id):
     )
     conn.commit()
     conn.close()
+
+
+# ---------- One-time links: verification and password reset ----------
+# The raw token goes in the email and is never stored. We keep only its
+# SHA-256, so reading the database gives an attacker nothing usable -- exactly
+# the reasoning behind password_hash. A token is single-use (used_at) and
+# short-lived (expires_at); both are checked on the way in.
+
+
+def _token_digest(token):
+    return hashlib.sha256((token or "").encode("utf-8")).hexdigest()
+
+
+def create_auth_token(user_id, purpose, token, ttl_seconds):
+    """Store the digest of one fresh token and drop that user's older ones.
+
+    Dropping the old ones matters: without it, an address that requested five
+    verification mails would have five live links, and revoking access would
+    mean finding all of them.
+    """
+    expires_at = (datetime.datetime.now(datetime.timezone.utc)
+                  + datetime.timedelta(seconds=int(ttl_seconds)))
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        "DELETE FROM auth_tokens WHERE user_id = ? AND purpose = ?",
+        (user_id, purpose)
+    )
+    cur.execute(
+        "INSERT INTO auth_tokens (user_id, purpose, token_hash, expires_at) "
+        "VALUES (?, ?, ?, ?)",
+        (user_id, purpose, _token_digest(token), expires_at.isoformat())
+    )
+    conn.commit()
+    conn.close()
+    return True
+
+
+def consume_auth_token(token, purpose):
+    """Return the user id for a valid, unused, unexpired token -- once.
+
+    Marking it used inside the same connection is what makes it single-use:
+    a second request with the same link finds used_at set and gets nothing.
+    """
+    if not token:
+        return None
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT id, user_id, expires_at, used_at FROM auth_tokens "
+        "WHERE token_hash = ? AND purpose = ?",
+        (_token_digest(token), purpose)
+    )
+    row = cur.fetchone()
+    if row is None or row["used_at"]:
+        conn.close()
+        return None
+    try:
+        expires_at = datetime.datetime.fromisoformat(row["expires_at"])
+    except (TypeError, ValueError):
+        conn.close()
+        return None
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=datetime.timezone.utc)
+    if datetime.datetime.now(datetime.timezone.utc) >= expires_at:
+        conn.close()
+        return None
+    cur.execute("UPDATE auth_tokens SET used_at = CURRENT_TIMESTAMP WHERE id = ?",
+                (row["id"],))
+    conn.commit()
+    user_id = row["user_id"]
+    conn.close()
+    return user_id
+
+
+def mark_email_verified(user_id):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("UPDATE users SET email_verified = 1 WHERE id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+
+
+def is_email_verified(user):
+    """Read the flag off a user row that may predate the column.
+
+    sqlite3.Row has no .get(), and a row read from a database created before
+    the migration simply has no such key -- so the membership test is the
+    check, not a style choice.
+    """
+    if user is None:
+        return False
+    try:
+        keys = user.keys()
+    except AttributeError:
+        keys = list(user or {})
+    if "email_verified" not in keys:
+        return True
+    return bool(user["email_verified"])
 
 
 # ---------- Admin dashboard functions ----------

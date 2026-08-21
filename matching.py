@@ -197,12 +197,29 @@ DERIVED_EDITION_PENALTY = 40
 
 # Broader catalogue-funnel exclusions. These are intentionally metadata words,
 # not genres: they describe a derived product rather than the individual book.
+#
+# The second group was added 2026-08-21 after 100 real cover photographs were
+# run through the pipeline. Three of the failures were a derived product shown
+# as the novel -- "Pride and Prejudice [adaptation]" by Fern Siegel, and a
+# 7 Habits "Expert Guide ... in 30 Minutes" -- which is the worst error this
+# product can make, because the reader is told it IS the book. Every added
+# pattern was checked against all 250 catalogue titles and all 100 benchmark
+# titles first: zero false matches.
+#
+# Deliberately NOT added: a rule for the "AUTHOR's TITLE written by somebody
+# else" shape ("Cormac McCarthy's The Road" by Harold Bloom). Any regex broad
+# enough to catch it also catches "Bridget Jones's Diary", and losing a real
+# novel costs more than showing a criticism volume. Those stay a known limit.
 UNSAFE_EDITION_RE = re.compile(
     r"\b(?:box(?:ed)?\s*set|complete\s+(?:set|collection|series|works)|"
     r"collection\s+of|omnibus|bundle|study\s*guide|summary(?:\s+and\s+analysis)?|"
     r"workbook|teacher(?:'s)?\s+edition|educator\s+edition|companion|"
     r"reader(?:'s)?\s+guide|film\s+adaptation|movie\s+tie[- ]?in|"
-    r"screenplay|series\s+guide|books?\s+collection|novels?\s+collection)\b",
+    r"screenplay|series\s+guide|e-?books?\s+collection|books?\s+collection|"
+    r"novels?\s+collection|"
+    r"adaptation|expert\s+guide|in\s+\d+\s+minutes|spark\s*notes|"
+    r"cliffs?\s*notes|critical\s+(?:insights|essays|interpretations)|"
+    r"bloom'?s\s+(?:modern\s+)?critical|analysis\s+of)\b",
     re.IGNORECASE)
 
 # The height-ordered probable title (the biggest text on the cover) is almost

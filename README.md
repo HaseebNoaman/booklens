@@ -55,6 +55,22 @@ Environment variables: `SECRET_KEY` and `ADMIN_PASSWORD` are mandatory when
 `BOOKLENS_ENV=production` — the app refuses to start without them —
 plus `GOOGLE_BOOKS_API_KEY` for books outside the local catalogue.
 
+**Email is required for signup to work at all.** A new account stays unusable
+until its address is confirmed, so a deployment with no mail configured can
+only be signed into with accounts the server created itself.
+
+| variable | why it matters |
+|---|---|
+| **`APP_BASE_URL`** | the origin the emailed links point at. **Set this, or every confirmation link points at `http://127.0.0.1:5000`** and no visitor can ever finish signing up. |
+| `MAIL_PROVIDER` | `resend`, `brevo` or `smtp`. Prefer the HTTPS ones: free hosts commonly block outbound SMTP ports, and `smtplib` does not fail fast when they do -- it hangs until the socket times out. |
+| `MAIL_API_KEY` | the provider's key. Not needed for `smtp`. |
+| `MAIL_FROM` | for example `BookLens <onboarding@resend.dev>`. |
+
+Leave `MAIL_PROVIDER` empty and the link is written to the server log instead of
+being sent, which is what keeps the flow testable locally. The signup response
+says which of the two happened rather than claiming success either way. Full
+list in `.env.example`.
+
 ### Option A — a host that builds Python (Render, Railway, a VPS)
 
 No Docker needed. `frontend/dist` is committed for exactly this case, so the

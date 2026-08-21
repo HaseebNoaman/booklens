@@ -25,7 +25,8 @@ ADMIN_ENDPOINTS = (
 def admin_token(client):
     from werkzeug.security import generate_password_hash
     database.create_user("Admin", "boss@example.com",
-                         generate_password_hash("adminpass123"), is_admin=1)
+                         generate_password_hash("adminpass123"), is_admin=1,
+                         email_verified=1)
     return client.post("/api/login", json={"email": "boss@example.com",
                                            "password": "adminpass123"}).get_json()["token"]
 

@@ -23,6 +23,7 @@ export default function App() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [libraryVersion, setLibraryVersion] = useState(0);
   const [authInfo, setAuthInfo] = useState("");
+  const [resetToken, setResetToken] = useState("");
 
   const clearSession = useCallback(() => {
     localStorage.removeItem("token");
@@ -51,6 +52,30 @@ export default function App() {
     });
     return () => setUnauthorizedHandler(() => {});
   }, [clearSession]);
+
+  // Where the two emailed links land. The server handles /api/verify-email and
+  // redirects here with the outcome, so this only has to read it and say so.
+  useEffect(() => {
+    const path = window.location.pathname;
+    const params = new URLSearchParams(window.location.search);
+
+    if (path === "/verify") {
+      const state = params.get("state");
+      setAuthInfo(state === "ok"
+        ? "Your email address is confirmed. Please sign in."
+        : "That confirmation link has expired or has already been used. Sign in to send yourself a new one.");
+      setModal("login");
+    } else if (path === "/reset" && params.get("token")) {
+      setResetToken(params.get("token"));
+      setModal("reset");
+    } else {
+      return;
+    }
+
+    // Clear the address bar so a refresh does not replay the link, and so a
+    // reset token stops sitting in the URL any longer than it has to.
+    window.history.replaceState({}, "", "/");
+  }, []);
 
   function handleLogin(newToken, newUser) {
     localStorage.setItem("token", newToken);
@@ -88,7 +113,9 @@ export default function App() {
       <Footer token={token} onSignIn={() => setModal("login")} onSignUp={() => setModal("register")} />
 
       {modal && <AuthModal mode={modal} setMode={setModal} initialInfo={authInfo}
-        onClose={() => { setModal(null); setAuthInfo(""); }} onLogin={handleLogin} />}
+        resetToken={resetToken}
+        onClose={() => { setModal(null); setAuthInfo(""); setResetToken(""); }}
+        onLogin={handleLogin} />}
       {adminOpen && <AdminOverlay token={token} onClose={() => setAdminOpen(false)} />}
       {profileOpen && token && <ProfileModal token={token} onClose={() => setProfileOpen(false)} onLogout={handleLogout} />}
     </div>

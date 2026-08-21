@@ -5,6 +5,7 @@ from PIL import Image
 
 import app as app_module
 import database
+from matching import REJECTED
 
 
 def png_bytes():
@@ -23,8 +24,13 @@ def client(tmp_path):
 
 
 def register_and_login(client, email="reader@example.com"):
+    # Registration now answers 202 and leaves the account unverified; these
+    # tests are about everything that happens AFTER sign-in, so the
+    # confirmation step is granted directly here. The link itself is exercised
+    # end to end in tests/test_email_verification.py.
     assert client.post("/api/register", json={"name": "Reader", "email": email,
-                                               "password": "strongpass"}).status_code == 201
+                                               "password": "strongpass"}).status_code == 202
+    database.mark_email_verified(database.get_user_by_email(email)["id"])
     response = client.post("/api/login", json={"email": email,
                                                 "password": "strongpass"})
     return response.get_json()["token"]
@@ -89,9 +95,22 @@ def test_scan_recovers_scrambled_raw_ocr_from_catalogue(client, monkeypatch):
         "full_text": "C.S. LEWIS THE HORSE ANDHIS BOY C-0ONOT",
         "text_lines": ["C.S.LEWIS", "ANDHIS BOY", "THE HORSE", "C-0ONOT"],
         "confidence_score": 0.91})
-    monkeypatch.setattr(
-        app_module, "retrieve_ranked_candidates",
-        lambda *a, **k: pytest.fail("Recovered catalogue scan called network"))
+    # This test used to assert the network was NEVER called here. That
+    # assertion described a design that has since been measured and changed:
+    # a recovery match is made against ALL the cover text, blurb included, so
+    # a praise quote naming another book could win and end the search (City of
+    # Orange recovered "The Road" that way). Providers are now always asked as
+    # well -- see tests/test_recovery_merge.py. What must NOT change is this:
+    # a scrambled title still finds the catalogue book, and a provider that
+    # offers nothing cannot take it away.
+    asked = []
+
+    def providers_find_nothing(*args, **kwargs):
+        asked.append(args)
+        return {"decision": REJECTED, "candidates": [], "rejected_count": 0}
+
+    monkeypatch.setattr(app_module, "retrieve_ranked_candidates",
+                        providers_find_nothing)
 
     response = client.post("/api/scan", headers=auth(token),
                            data={"image": (png_bytes(), "cover.png")},
@@ -101,6 +120,7 @@ def test_scan_recovers_scrambled_raw_ocr_from_catalogue(client, monkeypatch):
     assert data["status"] == "needs_confirmation"
     assert data["candidates"][0]["title"] == "The Horse and His Boy"
     assert data["candidates"][0]["provider"] == "local_catalogue"
+    assert asked, "providers were never consulted for a recovered match"
 
 
 def test_scan_escalates_when_confident_ocr_does_not_match_a_book(client, monkeypatch):
@@ -294,7 +314,8 @@ def test_normal_user_cannot_access_admin(client):
 def test_admin_can_access_catalogue(client):
     from werkzeug.security import generate_password_hash
     database.create_user("Admin", "admin@example.com",
-                         generate_password_hash("strongpass"), 1)
+                         generate_password_hash("strongpass"), 1,
+                         email_verified=1)
     token = client.post("/api/login", json={"email": "admin@example.com",
                                              "password": "strongpass"}).get_json()["token"]
     assert client.get("/api/admin/catalogue", headers=auth(token)).status_code == 200

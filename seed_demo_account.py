@@ -91,13 +91,22 @@ def seed():
     password = os.environ.get("DEMO_PASSWORD") or secrets.token_urlsafe(9)
     if existing is None:
         database.create_user(DEMO_NAME, DEMO_EMAIL,
-                             generate_password_hash(password), is_admin=0)
+                             generate_password_hash(password), is_admin=0,
+                             # There is no inbox behind demo@booklens.local and
+                             # never will be, so the confirmation step that a
+                             # real signup must pass is granted here instead.
+                             email_verified=1)
         user = database.get_user_by_email(DEMO_EMAIL)
         print("Created demo account.")
         print("  email:    %s" % DEMO_EMAIL)
         print("  password: %s" % password)
         print("  Write this down -- it is not stored anywhere in readable form.")
     else:
+        # Seeded before verification existed: grant it now rather than leave
+        # the demo account unable to sign in.
+        if not database.is_email_verified(existing):
+            database.mark_email_verified(existing["id"])
+
         user = existing
         print("Demo account already exists; refreshing its library only.")
         print("  email: %s (password unchanged)" % DEMO_EMAIL)
