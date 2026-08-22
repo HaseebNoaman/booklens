@@ -9,12 +9,12 @@
     "subjects": 83,
     "median_carriers": 2,
     "empty": {
-      "1": 2,
+      "1": 1,
       "2": 0,
       "3": 0
     },
     "thin": {
-      "1": 6,
+      "1": 5,
       "2": 0,
       "3": 0
     },
@@ -25,15 +25,15 @@
     "label": "CHOSEN (60)",
     "books": 60,
     "usable": 53,
-    "subjects": 50,
-    "median_carriers": 1.0,
+    "subjects": 51,
+    "median_carriers": 1,
     "empty": {
       "1": 5,
       "2": 0,
       "3": 0
     },
     "thin": {
-      "1": 19,
+      "1": 20,
       "2": 1,
       "3": 0
     },
@@ -237,11 +237,6 @@
       "why": "5953 Open Library readers"
     },
     {
-      "id": 16,
-      "title": "Animal Farm",
-      "why": "5178 Open Library readers"
-    },
-    {
       "id": 18,
       "title": "Harry Potter and the Goblet of Fire",
       "why": "4905 Open Library readers"
@@ -340,13 +335,18 @@
       "id": 53,
       "title": "The Sea of Monsters",
       "why": "2159 Open Library readers"
+    },
+    {
+      "id": 55,
+      "title": "The Invisible Man",
+      "why": "2080 Open Library readers"
     }
   ],
   "drop": [
     {
       "id": 250,
       "title": "The Tale of Despereaux",
-      "why": "description scores 14.7, under 15"
+      "why": "description scores 9.7, under 15"
     },
     {
       "id": 249,
@@ -411,7 +411,7 @@
     {
       "id": 236,
       "title": "The Sun Also Rises",
-      "why": "no cover; description scores 14.8, under 15"
+      "why": "no cover; description scores 9.8, under 15"
     },
     {
       "id": 235,
@@ -491,7 +491,7 @@
     {
       "id": 219,
       "title": "The Witching Hour",
-      "why": "description scores 14.8, under 15"
+      "why": "607 readers, below the cut"
     },
     {
       "id": 218,
@@ -516,7 +516,7 @@
     {
       "id": 214,
       "title": "The Fountainhead",
-      "why": "description scores 11.8, under 15"
+      "why": "625 readers, below the cut"
     },
     {
       "id": 213,
@@ -541,152 +541,12 @@
     {
       "id": 209,
       "title": "Uglies",
-      "why": "description scores 10.8, under 15"
+      "why": "648 readers, below the cut"
     },
     {
       "id": 208,
       "title": "Demian",
       "why": "no cover"
-    },
-    {
-      "id": 207,
-      "title": "The Age of Innocence",
-      "why": "no cover"
-    },
-    {
-      "id": 206,
-      "title": "My Side of the Mountain",
-      "why": "no cover"
-    },
-    {
-      "id": 205,
-      "title": "The Screwtape Letters",
-      "why": "668 readers, below the cut"
-    },
-    {
-      "id": 204,
-      "title": "Deception Point",
-      "why": "description scores 13.7, under 15"
-    },
-    {
-      "id": 203,
-      "title": "The Dead Zone",
-      "why": "683 readers, below the cut"
-    },
-    {
-      "id": 202,
-      "title": "The Left Hand of Darkness",
-      "why": "description scores 12.0, under 15"
-    },
-    {
-      "id": 201,
-      "title": "The Red Pyramid",
-      "why": "692 readers, below the cut"
-    },
-    {
-      "id": 200,
-      "title": "Red Dragon",
-      "why": "description scores 14.0, under 15"
-    },
-    {
-      "id": 199,
-      "title": "Hyperion",
-      "why": "714 readers, below the cut"
-    },
-    {
-      "id": 198,
-      "title": "The Graveyard Book",
-      "why": "718 readers, below the cut"
-    },
-    {
-      "id": 197,
-      "title": "Prince Caspian",
-      "why": "708 readers, below the cut"
-    },
-    {
-      "id": 196,
-      "title": "The Clan of the Cave Bear",
-      "why": "description scores 12.0, under 15"
-    },
-    {
-      "id": 195,
-      "title": "Atonement",
-      "why": "705 readers, below the cut"
-    },
-    {
-      "id": 194,
-      "title": "Purple Hibiscus",
-      "why": "description scores 13.8, under 15"
-    },
-    {
-      "id": 193,
-      "title": "Watership Down",
-      "why": "description scores 14.7, under 15"
-    },
-    {
-      "id": 192,
-      "title": "The Wind in the Willows",
-      "why": "720 readers, below the cut"
-    },
-    {
-      "id": 191,
-      "title": "The 33 Strategies of War",
-      "why": "781 readers, below the cut"
-    },
-    {
-      "id": 190,
-      "title": "Julius Caesar",
-      "why": "no cover"
-    },
-    {
-      "id": 189,
-      "title": "Needful Things",
-      "why": "description scores 11.0, under 15"
-    },
-    {
-      "id": 188,
-      "title": "The Exorcist",
-      "why": "749 readers, below the cut"
-    },
-    {
-      "id": 187,
-      "title": "Giovanni's Room",
-      "why": "description scores 8.6, under 15"
-    },
-    {
-      "id": 186,
-      "title": "The Autobiography of Benjamin Franklin",
-      "why": "no cover; description scores 11.8, under 15"
-    },
-    {
-      "id": 185,
-      "title": "World War Z",
-      "why": "737 readers, below the cut"
-    },
-    {
-      "id": 184,
-      "title": "Redeeming Love",
-      "why": "739 readers, below the cut"
-    },
-    {
-      "id": 183,
-      "title": "The Satanic Verses",
-      "why": "no cover; description scores 11.8, under 15"
-    },
-    {
-      "id": 182,
-      "title": "Carmilla",
-      "why": "747 readers, below the cut"
-    },
-    {
-      "id": 181,
-      "title": "For Whom the Bell Tolls",
-      "why": "746 readers, below the cut"
-    },
-    {
-      "id": 180,
-      "title": "The Hound of the Baskervilles",
-      "why": "758 readers, below the cut"
     },
     {
       "id": 179,
@@ -841,7 +701,7 @@
     {
       "id": 146,
       "title": "Parable of the Sower",
-      "why": "description scores 14.8, under 15"
+      "why": "938 readers, below the cut"
     },
     {
       "id": 145,
@@ -916,7 +776,7 @@
     {
       "id": 131,
       "title": "Rebecca",
-      "why": "no cover; description scores 13.8, under 15"
+      "why": "no cover"
     },
     {
       "id": 130,
@@ -991,7 +851,7 @@
     {
       "id": 113,
       "title": "A Clockwork Orange",
-      "why": "1175 readers, below the cut"
+      "why": "description scores 12.0, under 15"
     },
     {
       "id": 112,
@@ -1021,7 +881,7 @@
     {
       "id": 106,
       "title": "Outlander",
-      "why": "description scores 11.7, under 15"
+      "why": "1269 readers, below the cut"
     },
     {
       "id": 105,
@@ -1121,7 +981,7 @@
     {
       "id": 83,
       "title": "The Secret Garden",
-      "why": "no cover; description scores 14.0, under 15"
+      "why": "no cover"
     },
     {
       "id": 81,
@@ -1146,7 +1006,7 @@
     {
       "id": 77,
       "title": "A Wrinkle in Time",
-      "why": "description scores 14.0, under 15"
+      "why": "1540 readers, below the cut"
     },
     {
       "id": 76,
@@ -1176,12 +1036,152 @@
     {
       "id": 71,
       "title": "The Very Hungry Caterpillar",
-      "why": "description scores 14.8, under 15"
+      "why": "description scores 14.0, under 15"
     },
     {
       "id": 69,
       "title": "Jurassic Park",
       "why": "description scores 12.0, under 15"
+    },
+    {
+      "id": 207,
+      "title": "The Age of Innocence",
+      "why": "no cover"
+    },
+    {
+      "id": 206,
+      "title": "My Side of the Mountain",
+      "why": "no cover"
+    },
+    {
+      "id": 205,
+      "title": "The Screwtape Letters",
+      "why": "668 readers, below the cut"
+    },
+    {
+      "id": 204,
+      "title": "Deception Point",
+      "why": "719 readers, below the cut"
+    },
+    {
+      "id": 203,
+      "title": "The Dead Zone",
+      "why": "683 readers, below the cut"
+    },
+    {
+      "id": 202,
+      "title": "The Left Hand of Darkness",
+      "why": "description scores 12.0, under 15"
+    },
+    {
+      "id": 201,
+      "title": "The Red Pyramid",
+      "why": "692 readers, below the cut"
+    },
+    {
+      "id": 200,
+      "title": "Red Dragon",
+      "why": "description scores 14.0, under 15"
+    },
+    {
+      "id": 199,
+      "title": "Hyperion",
+      "why": "714 readers, below the cut"
+    },
+    {
+      "id": 198,
+      "title": "The Graveyard Book",
+      "why": "718 readers, below the cut"
+    },
+    {
+      "id": 197,
+      "title": "Prince Caspian",
+      "why": "708 readers, below the cut"
+    },
+    {
+      "id": 196,
+      "title": "The Clan of the Cave Bear",
+      "why": "description scores 12.0, under 15"
+    },
+    {
+      "id": 195,
+      "title": "Atonement",
+      "why": "705 readers, below the cut"
+    },
+    {
+      "id": 194,
+      "title": "Purple Hibiscus",
+      "why": "description scores 12.0, under 15"
+    },
+    {
+      "id": 193,
+      "title": "Watership Down",
+      "why": "description scores 14.7, under 15"
+    },
+    {
+      "id": 192,
+      "title": "The Wind in the Willows",
+      "why": "720 readers, below the cut"
+    },
+    {
+      "id": 191,
+      "title": "The 33 Strategies of War",
+      "why": "781 readers, below the cut"
+    },
+    {
+      "id": 190,
+      "title": "Julius Caesar",
+      "why": "no cover"
+    },
+    {
+      "id": 189,
+      "title": "Needful Things",
+      "why": "description scores 11.0, under 15"
+    },
+    {
+      "id": 188,
+      "title": "The Exorcist",
+      "why": "749 readers, below the cut"
+    },
+    {
+      "id": 187,
+      "title": "Giovanni's Room",
+      "why": "description scores 8.6, under 15"
+    },
+    {
+      "id": 186,
+      "title": "The Autobiography of Benjamin Franklin",
+      "why": "no cover; description scores 11.8, under 15"
+    },
+    {
+      "id": 185,
+      "title": "World War Z",
+      "why": "737 readers, below the cut"
+    },
+    {
+      "id": 184,
+      "title": "Redeeming Love",
+      "why": "739 readers, below the cut"
+    },
+    {
+      "id": 183,
+      "title": "The Satanic Verses",
+      "why": "no cover; description scores 11.8, under 15"
+    },
+    {
+      "id": 182,
+      "title": "Carmilla",
+      "why": "747 readers, below the cut"
+    },
+    {
+      "id": 181,
+      "title": "For Whom the Bell Tolls",
+      "why": "746 readers, below the cut"
+    },
+    {
+      "id": 180,
+      "title": "The Hound of the Baskervilles",
+      "why": "758 readers, below the cut"
     },
     {
       "id": 68,
@@ -1201,7 +1201,7 @@
     {
       "id": 65,
       "title": "Ender's Game",
-      "why": "description scores 14.7, under 15"
+      "why": "1790 readers, below the cut"
     },
     {
       "id": 64,
@@ -1211,7 +1211,7 @@
     {
       "id": 62,
       "title": "The Time Machine",
-      "why": "description scores 14.8, under 15"
+      "why": "1916 readers, below the cut"
     },
     {
       "id": 61,
@@ -1226,7 +1226,7 @@
     {
       "id": 59,
       "title": "Foundation",
-      "why": "description scores 12.0, under 15"
+      "why": "1963 readers, below the cut"
     },
     {
       "id": 58,
@@ -1244,11 +1244,6 @@
       "why": "2048 readers, below the cut"
     },
     {
-      "id": 55,
-      "title": "The Invisible Man",
-      "why": "2080 readers, below the cut"
-    },
-    {
       "id": 50,
       "title": "The Outsiders",
       "why": "no cover"
@@ -1256,7 +1251,7 @@
     {
       "id": 49,
       "title": "Alice's Adventures in Wonderland",
-      "why": "description scores 14.7, under 15"
+      "why": "description scores 9.7, under 15"
     },
     {
       "id": 41,
@@ -1292,6 +1287,11 @@
       "id": 15,
       "title": "Harry Potter and the Prisoner of Azkaban",
       "why": "description scores 14.0, under 15"
+    },
+    {
+      "id": 16,
+      "title": "Animal Farm",
+      "why": "description scores 14.7, under 15"
     }
   ]
 }

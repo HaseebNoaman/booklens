@@ -43,7 +43,11 @@ _AWARD_RE = re.compile(
     r"\b(?:award[- ]winning|winner of|finalist for|medal[- ]winning|"
     r"newbery|pulitzer|booker prize|book of the year|bestsell(?:er|ing)|"
     r"critically acclaimed|internationally acclaimed|modern classic|"
-    r"masterpiece|millions of (?:copies|readers))\b",
+    r"masterpiece|millions of (?:copies|readers)|"
+    # "This story of heroic endeavour WON HEMINGWAY THE NOBEL PRIZE" scored
+    # 18.85 and would have been The Old Man and the Sea's description. A prize
+    # is a fact about the book's reception, not about what happens in it.
+    r"nobel prize|national book award|won (?:\w+ ){0,3}the \w+ prize)\b",
     re.IGNORECASE,
 )
 _REVIEW_RE = re.compile(
@@ -62,11 +66,30 @@ _BIBLIOGRAPHIC_RE = re.compile(
     r"\b(?:first published|originally published|this edition|new edition|"
     r"revised edition|anniversary edition|translated by|translation by|"
     r"foreword by|introduction by|afterword by|isbn[- :]?|pages?\b|"
-    r"publication date|publisher:)\b",
+    r"publication date|publisher:|"
+    # The encyclopaedia opener. "The Da Vinci Code is a 2003 mystery thriller
+    # novel by Dan Brown" scored 19.0 and told a reader nothing about the book;
+    # its own stored summary opens on the murder in the Louvre and scored 22.
+    # "And Then There Were None is a mystery novel by the English writer Agatha
+    # Christie" is the same shape.
+    r"is a \d{4}\b|novel by the \w+ writer|"
+    r"(?:second|third|fourth|fifth|debut) novel)\b",
     re.IGNORECASE,
 )
 _PUBLICATION_ONLY_RE = re.compile(
     r"\b(?:published|publication|edition|volume|series|sequel|debut novel)\b",
+    re.IGNORECASE,
+)
+# A window that opens on a pronoun or a bare connective is quoting from the
+# middle of something, and the reader has no way to know who "they" are. The
+# card was showing "They want to change her and never let her go" for Coraline,
+# "He has a little brother, Manny" for Diary of a Wimpy Kid, "His family
+# accompanies him on this job" for The Shining, and "However, his plane crashes"
+# for Hatchet. Each is a true sentence about the book and a useless first one.
+_DANGLING_OPENING_RE = re.compile(
+    r"\s*(?:he|she|they|it|his|her|their|its|him|them|there|then|however|"
+    r"but|and|so|yet|meanwhile|later|afterwards?|eventually|"
+    r"when they|after the)\b",
     re.IGNORECASE,
 )
 _MARKETING_RE = re.compile(
@@ -254,6 +277,14 @@ def sentence_is_junk(sentence: str) -> bool:
 def clean_description(raw_text: str) -> dict:
     """Return cleaned, complete provider sentences and transparent removals."""
     plain = clean_source_text(raw_text or "")
+    # Open Library stores descriptions as Markdown, and it was reaching the
+    # card: Murder on the Orient Express opened "***While en route from Syria to
+    # Paris***" and Catch-22 read "*Catch-22* is the story of a bombardier".
+    # The tail after a "---" rule is a table of contents, not a description --
+    # Goblet of Fire ended "--- Contains: - [Harry Potter and the Goblet of..."
+    plain = re.split(r"\s-{3,}\s", plain)[0]
+    plain = re.sub(r"\*{1,3}([^*]+)\*{1,3}", r"\1", plain)
+    plain = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", plain)
     language = detect_language(plain)
     kept = []
     removed = []
@@ -381,6 +412,7 @@ def score_candidate(text: str, sentences: list[str], *, title: str,
         "category_residue": bool(_CATEGORY_RE.search(text)),
         "disconnected_pair": _pair_disconnected(sentences),
         "spoiler_resolution": bool(_SPOILER_RE.search(text)),
+        "dangling_opening": bool(_DANGLING_OPENING_RE.match(text)),
     }
     score = float(_length_points(count))
     if signals["title_overlap"]:
@@ -433,6 +465,8 @@ def score_candidate(text: str, sentences: list[str], *, title: str,
         score -= 6
     if signals["disconnected_pair"]:
         score -= 3
+    if signals["dangling_opening"]:
+        score -= 5
     score -= sentence_index * 0.15
 
     accepted = (
