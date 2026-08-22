@@ -2155,7 +2155,7 @@ def scan_verified(current_user):
 
         # Tier 1 missed. Try external providers for every readable, confident
         # OCR pass (best confidence first). The provider fetch and its raw-text
-        # recovery are generic, so books outside the 250-record catalogue can
+        # recovery are generic, so books outside the verified catalogue can
         # benefit too. Stop at the first candidate set that passes the gate.
         external_rejection = None
         external_attempts = sorted(
@@ -2481,7 +2481,7 @@ def catalogue_for_reader(row):
 def browse_catalogue(current_user):
     """Browse the verified books without scanning anything.
 
-    The 250 verified records were reachable only by photographing a cover or
+    The verified records were reachable only by photographing a cover or
     typing an exact title, which made the most trustworthy data in the product
     invisible. Reading here writes nothing and identifies nothing.
     """

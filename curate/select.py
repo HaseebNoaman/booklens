@@ -10,21 +10,23 @@ This script decides which books stay. It writes nothing to the database -- run
 `curate/apply.py` for that -- so the decision can be re-run, argued with, and
 re-run again.
 
-    python curate/select.py            # decide and report
-    python curate/select.py --size 120 # try a different target
+    python curate/select.py            # decide and report -- 60, what shipped
+    python curate/select.py --size 80  # try a different target
 
-THE ONE THING THIS SCRIPT EXISTS TO PREVENT. Cutting 250 books to 100 by any
-obvious rule -- keep the newest, keep the most popular, keep the first hundred --
-throws away a third of the subjects, and the subjects are what "is this for you?"
-and "closest on our shelf" are made of. Measured on the naive cut: 82 subjects
-become 50 and the books that can be evidence at all drop from 181 to 77.
+THE SHELF IS CHOSEN BY READERSHIP, and that is a correction. The first version
+filled by whichever SUBJECT was thinnest and used readership only to break ties,
+because subjects are what "is this for you?" and "closest on our shelf" are made
+of. Run against the real audits it dropped The 48 Laws of Power -- 51,033 Open
+Library readers, the most-read book in the catalogue -- along with A Game of
+Thrones and four Harry Potters, because their subjects were shelf-wide and no
+subject needed them. See choose() for what replaced it.
 
-So the fill order is by the THINNEST subject, not by fame. Fame only breaks ties.
-Measured that way, 100 books keep all 82 subjects and match the 250-book shelf to
-within a point -- because 69 of the 250 contribute nothing to either feature.
+A book has to look finished before its readership is consulted at all: a cover
+that loads, and a description worth reading.
 
 The acceptance gate at the bottom is not decoration. If the chosen set fails it,
-the script says so and refuses to recommend that size.
+the script says so and refuses to recommend that size -- which is how 60 was
+picked over 50, where one new reader in eight is left with an empty shelf.
 """
 import argparse
 import collections
@@ -110,6 +112,20 @@ def benchmark_titles():
     with io.open(MANIFEST, encoding="utf-8") as handle:
         return {(row["title"] or "").strip().lower()
                 for row in csv.DictReader(handle)}
+
+
+def curated_ids():
+    """Books somebody has already gone through by hand.
+
+    genres.json is the record of that work: a book is in it because a person
+    wrote its subjects. Those books are kept the way benchmark covers are kept,
+    for a reason that only shows up on the SECOND run -- see choose().
+    """
+    path = os.path.join(HERE, "genres.json")
+    if not os.path.exists(path):
+        return set()
+    with io.open(path, encoding="utf-8") as handle:
+        return {int(key) for key in json.load(handle)["genres"]}
 
 
 def census(rows):
@@ -254,6 +270,7 @@ def choose(rows, size, covers, descriptions, fame, counts, total):
     most-read book over that was the error above.
     """
     mandatory = benchmark_titles()
+    curated = curated_ids()
     keep, notes = [], {}
 
     def shelves(row):
@@ -281,6 +298,15 @@ def choose(rows, size, covers, descriptions, fame, counts, total):
         if row["title"].strip().lower() in mandatory:
             keep.append(row)
             notes[row["id"]] = "benchmark cover"
+        elif row["id"] in curated:
+            # Already hand-curated: genres written by a person, description
+            # chosen from a real source, cover committed. Curation happens
+            # AFTER selection, so re-running this later would otherwise propose
+            # swapping a curated book out for an untouched one -- it offered
+            # Hamlet in place of Charlie and the Chocolate Factory the first
+            # time it was tried, and Hamlet still had model-written text.
+            keep.append(row)
+            notes[row["id"]] = "hand-curated"
 
     kept = {r["id"] for r in keep}
 
@@ -308,11 +334,19 @@ def choose(rows, size, covers, descriptions, fame, counts, total):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--size", type=int, default=100)
+    # 60 is what shipped, and re-running this with a different default
+    # would quietly propose a different shelf than the one in the seed.
+    parser.add_argument("--size", type=int, default=60)
     parser.add_argument("--out", default=os.path.join(HERE, "selection.json"))
     args = parser.parse_args()
 
-    rows = [dict(r) for r in database.list_catalogue("VERIFIED")]
+    # EVERY catalogue row, not only the verified ones. This decides which books
+    # SHOULD be verified, so a book already demoted has to stay a candidate --
+    # otherwise the second run can only choose from what the first run kept, and
+    # each re-run shrinks the shelf a little more. Measured the day this was
+    # wrong: 60 books in, 59 out, with no change to the data that justified it.
+    rows = [dict(r) for r in database.list_catalogue()]
+    verified = [r for r in rows if r["verification_status"] == "VERIFIED"]
     counts, total = census(rows)
     covers = load_audit("cover_audit.json")
     descriptions = load_audit("description_audit.json")
@@ -322,9 +356,11 @@ def main():
                        ("fame", fame)):
         print("%-12s audit: %s" % (name, "%d books" % len(data) if data
                                    else "MISSING -- that bar is not applied"))
+    print("candidates  : %d rows, %d of them verified today"
+          % (len(rows), len(verified)))
     print()
 
-    today = evaluate(rows, "TODAY (%d)" % len(rows))
+    today = evaluate(verified, "TODAY (%d)" % len(verified))
     show(today)
     print()
 

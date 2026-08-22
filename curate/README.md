@@ -41,38 +41,97 @@ going.
 VERIFIED to NEEDS_REVIEW, and every reader-facing query already filters on
 VERIFIED. `python curate/apply.py --restore --confirm` puts them all back.
 
-## Why the fill order is "thinnest subject", not "most famous"
+## The shelf is 60, and the sort key is fame — after that was got wrong once
 
-"Keep the hundred most famous" is the obvious rule and it is the wrong one.
-"Is this for you?" and "Closest on our shelf" are built out of *subjects*, and
-famous books cluster into a handful of them. Measured:
+The first version of `select.py` filled by whichever **subject** was thinnest and
+used readership only to break ties, on the reasoning that "Is this for you?" and
+"Closest on our shelf" are built out of subjects, so the subjects must be
+protected. It is a good argument and it produced a bad shelf.
 
-| | today, 250 | naive 100 | **selected 100** |
+Run against the real audits, it dropped **The 48 Laws of Power** — 51,033 Open
+Library readers, the most-read book in the catalogue — because its subjects were
+all shelf-wide and no subject needed it. It also dropped A Game of Thrones and
+four Harry Potter books.
+
+So the rule was inverted: **the most-read books that look finished**, with the 32
+benchmark covers kept unconditionally. Measured at size 100, the reader-facing
+numbers barely moved between the two strategies:
+
+| strategy | subjects | nothing to offer, 2 books | one tap converts |
 |---|---|---|---|
-| books that can be evidence at all | 200 | 77 | **96** |
-| distinct subjects surviving | 83 | **50** | **84** |
-| nothing to offer, 1-book profile | 2% | 5% | **1%** |
-| nothing to offer, 2-book profile | 0% | 1% | **0%** |
-| one tap converts the starter shelf | 98% | — | **97%** |
+| thinnest-subject first | 63 | 0% | 95% |
+| **most-read first** | 57 | 0% | 96% |
+| the 250-book shelf | 83 | 0% | 98% |
+
+A proxy that swings nine points while the thing it stands for does not move is
+not a gate. The subject-count rule was removed from `select.py` and the two
+measures a reader actually feels were kept.
+
+### And why 60 rather than 50 or 100
+
+The size was chosen by the same gate, not by taste. Over 400 sampled profiles at
+each size:
+
+| size | closest shelf empty, 1-book reader | one tap converts |
+|---|---|---|
+| 40 | 15% | 88% |
+| 50 | 13% | 90% |
+| **60** | **5%** | **96%** |
+| 100 | 1% | 97% |
+
+At 50, one new reader in eight opens an empty "closest on our shelf". 60 is the
+smallest shelf where both features still work, and small enough that every book
+on it was checked by hand.
+
+<details>
+<summary>The original argument, kept because it is still true about naive cuts</summary>
+
+A cut that ignores subjects entirely does real damage — the numbers below are
+from the 250-book shelf:
+
+| | 250 | naive 100 | density-aware 100 |
+|---|---|---|---|
+| books that can be evidence at all | 200 | 77 | 96 |
+| distinct subjects surviving | 83 | **50** | 84 |
 
 A naive cut loses a third of the subjects. Filling by whichever subject is
 currently thinnest keeps all of them, and the shelf ends up matching the
 250-book one to within a point — because 50 of the 250 were contributing
 nothing to either feature in the first place.
 
-Fame is the **tie-break**: when several books would fill the same subject slot,
-the one more Open Library readers have shelved wins.
+</details>
 
 ## The two rules that are not negotiable
 
 **The 32 benchmark books stay.** Identification looks in the catalogue first, so
 dropping one of them changes what `bench/` measures and the headline accuracy
-figure stops describing the build it is quoted against.
+figure stops describing the build it is quoted against. Re-measured after the
+cut: **74 of 100 covers still identified, precision 84% → 85%.** The shrink cost
+nothing, because 68 of those covers were never going through the catalogue.
 
-**The acceptance gate has to pass.** `select.py` re-runs the table above on
-whatever it chose and refuses to recommend a shelf with fewer than 80 subjects,
-any 2-book profile left with nothing, or one-tap conversion below 90%. If a size
-fails, raise it — `--size 120` — rather than shipping the smaller shelf.
+**The acceptance gate has to pass.** `select.py` re-runs the numbers on whatever
+it chose and refuses a shelf where a 1-book reader is left with nothing more
+than 5% of the time, a 2-book reader is ever left with nothing, or one-tap
+conversion falls below 90%. If a size fails, raise it — `--size 80` — rather
+than shipping the smaller shelf.
+
+## What the 60 look like now
+
+Each book carries hand-written genres (`genres.json`), a description from a real
+source with that source recorded, and a cover committed to this repository. A
+catalogue card needs no network at all.
+
+| | |
+|---|---|
+| books that can be evidence | **60 of 60** |
+| reader left with nothing, profiles of 1 / 2 / 3 | **0% / 0% / 0%** |
+| one tap converts the starter shelf | **100%** |
+| descriptions written by a model | **0** |
+
+Providers speak a different vocabulary from these labels, so
+`taste_profile.SUBJECT_SYNONYMS` translates theirs into ours. Without it the
+share of *scanned* books that share any subject with the shelf falls to 53%;
+with it, 90%.
 
 ## Watch the denominator
 
