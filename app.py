@@ -2044,11 +2044,12 @@ def catalogue_cover(row):
 def catalogue_cover_fallback(row):
     """Open Library by ISBN, kept as the safety net behind our own copy.
 
-    Audited over all 250 verified books: the edition cover 404s for 90 of them,
-    and 48 of those 90 have a perfectly good cover filed under the ISBN --
-    The Da Vinci Code among them. So a third of Browse and a third of the
-    starter shelf were showing "Cover unavailable" for books whose cover we
-    were simply asking for the wrong way. 64% -> 83% for one extra URL.
+    Audited over all 250 verified books, before the shelf was cut to 60: the
+    edition cover 404s for 90 of them, and 48 of those 90 have a perfectly good
+    cover filed under the ISBN -- The Da Vinci Code among them. So a third of
+    Browse and a third of the starter shelf were showing "Cover unavailable"
+    for books whose cover we were simply asking for the wrong way.
+    64% -> 83% for one extra URL.
 
     It goes to the client as a fallback rather than being resolved here because
     BookCover already walks src -> fallback -> placeholder, and resolving it

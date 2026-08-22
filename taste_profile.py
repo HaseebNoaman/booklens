@@ -71,11 +71,13 @@ STATE_NO_MATCH = "no_match"             # something to compare with, no overlap
 # children's quest. Reporting that as a match is technically true and completely
 # useless.
 #
-# Measured over the 238 catalogue books that carry any subject at all (12 of
-# the 250 have none, and those can never match on subjects whatever the reader
-# has read): 85 subjects, median subject in 2 books, and only FOUR carried by
-# more than a fifth of the shelf -- speculative 54.6%, children's literature
-# 37.4%, fantasy 30.7%, science 22.7%.
+# Measured on the 250-book shelf, before it was cut to 60 on 2026-08-22, over
+# the 238 of those books that carried any subject at all (12 had none, and
+# those can never match on subjects whatever the reader has read): 85 subjects,
+# median subject in 2 books, and only FOUR carried by more than a fifth of the
+# shelf -- speculative 54.6%, children's literature 37.4%, fantasy 30.7%,
+# science 22.7%. The weights themselves are not from this measurement: they are
+# recomputed from the live catalogue on every card.
 #
 # The weight is log(total / count) -- inverse document frequency, the standard
 # measure of how much a term distinguishes. It separates where it matters:
@@ -485,7 +487,7 @@ def _spread_across_subjects(rows, subjects_of, subject_counts, catalogue_size,
 # It is called "closest on our shelf", never "recommendations". Two reasons,
 # both measured:
 #
-#   1. There are 250 books. A recommender chooses from everything published.
+#   1. There are 60 books. A recommender chooses from everything published.
 #   2. The catalogue's genre lists come from a source that mixes a book's
 #      primary genre with its peripheral ones. House of Leaves -- a horror
 #      novel -- is filed under "Romance novel" and "Chivalric romance", so a

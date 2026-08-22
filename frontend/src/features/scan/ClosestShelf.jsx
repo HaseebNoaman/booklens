@@ -7,13 +7,13 @@ import { BookCover } from "../../components/ui.jsx";
 // The refusal screen is the product working -- BookLens declines rather than
 // guesses -- but it still ends with the reader holding nothing. The profile
 // that answers "is this for you?" can answer this too: it is the same
-// arithmetic pointed backwards, over our own 250 verified books.
+// arithmetic pointed backwards, over our own 60 verified books.
 //
 // Every rule here exists to stop it becoming a recommender it has no right to
 // be. See taste_profile.closest_from_shelf for the measurements.
 //
 //   - It is called "closest on our shelf", never "recommendations". There are
-//     250 books, and the reader can see the whole shelf under Browse.
+//     60 books, and the reader can see the whole shelf under Browse.
 //   - Each book carries its REASON and the reader's own titles behind it, so
 //     the claim can be checked. A number out of five could not be.
 //   - Nothing is derived from any other account. 10 users and 23 history rows

@@ -555,13 +555,14 @@ def catalogue_subject_counts():
 
     Used to weight a shared subject by how rare it is: sharing "speculative"
     with 52% of the shelf is not evidence, sharing "time travel" with 1% is.
-    Measured on the 250-book catalogue -- 85 subjects, of which only four are
-    carried by more than a fifth of it, and the median subject appears in two
-    books.
+    Measured on the 250-book catalogue, before it was cut to 60 -- 85 subjects,
+    of which only four were carried by more than a fifth of it, and the median
+    subject appeared in two books. The counts returned here are always read
+    from the live catalogue, never from those figures.
 
     Cached for the process: the catalogue is loaded at deploy time and does not
-    change while the server runs, and this would otherwise read 250 rows on
-    every single card.
+    change while the server runs, and this would otherwise read every catalogue
+    row on every single card.
     """
     global _SUBJECT_COUNTS
     if _SUBJECT_COUNTS is not None:

@@ -4,9 +4,9 @@ import { BookCover, Icon } from "../../components/ui.jsx";
 
 // Browse the verified books without holding one.
 //
-// The 250 verified records were reachable only by photographing a cover or
-// typing an exact title, so the most trustworthy data in the product was
-// invisible to the people it was built for. This is the way in.
+// The verified records were reachable only by photographing a cover or typing
+// an exact title, so the most trustworthy data in the product was invisible to
+// the people it was built for. This is the way in.
 //
 // It answers the same question a scan does -- "is this for me?" -- against the
 // reader's own library, and it writes nothing: looking at a book is not
