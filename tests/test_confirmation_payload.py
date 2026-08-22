@@ -119,9 +119,13 @@ def test_two_candidates_still_go_to_the_chooser(client, monkeypatch):
 def test_the_consumer_ui_no_longer_prints_scores_or_ranking_reasons():
     # A percentage invites trust the method cannot justify, and the reasons
     # describe the algorithm rather than the book.
+    # The whole scan folder: the chooser this guards moved out of
+    # ResultViews.jsx into CandidateSelection.jsx, and reading one file meant
+    # the assertions passed without looking at the code they describe.
     from pathlib import Path
-    source = (Path(__file__).parents[1] / "frontend" / "src" / "features" /
-              "scan" / "ResultViews.jsx").read_text(encoding="utf-8")
+    folder = (Path(__file__).parents[1] / "frontend" / "src" / "features" / "scan")
+    source = "\n".join(path.read_text(encoding="utf-8")
+                       for path in sorted(folder.glob("*.jsx")))
     assert "confidence-score" not in source
     assert "candidate-reasons" not in source
     assert "{candidate.score}%" not in source

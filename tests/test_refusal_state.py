@@ -81,13 +81,24 @@ def test_refusal_never_leaks_ranking_internals(client, monkeypatch):
     assert not data.get("candidates")
 
 
+def scan_sources():
+    """Every component of the scan feature, concatenated."""
+    folder = Path(__file__).parents[1] / "frontend" / "src" / "features" / "scan"
+    return "\n".join(path.read_text(encoding="utf-8")
+                     for path in sorted(folder.glob("*.jsx")))
+
+
 def test_the_refusal_hint_advises_rather_than_asserts():
     # The copy used to promise that another photo "will read the same way".
     # It cannot know that -- a clearer photo sometimes does succeed -- and an
     # absolute claim in a refusal screen undermines the honesty the refusal is
     # there to demonstrate.
-    source = (Path(__file__).parents[1] / "frontend" / "src" / "features" /
-              "scan" / "ResultViews.jsx").read_text(encoding="utf-8")
+    # Read the whole scan folder, not one file. This assertion was pinned to
+    # ResultViews.jsx and broke the day the refusal panel moved into its own
+    # module -- and the sibling assertion in test_confirmation_payload.py went
+    # the other way, passing vacuously against a file that no longer held the
+    # code it was checking. A copy rule belongs to the feature, not to a path.
+    source = scan_sources()
     assert "will read the same way" not in source
     assert "A clearer photo may help" in source
 

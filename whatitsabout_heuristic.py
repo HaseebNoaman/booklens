@@ -139,7 +139,11 @@ _CONNECTOR_RE = re.compile(
 )
 
 _NONFICTION_CATEGORY_RE = re.compile(
-    r"\b(?:biograph|memoir|history|science|psychology|business|self[- ]help|"
+    # "biograph" carried a trailing \b, so it could never match "Biography" or
+    # "Autobiography" -- the word continues and the boundary fails. The term had
+    # been dead since it was written; lists like "Biography; History" were only
+    # ever caught by "history".
+    r"\b(?:\w*biograph\w*|memoir|history|science|psychology|business|self[- ]help|"
     r"philosophy|politic|economic|education|health|travel|religion|true crime|"
     r"social science|nature|environment|technology|mathematics|medical)\b",
     re.IGNORECASE,
@@ -149,6 +153,10 @@ _FICTION_CATEGORY_RE = re.compile(
     r"thriller|science fiction|literary)\b",
     re.IGNORECASE,
 )
+# The only genre label that settles the question on its own. Everything else is
+# a hint, and hints collide: "Science Fiction" carries "science", "Alternate
+# history" carries "history", "Time travel" carries "travel".
+_EXPLICIT_NONFICTION_RE = re.compile(r"\bnon[- ]?fiction\b", re.IGNORECASE)
 _THESIS_RE = re.compile(
     r"\b(?:argues?|examines?|explains?|explores?|shows?|reveals?|traces?|"
     r"investigates?|demonstrates?|considers?|challenges?|documents?|"
@@ -281,11 +289,31 @@ def infer_kind(categories: str = "", explicit_kind: str = "") -> str:
     explicit = (explicit_kind or "").strip().lower()
     if explicit in {"fiction", "nonfiction"}:
         return explicit
+    # ORDER IS THE WHOLE FUNCTION, and it used to be wrong. Asking the
+    # nonfiction words first let the "science" inside "Science Fiction" file a
+    # quarter of the catalogue -- 62 of 250 books, Kindred and Stardust and
+    # Cat's Cradle and The Time Traveler's Wife among them -- as nonfiction, so
+    # their descriptions were scored by rules written for biographies. The same
+    # collision hides in "Alternate history", "Time travel" and "Science
+    # fantasy", which is why blanking out compound genres was not enough either.
+    #
+    # A genre list that says "Non-fiction" means it. Otherwise a fiction label
+    # anywhere in the list settles it, because a novel is routinely tagged with
+    # its subject matter while a biography is not tagged "Novel". Only a list
+    # with no fiction label at all is read for nonfiction words.
+    #
+    # Measured on the 250-book catalogue: 7 nonfiction, and all 7 are right --
+    # Cosmos, Guns Germs and Steel, The Wealth of Nations, Into the Wild, The
+    # 33 Strategies of War, The 4-Hour Workweek, The Art of Seduction. The one
+    # book it now gets wrong is Walden, which the source dataset itself tags
+    # "Speculative fiction; Fiction". That is a bad row, not a bad rule.
     value = categories or ""
-    if _NONFICTION_CATEGORY_RE.search(value):
+    if _EXPLICIT_NONFICTION_RE.search(value):
         return "nonfiction"
     if _FICTION_CATEGORY_RE.search(value):
         return "fiction"
+    if _NONFICTION_CATEGORY_RE.search(value):
+        return "nonfiction"
     return "fiction"
 
 

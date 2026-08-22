@@ -31,9 +31,9 @@
     "title": "The Horse and His Boy",
     "isbn_13": "9780062246394",
     "olid": "OL58686161M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=1D9uozq9FwsC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 246,
@@ -175,9 +175,9 @@
     "title": "White Fang",
     "isbn_13": "9798515079307",
     "olid": "OL55621477M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=DdF5zgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 6173
   },
   {
     "id": 230,
@@ -526,9 +526,9 @@
     "title": "The Wind in the Willows",
     "isbn_13": "9781847496386",
     "olid": "OL50418961M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=XcMUMQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 191,
@@ -598,9 +598,9 @@
     "title": "Redeeming Love",
     "isbn_13": "9781782640691",
     "olid": "OL39576746M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=JjV0BAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 183,
@@ -616,9 +616,9 @@
     "title": "Carmilla",
     "isbn_13": "9781691385249",
     "olid": "OL56501905M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=3DIvyQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 7063
   },
   {
     "id": 181,
@@ -1201,9 +1201,9 @@
     "title": "The Silmarillion",
     "isbn_13": "9780007322565",
     "olid": "OL60833860M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=05Cj67qkoaoC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 116,
@@ -1228,9 +1228,9 @@
     "title": "Sense and Sensibility",
     "isbn_13": "9781542989473",
     "olid": "OL61147591M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=eM60AQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 7737
   },
   {
     "id": 113,
@@ -1354,9 +1354,9 @@
     "title": "Catch-22",
     "isbn_13": "9780099552185",
     "olid": "OL43711752M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=pMXBXwrQ-LYC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 99,
@@ -1471,9 +1471,9 @@
     "title": "The 4-Hour Workweek",
     "isbn_13": "9780307394392",
     "olid": "OL62223183M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=m3MfWicGv4gC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 86,
@@ -1561,18 +1561,18 @@
     "title": "A Wrinkle in Time",
     "isbn_13": "9780241618035",
     "olid": "OL53351620M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=pzguzwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 76,
     "title": "The Wonderful Wizard of Oz",
     "isbn_13": "9781709458569",
     "olid": "OL48350308M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=8hkLzAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 75,
@@ -1696,9 +1696,9 @@
     "title": "The Time Machine",
     "isbn_13": "9781726017640",
     "olid": "OL35664452M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "olid",
+    "url": "https://covers.openlibrary.org/b/olid/OL35664452M-M.jpg?default=false",
+    "bytes": 8192
   },
   {
     "id": 61,
@@ -1822,9 +1822,9 @@
     "title": "Of Mice and Men",
     "isbn_13": "9783150092538",
     "olid": "OL61317727M",
-    "route": "none",
-    "url": "",
-    "bytes": 0
+    "route": "google",
+    "url": "https://books.google.com/books/content?id=TzNvPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "bytes": 8192
   },
   {
     "id": 47,
