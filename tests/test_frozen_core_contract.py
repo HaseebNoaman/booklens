@@ -16,12 +16,19 @@ regenerate the baseline:
 
 Re-baselining without re-measuring is how a result silently stops being true.
 
-The one re-baseline so far, 2026-08-23: api.py lost 166 lines of Wikipedia code
-that had no caller and could not have run even if it had one -- wikipediaapi is
-not in requirements.txt, so the import failed inside a bare except and the
-function returned "". Code that cannot execute cannot change a measurement, so
-the benchmark was not re-run. A re-baseline that cannot make that argument in
-one paragraph needs the 25 minutes instead.
+Re-baselines so far, both 2026-08-23, both api.py only:
+
+  1. Deleted 166 lines of Wikipedia code that had no caller and could not have
+     run even if it had one -- wikipediaapi is not in requirements.txt, so the
+     import failed inside a bare except and the function returned "".
+  2. Deleted resolve_description(), 73 lines. It chose which source's text to
+     show, and nothing has called it since whatitsabout_heuristic.py took that
+     over -- verified against commit 31064c2, where it was already callerless.
+     Its five helpers stay: they are what build_external_overview() fetches with.
+
+Code that cannot execute cannot change a measurement, so the benchmark was not
+re-run for either. A re-baseline that cannot make that argument in one
+paragraph needs the 25 minutes instead.
 """
 from __future__ import annotations
 

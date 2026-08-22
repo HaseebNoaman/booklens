@@ -20,11 +20,17 @@
 #   3. Wikipedia plot sections give away the ending, which is wrong for a
 #      product whose job is helping someone decide whether to read the book.
 # The description now always comes from the EXACT MATCHED VOLUME. When no
-# source has one, we say so - see resolve_description() below.
+# source has one, we say so.
 #
 # It was removed from the funnel then, but the fetch itself and its two guards
 # were left in the file behind no caller. They were deleted on 2026-08-23; the
 # reasoning above is the part worth keeping.
+#
+# Choosing BETWEEN the sources below is no longer this file's job either.
+# resolve_description() used to do it and was deleted on 2026-08-23 with the
+# same finding: nothing had called it since whatitsabout_heuristic.py took over.
+# This file now only FETCHES -- by volume id, by ISBN, by work key -- and
+# build_external_overview() decides which answer a reader sees.
 
 import os
 import re
@@ -444,8 +450,8 @@ def get_volume_by_id(volume_id):
     if api_key:
         params["key"] = api_key
     # NOTE ON FAILURE HANDLING: in the LIVE APP a failed lookup must not break
-    # the scan, so fetch_json returns None and resolve_description reports the
-    # reason honestly. That is the opposite of the rule for the DATASET
+    # the scan, so fetch_json returns None and the caller reports the reason
+    # honestly. That is the opposite of the rule for the DATASET
     # scripts, which pass strict=True so a bad response stops the run rather
     # than being recorded as an absence (EVALUATION.md 8.1). The difference is
     # deliberate: a user wants a working app, a measurement wants the truth or
@@ -493,81 +499,6 @@ def get_open_library_work_description(work_key):
     if not data:
         return ""
     return _ol_text(data.get("description", ""))[:1200]
-
-
-def resolve_description(book):
-    # Decide what text to summarise for ONE matched book.
-    #
-    # Order, RICHEST VERIFIED SOURCE FIRST:
-    #   1. google_volume       - the matched volume's own description. This is
-    #                            the answer for new books.
-    #   2. openlibrary_edition - the edition record for its ISBN
-    #   3. openlibrary_work    - the work that edition belongs to
-    #   4. nothing             - we say so, and never invent a substitute
-    #
-    # Wikipedia used to be step 1 and is not in this funnel any more, for the
-    # reason recorded at the top of this file: the article describes the
-    # SUBJECT, not the volume we matched, so it answered with series pages and
-    # author biographies, and had nothing at all for a book published last
-    # month.
-    #
-    # Every candidate must pass is_usable_description, which now also rejects
-    # text that describes a FILM or a BOX SET rather than the book.
-    #
-    # Returns {"text", "source", "reason"}. `source` is None when there is no
-    # text. `reason` distinguishes the two ways that can happen, which is a
-    # distinction users and examiners both care about:
-    #   "no_identifiers"            - we never had an id to look anything up by
-    #   "sources_had_no_description"- we asked and this book genuinely has none
-    # Refusing here is the same behaviour as the matching gate refusing a weak
-    # candidate: an honest "I don't know" beats a confident wrong answer.
-    volume_id = (book.get("google_books_id") or "").strip()
-    isbn = (book.get("isbn_13") or book.get("isbn_10") or "").strip()
-    work_key = (book.get("open_library_key") or "").strip()
-
-    # A publisher description below may be displayed with that exact label,
-    # but callers must never treat this function as catalogue verification.
-
-    # 1. Google Books, by volume id.
-    # The search response already carried this volume's own description, so
-    # when it is usable we use it directly - it came from the matched volume,
-    # which is exactly the guarantee we need, and it saves a round trip.
-    # Only when it is missing, too short, or a film/box-set synopsis do we
-    # re-ask by id, because search responses sometimes omit the field that the
-    # full volume record has.
-    existing = book.get("description", "") or ""
-    if is_usable_description(existing):
-        return {"text": existing, "source": "google_volume", "reason": ""}
-    if volume_id:
-        fetched = get_volume_by_id(volume_id)
-        if is_usable_description(fetched):
-            return {"text": fetched, "source": "google_volume", "reason": ""}
-
-    # 2. Open Library edition, by ISBN.
-    edition = get_open_library_edition(isbn) if isbn else None
-    if edition is not None:
-        edition_desc = _ol_text(edition.get("description", ""))
-        if is_usable_description(edition_desc):
-            return {"text": edition_desc[:1200],
-                    "source": "openlibrary_edition", "reason": ""}
-        # 2a. The edition points at its work - follow it. This keeps us on the
-        # same book instead of running a fresh title search, which is the
-        # mistake the old Wikipedia path made.
-        works = edition.get("works") or []
-        if works and not work_key:
-            work_key = works[0].get("key", "")
-
-    # 3. Open Library work.
-    if work_key:
-        work_desc = get_open_library_work_description(work_key)
-        if is_usable_description(work_desc):
-            return {"text": work_desc, "source": "openlibrary_work", "reason": ""}
-
-    # 4. Nothing. Say so.
-    if not volume_id and not isbn and not work_key:
-        return {"text": None, "source": None, "reason": "no_identifiers"}
-    return {"text": None, "source": None,
-            "reason": "sources_had_no_description"}
 
 
 def parse_book(item):
@@ -632,7 +563,7 @@ def parse_ol_doc(doc):
     thumb = f"https://covers.openlibrary.org/b/id/{cover_id}-M.jpg" if cover_id else ""
 
     # Open Library returns every ISBN it knows for the work, in no useful
-    # order. Take the first 13-digit one so resolve_description can look up an
+    # order. Take the first 13-digit one so the overview builder can look up an
     # edition record; better an approximate edition than none at all, and the
     # work record is the fallback underneath it anyway.
     isbns = [str(i) for i in (doc.get("isbn") or [])]
