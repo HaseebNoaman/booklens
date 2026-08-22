@@ -27,3 +27,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
+
+# The database backup taken before the catalogue was curated. Local safety
+# net, not something to ship -- it holds real user rows.
+bookfinder.before-curation.db

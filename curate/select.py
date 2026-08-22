@@ -71,6 +71,27 @@ MAX_EMPTY_AT_TWO = 0       # percent of 2-book profiles with nothing to offer
 MIN_ONE_TAP = 90           # percent of usable books where one tap converts
 SAMPLES = 400
 
+# How good the stored summary has to be for the book to keep its place.
+#
+# NOT the accept gate the app applies to publisher blurbs. That gate vetoes any
+# text missing a "premise" signal, and run against plot summaries it rejected 82
+# of the 107 books it called unusable -- Charlotte's Web at 19.0, Anne of Green
+# Gables at 18.7, Lord of the Flies at 16.9 -- while the cut is 11. It was built
+# to strip marketing copy out of a blurb, and asking it to judge a plot summary
+# was a category error of my own making.
+#
+# So the bar here is the score alone, and 15 is where the two groups separate:
+#
+#     Charlotte's Web        19.0      To the Lighthouse   11.0
+#     Anne of Green Gables   18.7      The Lost World      10.0
+#     The Fault in Our Stars 17.0      The Handmaid's Tale  8.0
+#     Lord of the Flies      16.9
+#
+# There is empty space between 11 and 16.9; 15 sits in it. 123 of 250 books
+# clear it, which is more than any shelf size under discussion needs -- the cut
+# was read off the separation, not fitted to a target.
+DESCRIPTION_SCORE_CUT = 15
+
 
 def load_audit(name):
     path = os.path.join(AUDITS, name)
@@ -110,6 +131,33 @@ def census(rows):
 def distinguishing(raw, counts, total):
     return {s for s in tp.normalize_subjects(raw)
             if not tp.too_common_to_be_evidence(s, counts, total)}
+
+
+_SCORED = {}
+
+
+def stored_score(row):
+    """The best window the app could show from this book's stored summary.
+
+    Local and instant -- no provider involved -- so it is computed here rather
+    than carried in the audit file. It reads the SCORE and deliberately ignores
+    the accept flag; see DESCRIPTION_SCORE_CUT above for why.
+    """
+    if row["id"] in _SCORED:
+        return _SCORED[row["id"]]
+    import whatitsabout_heuristic as wia
+    text = (row.get("short_summary") or "").strip()
+    best = -999.0
+    if text:
+        kind = wia.infer_kind(row.get("genres") or "")
+        cleaned = wia.clean_description(text)
+        for index, window in wia.generate_candidate_windows(cleaned["sentences"]):
+            scored = wia.score_candidate(" ".join(window), window,
+                                         title=row["title"], kind=kind,
+                                         sentence_index=index)
+            best = max(best, scored["score"])
+    _SCORED[row["id"]] = best
+    return best
 
 
 def evaluate(rows, label):
@@ -197,7 +245,8 @@ def choose(rows, size, covers, descriptions, fame, counts, total):
 
     A book has to look finished before fame is even consulted:
       - a cover that actually loads, by any of the three routes
-      - a description that passes the same quality gate the app already applies
+      - a description worth reading: either the provider's own text passed the
+        app's gate, or the stored summary scores at least DESCRIPTION_SCORE_CUT
 
     The subject bar is deliberately NOT a requirement. A book with only
     shelf-wide subjects still browses, still scans, still shows a real card --
@@ -212,10 +261,17 @@ def choose(rows, size, covers, descriptions, fame, counts, total):
 
     def unfinished(row):
         why = []
-        if covers is not None and (covers.get(row["id"]) or {}).get("route", "none") == "none":
+        if covers is not None and \
+                (covers.get(row["id"]) or {}).get("route", "none") == "none":
             why.append("no cover")
-        if descriptions is not None and                 (descriptions.get(row["id"]) or {}).get("winner", "neither") == "neither":
-            why.append("no usable description")
+        if descriptions is not None:
+            record = descriptions.get(row["id"]) or {}
+            provider_ready = (record.get("provider") or {}).get("status") == "ready"
+            if not provider_ready and stored_score(row) < DESCRIPTION_SCORE_CUT:
+                # One decimal, or a 14.7 rounds to "15" and the note reads
+                # "scores 15, under 15".
+                why.append("description scores %.1f, under %d"
+                           % (stored_score(row), DESCRIPTION_SCORE_CUT))
         return why
 
     # 1. The benchmark books, whatever their state. Tier-1 lookup reads the

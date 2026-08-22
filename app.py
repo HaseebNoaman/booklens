@@ -87,6 +87,9 @@ logging.basicConfig(level=logging.INFO,
 # ----- App setup -----
 app = Flask(__name__, static_folder=None)
 FRONTEND_DIST = os.path.join(BASE_DIR, "frontend", "dist")
+# The verified shelf's covers, committed to the repository. Not under
+# frontend/dist, which the Docker build regenerates from source.
+CATALOGUE_COVERS = os.path.join(BASE_DIR, "catalogue_covers")
 
 UPLOAD_FOLDER = (os.environ.get("UPLOAD_FOLDER") or os.path.join(BASE_DIR, "uploads"))
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)   # make the uploads folder if missing
@@ -380,6 +383,26 @@ def frontend_asset(filename):
     # send_from_directory keeps asset resolution inside dist/assets and blocks
     # path traversal. Vite fingerprints these files during the build.
     return send_from_directory(os.path.join(FRONTEND_DIST, "assets"), filename)
+
+
+@app.route("/covers/<int:record_id>.jpg", methods=["GET"])
+def catalogue_cover_image(record_id):
+    """The verified shelf's own covers, served from this repository.
+
+    Every card, Browse row and starter-shelf tile used to fetch its cover from
+    covers.openlibrary.org while rendering -- a request per book per page view
+    to somebody else's server, for images that never change. The verified shelf
+    is small and fixed, so its covers are downloaded once by
+    curate/fetch_covers.py and committed: 60 files, 1.1 MB.
+
+    They live outside frontend/dist on purpose. The Docker build rebuilds the
+    frontend from source, which would delete anything kept in there.
+
+    An int converter, not a path one: this route takes a catalogue id and
+    nothing else, so no filename from a request ever reaches the filesystem.
+    """
+    return send_from_directory(CATALOGUE_COVERS, "%d.jpg" % record_id,
+                               max_age=60 * 60 * 24 * 30)
 
 @app.route("/api/health", methods=["GET"])
 def health():
@@ -2399,13 +2422,23 @@ OL_COVER = "https://covers.openlibrary.org/b/%s/%s-M.jpg?default=false"
 
 
 def catalogue_cover(row):
-    """The cover of the EDITION we stored, which is right 64% of the time."""
-    olid = (row.get("open_library_edition_id") or "").strip()
-    return OL_COVER % ("olid", olid) if olid else ""
+    """Our own copy, served from this repository.
+
+    The verified shelf is 60 fixed books, so their covers were downloaded once
+    by curate/fetch_covers.py and committed -- 1.1 MB for all of them. A
+    catalogue card now needs no network at all: description, subjects and cover
+    all come from the machine serving the page.
+
+    No filesystem check here. If a file is ever missing the client falls through
+    to the Open Library URL below and then to the placeholder, which is the same
+    chain it already walks -- and checking would mean a stat() per row while
+    rendering a grid.
+    """
+    return "/covers/%d.jpg" % row["id"] if row.get("id") else ""
 
 
 def catalogue_cover_fallback(row):
-    """The same book asked for by ISBN instead.
+    """Open Library by ISBN, kept as the safety net behind our own copy.
 
     Audited over all 250 verified books: the edition cover 404s for 90 of them,
     and 48 of those 90 have a perfectly good cover filed under the ISBN --

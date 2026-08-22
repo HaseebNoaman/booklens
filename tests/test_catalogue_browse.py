@@ -199,9 +199,24 @@ def test_a_book_carries_a_second_way_to_ask_for_its_cover(client):
     listed = client.get("/api/catalogue", headers=auth(token)).get_json()["books"]
     book = next(b for b in listed if b["title"] == "The Da Vinci Code")
 
-    assert "/b/olid/" in book["thumbnail"]
+    # The cover now comes from this repository -- 60 fixed books, downloaded
+    # once by curate/fetch_covers.py -- so a catalogue card needs no network.
+    assert book["thumbnail"] == "/covers/%d.jpg" % book["id"]
+    # Open Library stays behind it as the safety net, and it is the ISBN route
+    # rather than the edition one, because the edition URL 404s for a third of
+    # the shelf and 48 of those books are filed correctly under their ISBN.
     assert "/b/isbn/" in book["thumbnail_fallback"]
     assert book["isbn_13"] in book["thumbnail_fallback"]
+
+
+def test_the_shelf_serves_its_own_cover_files(client):
+    """The point of committing them: no provider is involved in rendering a
+    catalogue card. A missing file must still 404 rather than reach outside the
+    covers folder -- the route takes an int, so no request-supplied filename
+    ever touches the filesystem."""
+    token = register_and_login(client)
+    assert client.get("/covers/999999.jpg").status_code == 404
+    assert client.get("/covers/../app.py").status_code in (404, 308)
 
 
 def test_no_isbn_means_no_second_url_rather_than_a_broken_one(client):
