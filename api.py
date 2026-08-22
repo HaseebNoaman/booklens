@@ -21,6 +21,10 @@
 #      product whose job is helping someone decide whether to read the book.
 # The description now always comes from the EXACT MATCHED VOLUME. When no
 # source has one, we say so - see resolve_description() below.
+#
+# It was removed from the funnel then, but the fetch itself and its two guards
+# were left in the file behind no caller. They were deleted on 2026-08-23; the
+# reasoning above is the part worth keeping.
 
 import os
 import re
@@ -28,7 +32,6 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 
 import requests
-from thefuzz import fuzz
 
 import disk_cache
 
@@ -427,172 +430,6 @@ def is_usable_description(text):
     return not describes_something_else(stripped)
 
 
-# A Wikipedia article that describes a SERIES rather than one book. This is
-# the exact failure that got Wikipedia removed in the first place: scanning
-# "Harry Potter and the Philosopher's Stone" returned "Harry Potter is a series
-# of seven children's fantasy novels...". Presence of the author was not enough
-# to catch it, because the series article names the author too.
-#
-# It must fire only when the article's SUBJECT is the series, not whenever a
-# series is mentioned. The first version matched any "book series" / "novel
-# series" and wrongly rejected "The Miserable Mill is the fourth novel of the
-# children's novel series A Series of Unfortunate Events" - an article about
-# exactly the book we wanted. Anchoring on "is a ... series" fixes that,
-# because an article about one book says "is the fourth novel", never
-# "is a series".
-WIKI_SERIES_RE = re.compile(
-    r"\bis an?\s+(?:[\w'-]+\s+){0,3}series\b|\bis a series of\b",
-    re.IGNORECASE)
-
-# A Wikipedia article about the FILM of the book, not the book.
-WIKI_FILM_RE = re.compile(
-    r"\bis a \d{4} (?:American |British |[A-Za-z]+ )?film\b|"
-    r"\bfilm directed by\b|\bis a film\b",
-    re.IGNORECASE)
-
-
-def looks_like_disambiguation(text):
-    # Wikipedia disambiguation/word pages list links ("Martian, Martians or The
-    # Martians may also refer to: ...") instead of describing a book. Feeding
-    # one to the model produced a nonsense summary for The Martian.
-    head = text[:500].lower()
-    return "may refer to" in head or "may also refer to" in head
-
-
-def is_author_page(resolved_title, author):
-    # Wikipedia redirects a book with no article of its own to its AUTHOR's
-    # biography - both "The 10X Rule" and "If You're Not First, You're Last"
-    # resolve to "Grant Cardone". Summarising that describes the PERSON.
-    if not author or not resolved_title:
-        return False
-    return fuzz.token_set_ratio(resolved_title.lower(), author.lower()) >= 85
-
-
-def get_verified_wikipedia_description(title, author=""):
-    # Wikipedia text for a book, but ONLY when the article can be shown to be
-    # about THIS book. Returns "" when it cannot.
-    #
-    # WHY IT IS BACK. Wikipedia plot sections are the best summary input we
-    # have for well-known books - far better than a publisher blurb, which is
-    # marketing copy and is sometimes a film synopsis or a box-set listing.
-    # It was removed wholesale because it kept returning the SERIES or the
-    # AUTHOR. That was a verification failure, not a source failure: the old
-    # code searched by title string and had nothing to check the result
-    # against. We now hold the matched volume's real title and author, so an
-    # article has to prove it describes that book before we will use it.
-    #
-    # It contributes NOTHING for new books - measured 0 of 100 on titles
-    # published in 2026 - which is exactly why it is tried first and falls
-    # through silently rather than being relied upon.
-    if not title:
-        return ""
-    try:
-        import wikipediaapi
-        wiki = wikipediaapi.Wikipedia("BookFinder/1.0", "en", timeout=10)
-
-        surname = author.split()[-1] if author.strip() else ""
-        main_title = title.split(":")[0].strip()
-
-        # Study and school editions prefix the author possessively -
-        # "William Golding's Lord of the Flies". Wikipedia has no article under
-        # that name, so the book was reported as having no description at all
-        # even though its article exists. Strip the prefix and try the bare
-        # title too. Seen live 2026-07-27.
-        bare_title = re.sub(r"^\s*[\w.'-]+(?:\s+[\w.'-]+){0,3}'s\s+", "",
-                            main_title).strip()
-        # Catalogue titles also carry the author AFTER the title, and
-        # Wikipedia never does. Both forms were seen live on 2026-07-27 and
-        # each made the book report NO description although its article
-        # exists: "Normal People by Sally Rooney", "Jaws, Peter Benchley".
-        if author.strip():
-            for name in filter(None, (author.strip(), surname)):
-                bare_title = re.sub(
-                    rf"\s*(?:,|\bby\b)\s*{re.escape(name)}\s*$", "",
-                    bare_title, flags=re.IGNORECASE).strip()
-
-        # Book titles routinely lose a leading "The" in cover text and in
-        # catalogue metadata. Wikipedia keeps it: the article is "The
-        # Miserable Mill", so a stored title of "Miserable Mill" found nothing
-        # and the book fell back to a two-line blurb the model then padded
-        # into an invented sentence. Seen live 2026-07-27.
-        variants = [title, main_title, bare_title]
-        for t in (main_title, bare_title):
-            if t and not re.match(r"^(the|a|an)\s", t, re.IGNORECASE):
-                variants.append(f"The {t}")
-
-        terms = []
-        for t in variants:
-            if not t:
-                continue
-            if surname:
-                terms.append(f"{t} ({surname} novel)")
-            terms.append(f"{t} (novel)")
-            terms.append(t)
-        seen = set()
-        terms = [t for t in terms if not (t in seen or seen.add(t))]
-
-        for term in terms:
-            page = wiki.page(term)
-            if not page.exists() or len(page.summary) < 100:
-                continue
-
-            lead = page.summary
-            # --- the verification gauntlet -------------------------------
-            if looks_like_disambiguation(lead):
-                continue
-            if is_author_page(page.title, author):
-                continue
-            if WIKI_SERIES_RE.search(lead[:400]):
-                continue        # the series, not this book
-            if WIKI_FILM_RE.search(lead[:400]):
-                continue        # the film, not the book
-            if surname and surname.lower() not in (lead + page.text[:2000]).lower():
-                continue        # never names the author - probably not the book
-            # The resolved page title must still be recognisably this book.
-            # Wikipedia follows redirects, so page.title is where we LANDED,
-            # not what we asked for.
-            #
-            # Compare against the BARE title as well as the raw one. When the
-            # catalogue title carries the author ("Jaws, Peter Benchley") the
-            # raw comparison is diluted by words the article will never have:
-            # "Jaws (novel)" scored 57 against it and was rejected by three
-            # points, while scoring 100 against "Jaws". Seen live 2026-07-27.
-            landed = page.title.lower()
-            if max(fuzz.token_set_ratio(landed, main_title.lower()),
-                   fuzz.token_set_ratio(landed, bare_title.lower())) < 60:
-                continue
-
-            # --- build the input the model reads -------------------------
-            # HYBRID (measured 2026-07-19): the lead's first two sentences
-            # anchor what the book IS, while the plot section supplies the
-            # story. Lead-only leaked publication trivia into summaries;
-            # plot-only garbled referents.
-            plot = ""
-            for section_name in ("Plot", "Plot summary", "Synopsis", "Summary"):
-                section = page.section_by_title(section_name)
-                if section is not None and len(section.text) > 100:
-                    plot = section.text
-                    break
-            if plot:
-                protected = re.sub(r"\b([A-Z])\.", r"\1<DOT>", lead)
-                sentences = [s.strip() for s in
-                             re.split(r"(?<=[.!?])\s+", protected) if s.strip()]
-                text = f"{' '.join(sentences[:2]).replace('<DOT>', '.')} {plot}"
-            else:
-                text = lead
-
-            # The model reads about 1200 characters. Cut on a sentence end.
-            if len(text) > 1200:
-                text = text[:1200]
-                last_dot = text.rfind(". ")
-                if last_dot > 100:
-                    text = text[:last_dot + 1]
-            return text
-        return ""
-    except Exception:
-        return ""
-
-
 def get_volume_by_id(volume_id):
     # Fetch ONE Google Books volume by its id: GET /volumes/{id}.
     # Every other Google call in this file is a SEARCH (/volumes?q=...), which
@@ -662,17 +499,17 @@ def resolve_description(book):
     # Decide what text to summarise for ONE matched book.
     #
     # Order, RICHEST VERIFIED SOURCE FIRST:
-    #   1. wikipedia           - lead + plot, but only when the article is
-    #                            verified to be about THIS book (see
-    #                            get_verified_wikipedia_description). Best text
-    #                            available for well-known books; contributes
-    #                            nothing for new ones, measured 0/100 on 2026
-    #                            titles, so it simply falls through.
-    #   2. google_volume       - the matched volume's own description. This is
+    #   1. google_volume       - the matched volume's own description. This is
     #                            the answer for new books.
-    #   3. openlibrary_edition - the edition record for its ISBN
-    #   4. openlibrary_work    - the work that edition belongs to
-    #   5. nothing             - we say so, and never invent a substitute
+    #   2. openlibrary_edition - the edition record for its ISBN
+    #   3. openlibrary_work    - the work that edition belongs to
+    #   4. nothing             - we say so, and never invent a substitute
+    #
+    # Wikipedia used to be step 1 and is not in this funnel any more, for the
+    # reason recorded at the top of this file: the article describes the
+    # SUBJECT, not the volume we matched, so it answered with series pages and
+    # author biographies, and had nothing at all for a book published last
+    # month.
     #
     # Every candidate must pass is_usable_description, which now also rejects
     # text that describes a FILM or a BOX SET rather than the book.
@@ -688,12 +525,10 @@ def resolve_description(book):
     isbn = (book.get("isbn_13") or book.get("isbn_10") or "").strip()
     work_key = (book.get("open_library_key") or "").strip()
 
-    # Wikipedia is deliberately not part of the automatic summary funnel.
-    # Even a plausible article is not a locally verified catalogue summary.
-    # Publisher descriptions below may be displayed with that exact label,
+    # A publisher description below may be displayed with that exact label,
     # but callers must never treat this function as catalogue verification.
 
-    # 2. Google Books, by volume id.
+    # 1. Google Books, by volume id.
     # The search response already carried this volume's own description, so
     # when it is usable we use it directly - it came from the matched volume,
     # which is exactly the guarantee we need, and it saves a round trip.
@@ -715,14 +550,14 @@ def resolve_description(book):
         if is_usable_description(edition_desc):
             return {"text": edition_desc[:1200],
                     "source": "openlibrary_edition", "reason": ""}
-        # 3a. The edition points at its work - follow it. This keeps us on the
+        # 2a. The edition points at its work - follow it. This keeps us on the
         # same book instead of running a fresh title search, which is the
         # mistake the old Wikipedia path made.
         works = edition.get("works") or []
         if works and not work_key:
             work_key = works[0].get("key", "")
 
-    # 3b. Open Library work.
+    # 3. Open Library work.
     if work_key:
         work_desc = get_open_library_work_description(work_key)
         if is_usable_description(work_desc):
