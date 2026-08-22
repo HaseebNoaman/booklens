@@ -3,24 +3,32 @@
 #
 # Everything here answers one question: given the text we read off a cover and
 # a handful of candidate books from Google Books / Open Library, WHICH book is
-# it, and how sure are we? The two jobs are deliberately separate:
+# it, and how sure are we? The three jobs are deliberately separate:
 #
-#   verify_against_cover()  scores one candidate against the cover text
-#   pick_best()             ranks all candidates, then applies a QUALITY GATE
-#                           that rejects a weak best-candidate outright and
-#                           grades an accepted one high / medium
+#   score_candidate()        scores ONE candidate against the query
+#   rank_candidates()        orders them and decides HIGH_CONFIDENCE,
+#                            NEEDS_CONFIRMATION or REJECTED for the whole set
+#   recover_ocr_candidates() rescues a match from raw cover text when the
+#                            title guess itself was wrong
 #
-# Every threshold below was measured on the 100-cover benchmark in
-# test_covers/, not guessed, and each one carries the measurement that set it.
-# The honest-rejection behaviour is the point: the system says "no matching
-# book found" rather than showing a confident wrong answer.
+# It answers with a SET and a decision, never with a single book. That is the
+# difference from the matcher this file used to hold: pick_best() returned one
+# winner, so every scan produced an answer. Ranking with a refusal state is
+# what lets the product say "I am not sure" instead. pick_best and its two
+# scorers were deleted on 2026-08-23 once their last caller went; the
+# thresholds they used are kept below, labelled, because each one records a
+# measurement.
+#
+# Every threshold below was measured on the 100-cover benchmark, not guessed,
+# and each one carries the measurement that set it. The honest-rejection
+# behaviour is the point: the system says "no matching book found" rather than
+# showing a confident wrong answer.
 #
 # This code used to live in api.py. It was moved out because api.py is the
-# HTTP client layer (Google Books, Open Library) and the matching
-# logic is a different concern that happens to consume its output. api.py
-# re-exports every name defined here, so `api.pick_best`, `api.T_TITLE` and
-# the rest keep working for app.py, the tests and every benchmark script in
-# test_covers/.
+# HTTP client layer (Google Books, Open Library) and the matching logic is a
+# different concern that happens to consume its output. api.py re-exports every
+# name defined here, so `api.rank_candidates`, `api.T_TITLE` and the rest keep
+# working for app.py, the tests and every benchmark script.
 
 import os
 import re
@@ -34,55 +42,6 @@ TITLE_STOPWORDS = {
     "a", "an", "and", "the", "of", "in", "on", "at", "to", "for", "from",
     "with", "by", "or", "is", "it", "as", "into",
 }
-
-
-def title_token_coverage(book_title, cover_text):
-    # What FRACTION of the candidate title's OWN words actually appear in the
-    # text we read off the cover? Returns 0.0-1.0.
-    #
-    # WHY THIS EXISTS. title_score in verify_against_cover is
-    # max(token_set_ratio, partial_ratio), and both of those can be high while
-    # most of the title is missing from the cover:
-    #   - token_set_ratio returns 100 whenever the candidate's title words are
-    #     a SUBSET of the cover text, no matter how much else is on the cover.
-    #   - partial_ratio scores a SHORT title highly against almost any longer
-    #     text, because it slides the short string along looking for its best
-    #     window.
-    # So a candidate could look "present" on author evidence alone. That is
-    # exactly how a DIFFERENT BOOK BY THE CORRECT AUTHOR gets accepted: the
-    # author matches strongly, and the title only has to clear a bar that a
-    # couple of common words already clears.
-    #
-    # This measure is deliberately different: it is RECALL over the candidate
-    # title's words, so a title whose words are mostly absent from the cover
-    # scores low however well the author matches.
-    title = (book_title or "").split(":")[0].lower()
-    title_tokens = re.findall(r"[a-z0-9']+", title)
-    content = [t for t in title_tokens
-               if t not in TITLE_STOPWORDS and len(t) > 1]
-    # A title made only of stopwords or single letters ("It", "Us", "A") has
-    # nothing to measure. Fall back to the raw words rather than returning a
-    # free pass, so those titles are still judged on something.
-    if not content:
-        content = [t for t in title_tokens if t]
-    if not content:
-        return 0.0
-
-    cover_tokens = re.findall(r"[a-z0-9']+", (cover_text or "").lower())
-    if not cover_tokens:
-        return 0.0
-
-    found = 0
-    for word in content:
-        for token in cover_tokens:
-            # Exact or near-exact match. fuzz.ratio >= 85 absorbs the OCR
-            # noise we actually see ("Mockingbird" read as "Mockinqbird").
-            # The containment test catches the other common OCR artifact:
-            # neighbouring words merged into one ("GRANTCARDONE").
-            if word == token or word in token or fuzz.ratio(word, token) >= 85:
-                found += 1
-                break
-    return found / len(content)
 
 
 def cleanquery(text):
@@ -99,28 +58,19 @@ def cleanquery(text):
     return " ".join(words[:8])
 
 
-def verify_against_cover(book, cover_text):
-    # Score how well a candidate book matches ALL the text read off the
-    # cover (not the jumbled OCR title). Returns three 0-100 numbers:
-    #   title_score : is the book's TITLE present on the cover? (order- and
-    #                 subset-tolerant, so extra cover words don't hurt)
-    #   author_score: is the book's AUTHOR present on the cover?
-    #   title_fit   : is the cover essentially JUST this title? High for a
-    #                 title-only cover, LOW for a poster whose title is a
-    #                 small part of its text -> this is our precision guard.
-    title = book.get("title", "").split(":")[0].lower()
-    author = book.get("author", "").lower()
-    cover = cover_text.lower()
-
-    title_score = max(fuzz.token_set_ratio(title, cover),
-                      fuzz.partial_ratio(title, cover))
-    author_score = 0
-    if author:
-        author_score = max(fuzz.token_set_ratio(author, cover),
-                           fuzz.partial_ratio(author, cover))
-    title_fit = fuzz.token_sort_ratio(title, cover)
-    return title_score, author_score, title_fit
-
+# ---------------------------------------------------------------------------
+# RETIRED THRESHOLDS -- kept as the measurement record, read by nothing.
+#
+# Every T_* constant from here down to T_ACCEPT_ON_PROBABLE belonged to
+# pick_best(), the single-winner matcher this file used to hold. That function
+# was deleted on 2026-08-23 after its last caller went, and the live matcher
+# below (score_candidate / rank_candidates / recover_ocr_candidates) does not
+# read one of them.
+#
+# They stay because each number is a measurement, and several record something
+# that was TRIED AND REJECTED -- which is worth more than the number itself.
+# Deleting them would delete the evidence, not just the code.
+# ---------------------------------------------------------------------------
 
 # Acceptance thresholds, chosen by measuring on 100 real covers
 # (test_covers/). This point maximized correct matches while a non-book
@@ -233,8 +183,9 @@ TITLE_ON_COVER_BONUS = 15
 # MINIMUM TITLE-TOKEN COVERAGE (scan path only).
 # A candidate must not be accepted on AUTHOR evidence alone: at least this
 # fraction of its own title words has to be physically present on the cover.
-# See title_token_coverage() above for why the existing title_score cannot
-# express this.
+# It needed its own measure because title_score is a fuzzy similarity: it
+# cannot tell "most of this title is on the cover" from "these strings look
+# alike". The function that computed it went with pick_best.
 #
 # MEASURED AND CURRENTLY INERT (0.0 = gate off). Swept on the 100-cover
 # benchmark, experiments/title_coverage_sweep.csv:
@@ -260,22 +211,6 @@ TITLE_ON_COVER_BONUS = 15
 # metric is reusable if acceptance is ever tied to prominence. Set
 # OCR_TITLE_COVERAGE to re-run the sweep without editing this file.
 T_TITLE_COVERAGE = float(os.environ.get("OCR_TITLE_COVERAGE", "0.0"))
-
-
-def probable_title_agreement(book_title, probable_title):
-    # How well does a candidate's title agree with the cover's BIGGEST text
-    # (the height-ordered probable title)? Returns 0-100, or None when there
-    # is no probable title to judge against.
-    #
-    # max() of both fuzz flavours: partial_ratio handles a probable title that
-    # is a subset of the real title ("RULE"), token_set_ratio handles
-    # word-order scrambling from OCR ("Purple The Colpr").
-    if not probable_title:
-        return None
-    main = (book_title or "").split(":")[0].lower()
-    probable = probable_title.lower()
-    return max(fuzz.partial_ratio(main, probable),
-               fuzz.token_set_ratio(main, probable))
 
 
 # ACCEPTANCE on prominence (scan path only). MEASURED AND REJECTED - 0 = off.
@@ -311,141 +246,6 @@ def probable_title_agreement(book_title, probable_title):
 # into "show nothing". That is a worse product for no precision that matters.
 # It stays a CONFIDENCE rule (T_HIGH_ON_PROBABLE), which is where it works.
 T_ACCEPT_ON_PROBABLE = float(os.environ.get("OCR_ACCEPT_ON_PROBABLE", "0"))
-
-
-def pick_best(results, cover_text, typed_title=False, probable_title=""):
-    # Rank every candidate by how well it matches the cover text, then apply
-    # the quality gate so a weak best-candidate is honestly rejected.
-    # typed_title=True -> the user typed the title, so we trust it (see below).
-    # probable_title  -> the height-ordered OCR title (biggest cover text),
-    #                    used only as a ranking bonus, never for the gate.
-    if not results:
-        return {"error": "No matching book found", "confidence": "low"}
-
-    best_book = None
-    best_key = -1
-    best_scores = (0, 0, 0)
-
-    for book in results:
-        title_score, author_score, title_fit = verify_against_cover(book, cover_text)
-        # TYPED MODE: the "cover text" is just the few words the user typed,
-        # and fuzzing an author name against a short typed title yields a
-        # meaningless 25-45 — pure noise that decides ties randomly. Seen
-        # live 2026-07-20: for typed "The Hobbit", "Jeff Barton" (a game
-        # guide) scored 42 vs 35 for "J.R.R. Tolkien" and the noise picked
-        # the guide. Count the author only when it is a REAL signal, i.e.
-        # the user actually typed author words ("The Hobbit Tolkien").
-        ranked_author = author_score
-        if typed_title and author_score < T_AUTHOR:
-            ranked_author = 0
-        key = title_score + ranked_author + title_fit
-        # Prefer books that actually have a description (needed for a summary).
-        if len(book.get("description", "")) >= 50:
-            key += 20
-        # A real book usually has more than 20 pages -> tiny tie-breaker.
-        if book.get("page_count", 0) > 20:
-            key += 5
-        # TYPED MODE tie-breakers, measured on the 100-title typed benchmark
-        # (test_covers/evaluate_typed_search.py): bare-title top-1 went
-        # 72/100 (old ranking) -> 82/100 with the author-noise gate above
-        # plus these two signals. Both are small and capped — they separate
-        # otherwise-tied editions but can never override a title or author
-        # difference.
-        if typed_title:
-            # Any user ratings at all mark the edition people actually read
-            # (knockoff "editions" of popular novels have none).
-            ratings = book.get("ratings_count", 0) or 0
-            if ratings >= 100:
-                key += 10
-            elif ratings >= 1:
-                key += 5
-            # Google's own relevance order (recorded by searchbook).
-            key += book.get("_rank_bonus", 0)
-        title_main = book.get("title", "").split(":")[0]
-        if DERIVED_EDITION_RE.search(book.get("title", "")):
-            key -= DERIVED_EDITION_PENALTY
-        elif probable_title and len(title_main) >= 4 and \
-                fuzz.partial_ratio(title_main.lower(), probable_title.lower()) >= 90:
-            key += TITLE_ON_COVER_BONUS
-        if key > best_key:
-            best_key = key
-            best_book = book
-            best_scores = (title_score, author_score, title_fit)
-
-    title_score, author_score, title_fit = best_scores
-    best_book.pop("_rank_bonus", None)   # internal ranking detail, not API data
-
-    # TYPED-TITLE PATH: the user chose this title, so trust it. Accept the best
-    # candidate whose title matches what they typed (lenient, so partial titles
-    # like "Gatsby" and small typos still work). No author needed — they only
-    # typed a title.
-    if typed_title:
-        if title_score < T_TITLE_TYPED:
-            return {"error": "No matching book found", "confidence": "low"}
-        best_book["confidence"] = "high" if title_score >= T_TITLE_HIGH else "medium"
-        return best_book
-
-    # SCAN PATH — QUALITY GATE. Accept the book if ANY of these hold:
-    #   both_present  : the title AND the author both appear on the cover, OR
-    #   is_title_cover: the cover is essentially just this title, OR
-    #   strong_author : a strong author match backs up a present title, OR
-    #   title_dominant: a very strong, cover-dominant title.
-    # A random poster has a weak author and its title is a small fraction of its
-    # text, so it fails all four and is rejected.
-    both_present = title_score >= T_TITLE and author_score >= T_AUTHOR
-    is_title_cover = title_fit >= T_FIT
-    strong_author = author_score >= T_AUTHOR_STRONG and title_score >= T_TITLE_PRESENT
-    title_dominant = title_score >= T_TITLE_DOMINANT and title_fit >= T_FIT_LOOSE
-    if not (both_present or is_title_cover or strong_author or title_dominant):
-        # LOW confidence: nothing convincing. The caller shows the "type the
-        # title or scan the barcode" fallback instead of guessing a wrong book.
-        return {"error": "No matching book found", "confidence": "low"}
-
-    # AND, on top of whichever rule fired: enough of the candidate's OWN title
-    # has to be on the cover. Without this a strong author match could carry a
-    # candidate whose title is barely present, which is how a DIFFERENT BOOK
-    # BY THE CORRECT AUTHOR gets through - the rule above named
-    # `strong_author` is the one that does it, since its title bar
-    # (T_TITLE_PRESENT) is met by a couple of common words.
-    # Typed-title searches return earlier and never reach here: there the
-    # "cover text" is what the user typed, so measuring coverage against it
-    # would be circular.
-    coverage = title_token_coverage(best_book.get("title", ""), cover_text)
-    if coverage < T_TITLE_COVERAGE:
-        return {"error": "No matching book found", "confidence": "low"}
-
-    # PROMINENCE. How well does the matched title agree with the cover's
-    # BIGGEST text? Computed once and used twice: as an acceptance rule here,
-    # and to set the confidence band below.
-    #
-    # This is the signal that separates a book from ANOTHER BOOK BY THE SAME
-    # AUTHOR named in small print. Presence cannot: a tagline like "a novel by
-    # the author of THE SHINING" puts the wrong title genuinely ON the cover.
-    # Only size tells them apart, and the height-ordered probable_title is
-    # exactly that measurement.
-    agreement = probable_title_agreement(best_book.get("title", ""),
-                                         probable_title)
-    if agreement is not None and agreement < T_ACCEPT_ON_PROBABLE:
-        return {"error": "No matching book found", "confidence": "low"}
-
-    # We accepted the book. Now grade HOW sure we are so the frontend can
-    # either show it outright or ask the user to confirm:
-    #   HIGH   - the title AND author are both strongly on the cover.
-    #   MEDIUM - it passed the gate but not strongly (a title-only cover, a
-    #            weaker author, or one of the loosened rules) -> confirm it.
-    author_strict = fuzz.token_set_ratio(best_book.get("author", "").lower(),
-                                         cover_text.lower())
-    # Dominant-text agreement (see T_HIGH_ON_PROBABLE above): high confidence
-    # requires the matched title to appear in the cover's BIGGEST text, not
-    # only somewhere in the small print. `agreement` was computed above.
-    on_probable = agreement is None or agreement >= T_HIGH_ON_PROBABLE
-    if (title_score >= T_TITLE_HIGH and author_score >= T_AUTHOR_HIGH
-            and author_strict >= T_AUTHOR_HIGH_STRICT and on_probable):
-        best_book["confidence"] = "high"
-    else:
-        best_book["confidence"] = "medium"
-
-    return best_book
 
 
 # ---------------------------------------------------------------------------

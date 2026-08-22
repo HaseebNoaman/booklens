@@ -16,7 +16,7 @@ regenerate the baseline:
 
 Re-baselining without re-measuring is how a result silently stops being true.
 
-Re-baselines so far, both 2026-08-23, both api.py only:
+Re-baselines so far, all 2026-08-23:
 
   1. Deleted 166 lines of Wikipedia code that had no caller and could not have
      run even if it had one -- wikipediaapi is not in requirements.txt, so the
@@ -26,9 +26,31 @@ Re-baselines so far, both 2026-08-23, both api.py only:
      over -- verified against commit 31064c2, where it was already callerless.
      Its five helpers stay: they are what build_external_overview() fetches with.
 
-Code that cannot execute cannot change a measurement, so the benchmark was not
-re-run for either. A re-baseline that cannot make that argument in one
-paragraph needs the 25 minutes instead.
+  3. Retired the single-winner matcher: api.searchbook() and, with it,
+     matching.pick_best(), verify_against_cover(), probable_title_agreement()
+     and title_token_coverage() -- 324 lines. searchbook's only two callers
+     were the disabled legacy endpoints, which returned 410 on their first
+     statement long before this cleanup; deleting those endpoints is what made
+     the rest visible. This is the FIRST re-baseline to touch matching.py.
+
+The first two deleted code that could not execute, so the benchmark was not
+re-run for them. The third could not make that argument -- matching.py is the
+file the 74/100 comes from -- so it was proved three ways instead, in a git
+worktree, before a line of the live tree was touched:
+
+  * a tripwire in all four functions, recording any call to a file rather than
+    raising (app.py's `except Exception` would have swallowed a raise). Three
+    real cover scans, two typed searches and one ISBN search: not one call.
+    The recorder itself was proved to fire by calling a function directly.
+  * the full suite, 254 green -- weak evidence on its own here, because no
+    test imports any of the four.
+  * bench/run_images.py over 20 covers, before and after, sharing one database
+    and one provider cache so the code was the only variable. Every field the
+    harness records was identical: same decision, same shown list in the same
+    order, same scores. 14 correct, 0 wrong, 1 refused, both times.
+
+A re-baseline that cannot make the "it could not run" argument in one paragraph
+needs that treatment, or the 25 minutes.
 """
 from __future__ import annotations
 

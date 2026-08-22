@@ -43,11 +43,11 @@ import disk_cache
 
 # The MATCHING ALGORITHM lives in matching.py; this file is the HTTP client
 # layer (Google Books, Open Library). Every name defined there is
-# re-exported here, so api.pick_best, api.cleanquery, api.T_TITLE and the rest
-# keep resolving for app.py, test_app.py and the benchmark scripts in
-# test_covers/ without any of them having to change.
+# re-exported here, so api.cleanquery, api.rank_candidates, api.T_TITLE and the
+# rest keep resolving for app.py, the tests and the benchmark scripts without
+# any of them having to change.
 from matching import (  # noqa: F401  (imported for re-export)
-    cleanquery, verify_against_cover, pick_best,
+    cleanquery,
     T_TITLE, T_AUTHOR, T_FIT, T_TITLE_HIGH, T_AUTHOR_HIGH,
     T_AUTHOR_HIGH_STRICT, T_AUTHOR_STRONG, T_TITLE_PRESENT,
     T_TITLE_DOMINANT, T_FIT_LOOSE, T_HIGH_ON_PROBABLE, T_TITLE_TYPED,
@@ -133,122 +133,11 @@ def build_search_queries(title, author="", full_text=""):
     # LAST resort: throw ALL the text we read off the cover at Google. This
     # rescues messy covers where the title guess was wrong but the cover
     # still shows enough words to identify the book. The winner still has to
-    # pass pick_best's quality gate.
+    # pass rank_candidates' quality gate.
     clean_full = cleanquery(full_text)
     if clean_full and clean_full != clean_title:
         queries.append(clean_full)
     return queries
-
-
-def searchbook(title, author="", full_text="", typed_title=False):
-    # Main search function. Tries several queries and picks the best result.
-    # typed_title=True means the user TYPED this title (manual fallback), so we
-    # trust it more in pick_best (see that function) instead of verifying it
-    # against a photographed cover.
-    api_key = os.environ.get("GOOGLE_BOOKS_API_KEY")
-    if not api_key:
-        return {"error": "Google Books API key not set"}
-
-    clean_title = cleanquery(title)
-    clean_author = cleanquery(author)
-
-    if not clean_title:
-        return {"error": "No usable title text from OCR"}
-
-    queries = build_search_queries(title, author, full_text)
-
-    # Run ALL the queries and collect every candidate book. We used to stop
-    # early once a query returned something, but that let one query's junk
-    # block a later, better query. Precision is now handled by the quality
-    # gate in pick_best, so it is safe to gather widely and let the gate
-    # choose. Duplicates (same Google id) are removed.
-    all_results = []
-    seen_ids = set()
-    api_error = False   # set if Google refuses a query (outage, timeout...)
-    quota_hit = False   # set specifically on HTTP 429 "daily quota exceeded"
-
-    # The queries are INDEPENDENT lookups, so run them at the same time instead
-    # of one after another. Sequentially this phase measured ~10s of a ~40s
-    # scan (four round-trips to Google, each with its own latency); in parallel
-    # it costs about as long as the SLOWEST single query. Results are merged
-    # below in the original query order, so de-duplication and the rank bonus
-    # behave exactly as they did sequentially (order-independent output).
-    with ThreadPoolExecutor(max_workers=max(1, len(queries))) as pool:
-        fetched = list(pool.map(lambda q: _fetch_google_query(q, api_key),
-                                queries))
-
-    for books, had_error, had_quota in fetched:
-        # A non-200 means Google itself rejected the request. 429 is the
-        # daily-quota limit; anything else (500/503/...) is a temporary
-        # outage. Neither means "this book does not exist", so we remember
-        # what happened and report the RIGHT reason below.
-        api_error = api_error or had_error
-        quota_hit = quota_hit or had_quota
-        for i, book in enumerate(books):
-            bid = book.get("google_books_id", "")
-            # Google's own result order encodes a relevance/popularity
-            # model we cannot reconstruct from the sparse metadata, so
-            # remember each candidate's best position as a small bonus
-            # (8,6,4,2,0 down the list; max across queries). Only the
-            # TYPED ranking uses it (see pick_best) — scan ranking has
-            # real cover text to discriminate with.
-            rank_bonus = max(0, 8 - 2 * i)
-            if bid and bid in seen_ids:
-                for existing in all_results:
-                    if existing.get("google_books_id") == bid:
-                        existing["_rank_bonus"] = max(
-                            existing.get("_rank_bonus", 0), rank_bonus)
-                        break
-                continue
-            seen_ids.add(bid)
-            book["_rank_bonus"] = rank_bonus
-            all_results.append(book)
-
-    # Verify candidates against the FULL cover text, not just the (often
-    # jumbled) OCR title. full_text falls back to title+author if empty.
-    # (pick_best handles an empty candidate list itself.)
-    result = pick_best(all_results, full_text or f"{title} {author}",
-                       typed_title=typed_title, probable_title=title)
-    if "error" not in result:
-        return result
-
-    # FALLBACK: Open Library (free, no key, no daily quota). We only get here
-    # when Google produced nothing usable — zero candidates (including quota
-    # exhaustion and outages, which used to kill scanning for the rest of the
-    # day) or nothing that passed the quality gate. The SAME gate judges the
-    # Open Library candidates, so this cannot loosen precision.
-    # Measured on the 100 covers in test_covers/ (evaluate_ol_fallback.py,
-    # 2026-07-10): +7 correct, +1 wrong, precision steady at 92%, and the
-    # non-book poster stayed rejected.
-    #
-    # SCAN PATH ONLY. The typed-title gate is deliberately lenient (a partial
-    # title like "Gatsby" must match), which is safe against Google's
-    # intitle:-prefiltered results but NOT against Open Library's raw catalog
-    # of millions of obscure entries: typing "jaws" accepted the medical text
-    # "Fracture of the Lower Jaw" at high confidence (partial_ratio 86).
-    # Seen live 2026-07-10 and reproduced in the tests below — do not re-enable
-    # OL for typed titles without a stricter typed gate measured first.
-    if not typed_title:
-        ol_results = search_open_library(clean_title, clean_author)
-        if ol_results:
-            ol_best = pick_best(ol_results, full_text or f"{title} {author}",
-                                probable_title=title)
-            if "error" not in ol_best:
-                return ol_best
-
-    # Neither source found an acceptable match. If Google refused us, say so
-    # clearly (and with the right cause) instead of the misleading
-    # "no matching book".
-    if not all_results and (quota_hit or api_error):
-        if quota_hit:
-            msg = ("Book search is busy right now (daily lookup limit reached). "
-                   "Please try again later.")
-        else:
-            msg = ("Book search is temporarily unavailable. "
-                   "Please try again in a moment.")
-        return {"error": msg, "confidence": "low"}
-
-    return result
 
 
 def retrieve_ranked_candidates(title, author="", isbn="", full_text="", limit=5,
@@ -344,7 +233,7 @@ def hydrate_exact_candidate(candidate):
 
 def search_by_isbn(isbn):
     # Look up a book by its ISBN number (read from the barcode).
-    # NOTE: this deliberately skips pick_best and the quality gate —
+    # NOTE: this deliberately skips the ranking quality gate —
     # an ISBN identifies exactly one book edition, so the first result
     # IS the right book by definition. Fuzzy matching only exists to fix
     # OCR mistakes, and a barcode has none.
@@ -550,10 +439,10 @@ OPEN_LIBRARY_SEARCH_URL = "https://openlibrary.org/search.json"
 
 def parse_ol_doc(doc):
     # Turn one Open Library search "doc" into the SAME dictionary shape that
-    # parse_book makes, so pick_best and the rest of the app can treat books
+    # parse_book makes, so the matcher and the rest of the app can treat books
     # from either source identically. Search docs carry no description; the
-    # existing enrichment step (Wikipedia / Open Library work page) fills
-    # that in after the match, exactly like it does for Google results.
+    # overview builder fills that in after the match, exactly like it does for
+    # Google results.
     authors = doc.get("author_name", []) or []
     publishers = doc.get("publisher", []) or []
     subjects = doc.get("subject", []) or []
