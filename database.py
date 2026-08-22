@@ -758,8 +758,8 @@ def update_book_description(book_id, description):
 def update_book_description_source(book_id, source, reason):
     # Record WHERE this book's description came from, or that none exists.
     # source "none" means every source was asked and none had one; storing
-    # that is what lets ensure_summary answer "unavailable" instead of
-    # queueing the same lookup again on every poll.
+    # that is what lets the summary status endpoint answer "unavailable"
+    # instead of queueing the same lookup again on every poll.
     conn = get_db()
     cur = conn.cursor()
     cur.execute(

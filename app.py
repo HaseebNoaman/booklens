@@ -1213,23 +1213,6 @@ def enqueue_summary(book_id, book):
     _summary_queue.put((book_id, book))
 
 
-def ensure_summary(book_row):
-    # SELF-HEALING CACHE: cached books normally come back with their stored
-    # summary. If it is empty (old rows were reset after we improved the
-    # summarizer, or a background job failed), queue a regeneration and let
-    # the frontend poll for it. Returns (book, summary_status).
-    # Statuses: "ready" | "pending" | "unavailable".
-    book = dict(book_row)   # sqlite3.Row cannot be modified -> dict copy
-    if (book.get("ai_summary") or "").strip():
-        return book, "ready"
-    if not book.get("catalogue_id") and book.get("summary_status") == "pending":
-        return book, "pending"
-    # Tier-1 summaries are precomputed once during catalogue construction.
-    # A missing stored summary is an honest unavailable state, never a reason
-    # to load FLAN-T5 during a user request.
-    return book, "unavailable"
-
-
 def edition_evidence(book, scanned_isbn="", exact_isbn=None):
     """Two SEPARATE facts about the object on the card.
 
