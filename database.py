@@ -210,9 +210,9 @@ def init_db():
 
     # Indexes make our most common lookups fast even with thousands of rows.
     # Without an index SQLite reads EVERY row of the table to find a match.
-    # books uses LOWER(title) because find_cached_book compares with LOWER();
-    # an index on the plain title column would never be used for that query.
-    cur.execute("CREATE INDEX IF NOT EXISTS idx_books_title_lower ON books(LOWER(title))")
+    # books had a LOWER(title) index for the title-only cache lookup. That
+    # lookup is gone -- a row is now found by an exact identifier
+    # (find_cached_exact), never by title -- so the index only cost writes.
     cur.execute("CREATE INDEX IF NOT EXISTS idx_history_user_id ON history(user_id)")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_history_book_id ON history(book_id)")
 
@@ -445,26 +445,6 @@ def get_user_by_id(user_id):
 # row's author must roughly agree; token_set_ratio tolerates initials and
 # OCR noise ("J.R.R. Tolkien" vs "Tolkien" scores 100).
 CACHE_AUTHOR_MATCH = 60
-
-
-def find_cached_book(title, author=""):
-    # Check if we already saved this book before (case-insensitive title
-    # match + author agreement when both sides know the author).
-    conn = get_db()
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM books WHERE LOWER(title) = LOWER(?)", (title,))
-    rows = cur.fetchall()
-    conn.close()
-
-    author = (author or "").strip().lower()
-    for row in rows:
-        row_author = (row["author"] or "").strip().lower()
-        # An author-less query (bare typed title, no OCR author) keeps the
-        # old behavior; an author-less ROW cannot contradict the query.
-        if not author or not row_author or \
-                fuzz.token_set_ratio(author, row_author) >= CACHE_AUTHOR_MATCH:
-            return row
-    return None
 
 
 def save_book(book_data):
@@ -785,20 +765,6 @@ def update_book_description_source(book_id, source, reason):
         "UPDATE books SET description_source = ?, description_reason = ? "
         "WHERE id = ?",
         (source or "", reason or "", book_id)
-    )
-    conn.commit()
-    conn.close()
-
-
-def update_book_summary(book_id, ai_summary):
-    # Fill in or replace the stored AI summary of one book. Used by the
-    # "self-healing cache": a cached book whose summary is empty gets a
-    # freshly generated one on its next scan.
-    conn = get_db()
-    cur = conn.cursor()
-    cur.execute(
-        "UPDATE books SET ai_summary = ? WHERE id = ?",
-        (ai_summary, book_id)
     )
     conn.commit()
     conn.close()

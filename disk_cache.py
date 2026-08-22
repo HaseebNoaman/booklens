@@ -149,17 +149,3 @@ def fetch_json(namespace, key, url, params=None, headers=None, timeout=10,
 
     cache_put(namespace, key, payload)
     return payload
-
-
-def stats():
-    # How many entries are cached, per namespace. Used by the pre-warm script
-    # and handy before a demo.
-    out = {}
-    if not os.path.isdir(CACHE_DIR):
-        return out
-    for namespace in sorted(os.listdir(CACHE_DIR)):
-        directory = os.path.join(CACHE_DIR, namespace)
-        if os.path.isdir(directory):
-            out[namespace] = len([n for n in os.listdir(directory)
-                                  if n.endswith(".json")])
-    return out

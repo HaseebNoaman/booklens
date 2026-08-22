@@ -56,11 +56,6 @@ export function BookCover({ src, fallback = "", alt, className = "", loading }) 
   );
 }
 
-export function StatusMessage({ tone = "info", children }) {
-  if (!children) return null;
-  return <div className={`status-message ${tone}`} role={tone === "error" ? "alert" : "status"}>{children}</div>;
-}
-
 export function ModalShell({ children, onClose, wide = false, labelledBy }) {
   const dialogRef = useRef(null);
   useEffect(() => {

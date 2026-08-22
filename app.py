@@ -33,8 +33,7 @@ from PIL import Image, UnidentifiedImageError
 
 from ocrpp import (process_book_cover, OCR_REC_TIER, OCR_ESCALATE_REC_TIER)
 from barcode_reader import read_isbn
-from api import (searchbook, search_by_isbn,
-                 retrieve_ranked_candidates, hydrate_exact_candidate)
+from api import retrieve_ranked_candidates, hydrate_exact_candidate
 from matching import (valid_isbn, normalize_isbn, normalize_match_text,
                       rank_candidates, recover_ocr_candidates,
                       UNSAFE_EDITION_RE,
@@ -52,10 +51,10 @@ from database import (CACHE_AUTHOR_MATCH, backfill_book_thumbnail,
                       get_taste_profile_books, get_user_interests,
                       set_user_interests,
                       init_db, create_user, get_user_by_email, get_user_by_id,
-                      find_cached_book, save_book, save_history, get_user_history,
+                      save_book, save_history, get_user_history,
                       toggle_favorite, update_history_reading,
                       delete_history_item, count_user_history,
-                      update_user_password, update_book_summary,
+                      update_user_password,
                       revoke_user_tokens,
                       get_book_by_id, update_book_description,
                       update_book_description_source,
@@ -1152,14 +1151,6 @@ def admin_system(current_user):
     })
 
 
-def pick_summary_texts(book):
-    # The only approved model input is an administrator-verified local
-    # catalogue summary. Publisher descriptions remain display-only metadata.
-    text = (book.get("verified_summary") or "").strip()
-    if not book.get("catalogue_id") or not text:
-        return None, "", None, "verified_summary_missing"
-    return text, text, "catalogue_verified", ""
-
 
 def find_current_external_summary(book):
     """Return only cache rows produced by the active deterministic method."""
@@ -1399,184 +1390,6 @@ def taste_for_client(user_id, categories, book_id=None, title=""):
                                 get_user_interests(user_id),
                                 subject_counts=counts,
                                 catalogue_size=catalogue_size)
-
-
-def cache_hit_response(book_row, extracted_title, extracted_author,
-                       match_method="ocr", isbn="", history_id=None,
-                       ocr_tier="", user_id=None, scanned_isbn=""):
-    # The scan pipeline can hit the cache in two places (by OCR title,
-    # and by the real title Google returns) — both send this same response.
-    # The band the book EARNED when first matched is stored with it and
-    # repeated here: a medium (please-confirm) match must not silently
-    # become "high" just because it was scanned twice.
-    book = dict(book_row)
-    if not book.get("catalogue_id"):
-        current_cache = find_current_external_summary(book)
-        if current_cache is None:
-            # A previous FLAN/legacy row is evidence, not the current product
-            # answer. Preserve it in the cache table but regenerate this book
-            # with the versioned deterministic method.
-            update_book_ai_summary(book["id"], "", "pending")
-            enqueue_summary(book["id"], book)
-        else:
-            update_book_description(book["id"], current_cache["source_description"])
-            update_book_description_source(
-                book["id"], current_cache["description_source"], "")
-            update_book_ai_summary(book["id"], current_cache["short_summary"], "ready")
-        refreshed = get_book_by_id(book["id"])
-        if refreshed is not None:
-            book = dict(refreshed)
-    book, summary_status = ensure_summary(book)
-    return jsonify({
-        "status": "success",
-        "source": "cache",
-        "ocr": {"extracted_title": extracted_title,
-                "extracted_author": extracted_author},
-        "match_method": match_method,
-        "isbn": isbn,
-        "book": book,
-        # Evidence from the user's own library. See taste_profile.py.
-        "for_you": taste_for_client(user_id, book.get("categories", ""),
-                                    book.get("id"), book.get("title", "")),
-        # A fact, not an inference -- see already_read().
-        "already_read": already_read(user_id, book.get("title", ""),
-                                     book.get("author", "")),
-        "live": live_for_client(book.get("id"), book.get("title", ""),
-                                book.get("author", ""),
-                                book.get("page_count") or 0),
-        # Identity and page-count provenance, kept separate. See edition_evidence.
-        "edition_evidence": edition_evidence(book, scanned_isbn),
-        # Which history row this scan created, so the UI can remove it again
-        # if the user rejects a medium-confidence match.
-        "history_id": history_id,
-        "summary_method": "cache",
-        "summary_status": summary_status,
-        "ocr_tier": ocr_tier,
-        # Where the summarised text came from, and — when there is none — why.
-        # The UI shows an honest "no description available for this edition"
-        # state rather than a summary of something else.
-        "description_source": book.get("description_source") or None,
-        "reason": book.get("description_reason") or "",
-        "confidence": book.get("confidence") or "high"
-    })
-
-
-def summarize_and_save(current_user, api_result, extracted_title,
-                       extracted_author, match_method="ocr", isbn="",
-                       ocr_tier=""):
-    # Shared tail of the pipeline, used by BOTH /api/scan and
-    # /api/search-by-title. Given a matched book (api_result), reuse the
-    # cache if we already have this exact title, otherwise make the AI
-    # summary, save the book + history, and return the success response.
-
-    # Cache check by the REAL title Google returned. The OCR / typed title
-    # often differs ("ATOMIC HABITS TINY CHANGES..." vs "Atomic Habits"),
-    # so this stops the same book being saved under every text variation.
-    real_title = api_result.get("title", "")
-    existing_book = find_cached_book(real_title, api_result.get("author", ""))
-    if existing_book is not None:
-        history_id = save_history(current_user["id"], existing_book["id"])
-        return cache_hit_response(existing_book,
-                                  extracted_title, extracted_author,
-                                  match_method, isbn, history_id,
-                                  ocr_tier=ocr_tier,
-                                  user_id=current_user["id"],
-                                  scanned_isbn=isbn)
-
-    # Save the book NOW with the Google description and an EMPTY summary,
-    # then queue the summary for the background worker — the user sees the
-    # matched book in seconds instead of waiting ~40s for the model. The
-    # worker considers exact-ID Google/Open Library descriptions and writes the
-    # selected source plus deterministic adjacent-window overview back.
-    book_data = {
-        "title": api_result.get("title", ""),
-        "author": api_result.get("author", ""),
-        "description": api_result.get("description", ""),
-        "ai_summary": "",
-        "thumbnail": api_result.get("thumbnail", ""),
-        "page_count": api_result.get("page_count", 0),
-        "publisher": api_result.get("publisher", ""),
-        "published_date": api_result.get("published_date", ""),
-        "categories": api_result.get("categories", ""),
-        # Remember HOW SURE the match was, so a later cache hit can repeat
-        # the honest band instead of promoting everything to "high".
-        "confidence": api_result.get("confidence", "high"),
-        # The identifiers that pin this row to ONE volume. These used to be
-        # dropped here, which is why the summary step could only search by
-        # title and could drift to a different book entirely.
-        "google_books_id": api_result.get("google_books_id", ""),
-        "isbn_13": api_result.get("isbn_13", "") or isbn,
-        "description_source": "",
-        "description_reason": "",
-    }
-    book_id = save_book(book_data)
-
-    # Record this scan in the user's history.
-    history_id = save_history(current_user["id"], book_id)
-
-    # Pass the whole book (identifiers included) plus anything the matcher
-    # knew that we do not persist, e.g. an Open Library work key.
-    summary_input = dict(book_data)
-    summary_input["id"] = book_id
-    summary_input["open_library_key"] = api_result.get("open_library_key", "")
-    enqueue_summary(book_id, summary_input)
-
-    # Re-read the row before answering. In production the worker is still
-    # running and this is simply "pending", but under TESTING the job ran
-    # INLINE just above, so the honest status may already be "ready" or
-    # "unavailable". Reading it back means the response never claims a
-    # summary is coming when we already know none is.
-    summary_status = "pending"
-    description_source = None
-    reason = ""
-    saved = get_book_by_id(book_id)
-    if saved is not None:
-        saved = dict(saved)
-        if (saved.get("ai_summary") or "").strip():
-            summary_status = "ready"
-        elif (saved.get("description_source") or "") == "none":
-            summary_status = "unavailable"
-        description_source = saved.get("description_source") or None
-        reason = saved.get("description_reason") or ""
-        book_data["description"] = saved.get("description", "")
-        book_data["ai_summary"] = saved.get("ai_summary", "")
-
-    # Send everything back to the frontend. "confidence" (high/medium) tells
-    # the UI whether to show the book outright or ask the user to confirm;
-    # summary_status="pending" tells it to poll /api/books/<id>/summary.
-    book_data["id"] = book_id
-    return jsonify({
-        "status": "success",
-        "source": "new_scan",
-        "ocr": {"extracted_title": extracted_title,
-                "extracted_author": extracted_author},
-        "match_method": match_method,
-        "isbn": isbn,
-        "book": book_data,
-        # Evidence from the user's own library. See taste_profile.py.
-        "for_you": taste_for_client(current_user["id"],
-                                    book_data.get("categories", ""), book_id,
-                                    book_data.get("title", "")),
-        "already_read": already_read(current_user["id"],
-                                     book_data.get("title", ""),
-                                     book_data.get("author", "")),
-        "live": live_for_client(book_id, book_data.get("title", ""),
-                                book_data.get("author", ""),
-                                book_data.get("page_count") or 0),
-        "edition_evidence": edition_evidence(book_data, isbn),
-        # Which history row this scan created, so the UI can remove it again
-        # if the user rejects a medium-confidence match.
-        "history_id": history_id,
-        "summary_method": "pending",
-        "summary_status": summary_status,
-        # Which OCR recognition tier produced this match. "medium" here means
-        # the escalation pass rescued a scan the fast tier had failed.
-        "ocr_tier": ocr_tier,
-        # Where the summarised text came from, and — when there is none — why.
-        "description_source": description_source,
-        "reason": reason,
-        "confidence": api_result.get("confidence", "high")
-    })
 
 
 def classify_ocr(result):
@@ -2253,171 +2066,6 @@ def scan_verified(current_user):
         prune_uploads(UPLOAD_FOLDER, keep=KEEP_UPLOADS)
 
 
-@app.route("/api/legacy-scan-disabled", methods=["POST"])
-@rate_limited(15, 60)    # each scan costs OCR + API quota + model inference
-@token_required
-def scan(current_user):
-    return jsonify({"error": "Legacy scan pipeline is disabled"}), 410
-    # THE MAIN ENDPOINT. This runs the whole pipeline:
-    # image -> OCR -> cache check -> Google Books -> description of the
-    # matched volume -> AI summary -> save.
-
-    # Step 1: check a file was actually sent.
-    if "image" not in request.files:
-        return jsonify({"error": "No image uploaded"}), 400
-
-    file = request.files["image"]
-    if file.filename == "":
-        return jsonify({"error": "No file selected"}), 400
-    if not allowed_file(file.filename):
-        return jsonify({"error": "File type not allowed"}), 400
-
-    # Step 2: save the image with a unique timestamp name.
-    # secure_filename can return an empty string for unusual filenames
-    # (e.g. all non-English characters), so we keep a safe fallback.
-    filename = secure_filename(file.filename) or "cover.jpg"
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{timestamp}_{filename}"
-    filepath = os.path.join(UPLOAD_FOLDER, filename)
-
-    try:
-        file.save(filepath)
-
-        # Step 2.5: look for an ISBN barcode FIRST (every printed book has
-        # one on the back cover). A barcode decodes to the exact ISBN
-        # number, so the match is PERFECT — no OCR guessing, no fuzzy
-        # matching needed. If there is no barcode (front-cover photo), we
-        # fall through to the normal OCR path exactly as before.
-        match_method = "ocr"
-        extracted_title = ""
-        extracted_author = ""
-        api_result = None
-        # Which recognition tier produced the accepted match. Reported in the
-        # response so the value of escalating is visible in production, not
-        # only in the benchmark.
-        ocr_tier_used = OCR_REC_TIER
-
-        isbn = read_isbn(filepath)
-        if isbn:
-            isbn_result = search_by_isbn(isbn)
-            if "error" not in isbn_result:
-                api_result = isbn_result
-                match_method = "isbn_barcode"
-            # If Google does not know this ISBN we simply continue with
-            # the OCR path below — a failed barcode costs us nothing.
-
-        if match_method == "ocr":
-            # Steps 3-5, with OCR ESCALATION.
-            #
-            # Read the cover with the default recogniser. If that does not
-            # produce a match, read it AGAIN with the escalation recogniser
-            # before giving up and asking the user to type the title.
-            #
-            # WHY: the two recognisers are COMPLEMENTARY, not ranked. On the
-            # 100-cover benchmark medium reads 12 covers mobile misses while
-            # mobile reads 10 that medium misses, so neither dominates and the
-            # net difference is only +2. Retrying only the FAILURES captures
-            # the union: 69 -> 80 correct, rejections 29 -> 17, precision
-            # 97% -> 96%. The second pass costs nothing on an easy cover
-            # because it only runs after the first one has already failed.
-            rec_tiers = [OCR_REC_TIER]
-            if OCR_ESCALATE_REC_TIER != OCR_REC_TIER:
-                rec_tiers.append(OCR_ESCALATE_REC_TIER)
-
-            read_any_text = False
-            match_error = "No matching book found"
-            for rec_tier in rec_tiers:
-                ocr_result = process_book_cover(filepath, rec_tier=rec_tier)
-                extracted_title = (ocr_result.get("probable_title") or
-                                   ocr_result.get("cleaned_text") or
-                                   ocr_result.get("raw_text") or "")
-                extracted_author = ocr_result.get("probable_author", "") or ""
-
-                # One line per attempt saying exactly what the OCR read, and
-                # at which tier. Together with the upload image this makes
-                # every failure debuggable.
-                logging.info("SCAN %s | rec=%s title=%r author=%r | full=%r",
-                             filename, rec_tier, extracted_title,
-                             extracted_author,
-                             (ocr_result.get("full_text", "") or "")[:120])
-
-                if not extracted_title:
-                    continue        # nothing readable at this tier - escalate
-
-                read_any_text = True
-
-                # Cache check (saves time and API calls). ensure_summary
-                # regenerates the AI summary if it is missing.
-                cached_book = find_cached_book(extracted_title, extracted_author)
-                if cached_book is not None:
-                    history_id = save_history(current_user["id"], cached_book["id"])
-                    return cache_hit_response(cached_book,
-                                              extracted_title, extracted_author,
-                                              history_id=history_id,
-                                              ocr_tier=rec_tier,
-                                              user_id=current_user["id"])
-
-                # Search Google Books for the real book. We also pass the FULL
-                # cover text so searchbook can try it as a last-resort query if
-                # the title/author guess does not find anything.
-                candidate = searchbook(extracted_title, extracted_author,
-                                       ocr_result.get("full_text", ""))
-                if "error" not in candidate:
-                    api_result = candidate
-                    ocr_tier_used = rec_tier
-                    break
-
-                match_error = candidate["error"]
-                logging.info("SCAN %s | no match at rec=%s (%s)",
-                             filename, rec_tier, match_error)
-
-            if not read_any_text:
-                logging.info("SCAN %s | NO TEXT FOUND at any tier", filename)
-                return jsonify({"error": "Could not read any text from the cover"}), 422
-
-            if api_result is None:
-                # Every tier read the cover but none could confidently match a
-                # book. "confidence": "low" tells the frontend to show the
-                # fallback (type the title / scan the barcode), not a dead end.
-                logging.info("SCAN %s | NO MATCH after %d OCR tier(s) (%s)",
-                             filename, len(rec_tiers), match_error)
-                return jsonify({
-                    "status": "partial",
-                    "source": "new_scan",
-                    "ocr": {"extracted_title": extracted_title,
-                            "extracted_author": extracted_author},
-                    "book": None,
-                    "message": match_error,
-                    "confidence": "low"
-                })
-
-        # Steps 5b-10: second cache check, AI summary, save, and respond.
-        # This tail is shared with /api/search-by-title, so it lives in one
-        # helper (summarize_and_save) to avoid duplicating the logic.
-        logging.info("SCAN %s | MATCHED %r by %r via %s (confidence %s)",
-                     filename, api_result.get("title"),
-                     api_result.get("author"), match_method,
-                     api_result.get("confidence"))
-        return summarize_and_save(current_user, api_result,
-                                  extracted_title, extracted_author,
-                                  match_method,
-                                  isbn if match_method == "isbn_barcode" else "",
-                                  ocr_tier=ocr_tier_used)
-
-    except Exception:
-        # If ANY unexpected error happens in the pipeline, return a clean
-        # JSON error instead of Flask's default HTML error page.
-        # logging.exception also records the full traceback for debugging.
-        logging.exception("Scan pipeline error")
-        return jsonify({"error": "Something went wrong while processing the image"}), 500
-
-    finally:
-        # "Photos are never stored": remove the upload as soon as the scan
-        # is done (success OR failure). With KEEP_UPLOADS_FOR_DEBUG=N set,
-        # the newest N stay on disk for diagnosing bad scans instead.
-        prune_uploads(UPLOAD_FOLDER, keep=KEEP_UPLOADS)
-
-
 OL_COVER = "https://covers.openlibrary.org/b/%s/%s-M.jpg?default=false"
 
 
@@ -2756,40 +2404,6 @@ def confirm_identification(current_user):
         return jsonify({"error": "A valid attempt and candidate are required"}), 400
     return finalize_candidate(current_user, attempt_id, candidate_id,
                               "user_confirmation")
-
-
-@app.route("/api/legacy-search-by-title-disabled", methods=["POST"])
-@rate_limited(15, 60)    # cheaper than a scan but still hits Google's quota
-@token_required
-def search_by_title(current_user):
-    return jsonify({"error": "Legacy title search pipeline is disabled"}), 410
-    # FALLBACK for when a scan was not confident (low confidence, or the
-    # user said the guess was wrong). The user types the book title and we
-    # run the SAME matching + summary pipeline as a scan — just starting
-    # from typed text instead of a photo. Because the user typed the exact
-    # title, the match is reliable, so no OCR guessing is involved.
-    data = request.get_json(silent=True) or {}
-    title = (data.get("title") or "").strip()
-    if not title:
-        return jsonify({"error": "Please type a book title"}), 400
-
-    # Search Google Books. typed_title=True tells searchbook/pick_best to
-    # TRUST the user's typed title (like a barcode) instead of verifying it
-    # against a photographed cover — so partial titles ("Gatsby") and small
-    # typos still find the book.
-    api_result = searchbook(title, "", title, typed_title=True)
-    if "error" in api_result:
-        return jsonify({
-            "status": "partial",
-            "source": "manual_title",
-            "ocr": {"extracted_title": title, "extracted_author": ""},
-            "book": None,
-            "message": api_result["error"],
-            "confidence": "low"
-        })
-
-    return summarize_and_save(current_user, api_result,
-                              title, "", match_method="manual_title")
 
 
 def create_default_admin():

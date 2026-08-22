@@ -33,9 +33,10 @@ python-Levenshtein==0.27.3
 # --- summarizer: DELIBERATELY NOT INSTALLED ---
 # The FLAN-T5 checkpoint is not on the production request path. Verified by
 # tracing app.py's import closure: summarizer.py and summary_service.py are
-# never imported, and pick_summary_texts() is never called. Shipping torch +
-# transformers + the 947 MB checkpoint would add ~2.5 GB to the image for an
-# admin status flag. The research code stays in the archive repo.
+# never imported. The last function that chose model input, pick_summary_texts(),
+# had no caller left and has been deleted. Shipping torch + transformers + the
+# 947 MB checkpoint would add ~2.5 GB to the image for an admin status flag.
+# The research code stays in the archive repo.
 #   transformers==5.5.0
 #   torch==2.11.0
 #   sentencepiece==0.2.1
