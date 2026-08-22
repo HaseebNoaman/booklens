@@ -2,24 +2,77 @@
   "_why": "Books whose stored description was still FLAN-T5 output, because neither the corpus nor the publisher passed the automatic gate. The model is gone from the product; its writing should go with it. So the sentences below were chosen by hand FROM THE BOOK'S OWN SOURCE SUMMARY -- by index, never retyped, so the text cannot drift from what the corpus actually says. Choosing which sentences to show is editorial work; writing new ones would be inventing provenance.",
   "_format": "catalogue id -> the sentence indices of verified_summary, in order, as split by whatitsabout_heuristic.split_sentences",
   "picks": {
-    "240": [1, 2],
-    "110": [0],
-    "103": [4],
-    "51":  [0],
-    "39":  [3],
-    "33":  [0, 1],
-    "28":  [0, 1],
-    "26":  [0, 1],
-    "25":  [0],
-    "22":  [0, 1],
-    "21":  [0],
-    "20":  [0, 1],
-    "4":   [0, 1],
-    "119": [7, 8],
-    "19":  [11, 12]
+    "240": [
+      1,
+      2
+    ],
+    "110": [
+      0
+    ],
+    "103": [
+      4
+    ],
+    "51": [
+      0
+    ],
+    "39": [
+      3
+    ],
+    "33": [
+      0,
+      1
+    ],
+    "28": [
+      0,
+      1
+    ],
+    "26": [
+      0,
+      1
+    ],
+    "25": [
+      0
+    ],
+    "22": [
+      0,
+      1
+    ],
+    "21": [
+      0
+    ],
+    "20": [
+      0,
+      1
+    ],
+    "4": [
+      0,
+      1
+    ],
+    "119": [
+      7,
+      8
+    ],
+    "19": [
+      11,
+      12
+    ],
+    "32": [
+      0,
+      1
+    ],
+    "6": [
+      0
+    ],
+    "48": [
+      0,
+      1
+    ]
   },
   "_notes": {
     "119": "Life of Pi -- the source opens on the book's three-part structure and the narrator's name. The premise everyone actually knows arrives at sentence 7, where the ship sinks, and sentence 8 puts Pi in the lifeboat with the tiger.",
-    "19": "Harry Potter and the Order of the Phoenix -- the source's first sentence runs two together with a lowercase 'when', and the ones after it open on 'After he' and 'A few days afterwards'. Sentences 11 and 12 begin on a proper noun and carry the book's actual conflict: Umbridge."
+    "19": "Harry Potter and the Order of the Phoenix -- the source's first sentence runs two together with a lowercase 'when', and the ones after it open on 'After he' and 'A few days afterwards'. Sentences 11 and 12 begin on a proper noun and carry the book's actual conflict: Umbridge.",
+    "32": "Coraline -- the publisher blurb opens 'They want to change her', with no way to know who they are. The source names her in its first sentence.",
+    "6": "Diary of a Wimpy Kid -- the chosen window opened on 'He has a little brother'. Sentence 0 names Greg.",
+    "48": "Of Mice and Men -- the publisher blurb opens 'They are an unlikely pair'. The source names George and Lennie and the Great Depression."
   }
 }
