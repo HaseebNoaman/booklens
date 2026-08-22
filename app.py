@@ -1645,6 +1645,35 @@ def usable_ocr_author(value):
     return value
 
 
+def ocr_evidence(result, status, tier):
+    """What one OCR pass saw, in the shape the funnel records and replays.
+
+    scan_verified can reach a decision at four different points -- a catalogue
+    match, a provider match, a recovered raw-text match, and giving up -- and
+    each built this dictionary again from scratch. They had already drifted:
+    one wrote query_author from the raw string, the others from
+    usable_ocr_author.
+
+    The two author fields are NOT the same thing and that is the whole reason
+    this is one function now. ocr_author is what the recogniser read, kept so
+    the attempt can be audited afterwards. query_author is what is safe to send
+    a provider, which is nothing at all when the recogniser read "The" -- see
+    usable_ocr_author for what that costs when it is wrong.
+    """
+    title = (result.get("probable_title") or "").strip()
+    author = (result.get("probable_author") or "").strip()
+    return {
+        "ocr_status": status,
+        "ocr_title": title,
+        "ocr_author": author,
+        "ocr_text": (result.get("full_text") or "").strip(),
+        "ocr_confidence": float(result.get("confidence_score") or 0),
+        "ocr_tier": tier,
+        "query_title": title,
+        "query_author": usable_ocr_author(author),
+    }
+
+
 def drop_derived_products(candidates, keep_when_empty=True):
     """Remove study guides and summaries when the real book is also on offer.
 
@@ -1910,16 +1939,7 @@ def scan_verified(current_user):
 
         if selected is not None:
             best, best_status, used_tier, ranked = selected
-            title = (best.get("probable_title") or "").strip()
-            author = (best.get("probable_author") or "").strip()
-            confidence = float(best.get("confidence_score") or 0)
-            full_text = (best.get("full_text") or "").strip()
-            evidence = {
-                "ocr_status": best_status, "ocr_title": title,
-                "ocr_author": author, "ocr_text": full_text,
-                "ocr_confidence": confidence, "ocr_tier": used_tier,
-                "query_title": title, "query_author": usable_ocr_author(author),
-            }
+            evidence = ocr_evidence(best, best_status, used_tier)
             return begin_candidate_funnel(current_user, evidence, ranked, "ocr")
 
         # Tier 1 missed. Try external providers for every readable, confident
@@ -1944,13 +1964,7 @@ def scan_verified(current_user):
                 # Show both. The reader can see the cover; the funnel cannot.
                 ranked = merge_recovery_with_external(recovery_fallback[3], ranked)
             if ranked["decision"] != REJECTED:
-                evidence = {
-                    "ocr_status": status, "ocr_title": pass_title,
-                    "ocr_author": pass_author_raw, "ocr_text": pass_text,
-                    "ocr_confidence": float(result.get("confidence_score") or 0),
-                    "ocr_tier": tier, "query_title": pass_title,
-                    "query_author": pass_author,
-                }
+                evidence = ocr_evidence(result, status, tier)
                 return begin_candidate_funnel(current_user, evidence, ranked, "ocr")
             external_rejection = external_rejection or ranked
 
@@ -1959,29 +1973,15 @@ def scan_verified(current_user):
             # the recovered match is all there is. Answering with it is what
             # this code did before providers were consulted at all.
             result, status, tier, ranked = recovery_fallback
-            evidence = {
-                "ocr_status": status,
-                "ocr_title": (result.get("probable_title") or "").strip(),
-                "ocr_author": (result.get("probable_author") or "").strip(),
-                "ocr_text": (result.get("full_text") or "").strip(),
-                "ocr_confidence": float(result.get("confidence_score") or 0),
-                "ocr_tier": tier,
-                "query_title": (result.get("probable_title") or "").strip(),
-                "query_author": usable_ocr_author(result.get("probable_author")),
-            }
+            evidence = ocr_evidence(result, status, tier)
             return begin_candidate_funnel(current_user, evidence, ranked, "ocr")
 
         best = best or {}
-        title = (best.get("probable_title") or "").strip()
-        author = (best.get("probable_author") or "").strip()
-        confidence = float(best.get("confidence_score") or 0)
-        full_text = (best.get("full_text") or "").strip()
-        evidence = {
-            "ocr_status": best_status, "ocr_title": title,
-            "ocr_author": author, "ocr_text": full_text,
-            "ocr_confidence": confidence, "ocr_tier": used_tier,
-            "query_title": title, "query_author": usable_ocr_author(author),
-        }
+        evidence = ocr_evidence(best, best_status, used_tier)
+        title = evidence["ocr_title"]
+        author = evidence["ocr_author"]
+        confidence = evidence["ocr_confidence"]
+        full_text = evidence["ocr_text"]
 
         # Existing barcode support is opt-in and runs only after OCR.
         if request.form.get("allow_barcode_fallback") == "1":
