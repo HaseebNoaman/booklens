@@ -12,6 +12,7 @@ deliberately not called, so this can be re-run without polluting anything.
 
 Usage:  python run_images.py <label>
 """
+import csv
 import json
 import os
 import sys
@@ -33,14 +34,17 @@ from rapidfuzz import fuzz
 
 
 def expected_books():
-    rows = {}
-    with open(MANIFEST, encoding="utf-8") as fh:
-        next(fh)
-        for line in fh:
-            parts = line.rstrip("\n").split(",")
-            if len(parts) >= 3:
-                rows[parts[0]] = (parts[1], ",".join(parts[2:]))
-    return rows
+    """The ground truth, read with the csv module and not with split(',').
+
+    manifest.csv quotes the titles that contain commas -- "Thinking, fast and
+    slow", "Rich Dad, Poor Dad", "Guns, Germs, and Steel". Splitting on the
+    comma turns the first into `"Thinking` and scores three correct answers as
+    failures. rescore.py was fixed for exactly this and this file was not, so
+    the bug returned the moment the harness ran again: three books lost.
+    """
+    with open(MANIFEST, encoding="utf-8", newline="") as handle:
+        return {row["file"]: (row["title"], row["author"])
+                for row in csv.DictReader(handle)}
 
 
 def main_title(value):

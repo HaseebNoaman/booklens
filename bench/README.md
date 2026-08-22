@@ -17,7 +17,47 @@ copying them — an earlier version kept its own copy of that logic, went stale
 when `app.py` changed, and spent 34 minutes measuring code that was no longer
 shipped. Nothing is written to the database.
 
-## The result, 2026-08-21
+## The result, 2026-08-22 — after the catalogue was cut from 250 books to 60
+
+`bench60_2026_08_22.json` · the same 100 cover photographs · 24.9 minutes.
+
+This run exists to answer one question: does identification get worse when the
+local catalogue loses 190 of its 250 books? Tier-1 lookup reads that catalogue,
+so it could have.
+
+| | 250-book shelf, 21 Aug | **60-book shelf, 22 Aug** |
+|---|---|---|
+| right book on the card | 74 | **74** |
+| right work, another language's edition | 4 | 5 |
+| **wrong book** | 10 | **8** |
+| refused — said it was not sure | 12 | 13 |
+| **precision when a card appeared** | 84% | **85%** |
+
+**It did not get worse.** The same 74 covers are identified, two fewer are
+misidentified, one more is refused. The reason is worth stating plainly: 68 of
+these 100 covers were never going through the catalogue anyway — they are books
+it has never held, and they take the provider path either way. A shelf small
+enough for a person to vouch for costs nothing in accuracy.
+
+The eight wrong answers: Dune returned The Lord of the Rings; The Stand returned
+The Shining; Pride and Prejudice returned Pride and Prejudice **and Zombies**;
+The Catcher in the Rye and The Road each returned a **study guide about** the
+book; and The Shining, Twilight and La Nuit each returned a **biography of the
+author** — still the single most common failure shape.
+
+### The measurement bug this run brought back
+
+The raw harness reported 67 correct. Three of those "failures" were `"Thinking`,
+`"Rich Dad` and `"Guns`: `run_images.py` was still splitting manifest.csv on the
+comma, so every quoted title was truncated at it. This README has claimed since
+August that the bug was fixed, and it was — in `rescore.py`, the scorer, and not
+in `run_images.py`, the runner. It returned the moment the harness ran again.
+Both parse with the `csv` module now.
+
+Take it as a standing warning about this folder: **a number is only as good as
+the last time somebody checked the instrument.**
+
+## The previous result, 2026-08-21
 
 `benchmark_2026_08_21.json` · 100 cover photographs · real OCR at both tiers ·
 providers queried live · every disputed case decided by hand on title **and**
