@@ -48,10 +48,13 @@ def test_deliberate_signals_count(favorite, status):
 # ----- subject normalisation -----
 
 def test_provider_shapes_become_comparable():
-    # Google uses slashes, Open Library uses commas. They must meet.
+    # Google uses slashes, Open Library uses commas. They must meet -- and both
+    # arrive in the CANONICAL spelling, "thriller", because the catalogue's own
+    # 60 books say Thriller and a provider says Thrillers. See
+    # taste_profile.SUBJECT_SYNONYMS.
     google = normalize_subjects("Fiction / Thrillers / Psychological")
     openlib = normalize_subjects("Psychological fiction, Thrillers, Murder")
-    assert "thrillers" in google and "thrillers" in openlib
+    assert "thriller" in google and "thriller" in openlib
     assert "psychological" in google & openlib
 
 
@@ -61,7 +64,7 @@ def test_the_local_catalogue_uses_semicolons():
     # into one label and break the feature on the offline Tier-1 path -- the
     # one demonstrated with the network switched off.
     subjects = normalize_subjects("Speculative fiction; Fantasy; Horror")
-    assert subjects == {"speculative", "fantasy", "horror"}
+    assert subjects == {"sci-fi", "fantasy", "horror"}
 
 
 def test_all_three_provider_shapes_agree():
@@ -175,5 +178,8 @@ def test_duplicate_scans_do_not_inflate_the_profile():
     # distinct titles, so a book scanned twice cannot be counted twice.
     history = [row("Gone Girl", "Thrillers"), row("Gone Girl", "Thrillers"),
                row("Sharp Objects", "Thrillers"), row("Dune", "Science")]
-    assert build_profile(history)["subjects"]["thrillers"] == [
-        "Gone Girl", "Sharp Objects"]
+    profile = build_profile(history)["subjects"]
+    assert profile["thriller"] == ["Gone Girl", "Sharp Objects"]
+    # And Dune lands under sci-fi, not beside Cosmos: a provider saying
+    # "Science" means science fiction.
+    assert profile["sci-fi"] == ["Dune"]

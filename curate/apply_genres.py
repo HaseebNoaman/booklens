@@ -74,7 +74,12 @@ def main():
         if n > limit:
             flag = "  TOO COMMON (over %d)" % limit
         elif n < MIN_CARRIERS:
-            flag = "  DEAD END (needs %d)" % MIN_CARRIERS
+            # Not a failure. A single-carrier label is a BRIDGE: it exists so a
+            # scanned book the provider calls "History" or "Biography" can find
+            # Guns, Germs and Steel or Into the Wild. One carrier is one
+            # neighbour, which is all a scanned book needs. The rule that must
+            # hold is per BOOK -- see the check below.
+            flag = "  bridge only (1 carrier)"
         print("   %-22s %3d%s" % (tp.display_subject(label), n, flag))
 
     problems = []

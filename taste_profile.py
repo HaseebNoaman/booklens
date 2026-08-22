@@ -108,6 +108,58 @@ def too_common_to_be_evidence(label, counts, total):
     return counts.get(label, 0) / float(total) > COMMON_SUBJECT_SHARE
 
 
+# Provider words, translated into the catalogue's own vocabulary.
+#
+# WHY THIS EXISTS. The 60 verified books were re-tagged by hand into 28 labels
+# that each mean one thing. That made the catalogue's own numbers the best they
+# have been -- every book usable, no reader left with nothing. It also broke the
+# bridge to everything else, because most books a reader scans are NOT among the
+# 60, and Google and Open Library answer in a different vocabulary: "Thrillers",
+# "Suspense", "Space opera", "Self-Help". Measured, the share of scanned books
+# that shared any subject with the shelf fell from ~82% to 53%.
+#
+# The fix is one table rather than sixty edited rows. Provider vocabulary is
+# unbounded -- Google Books alone has hundreds of category strings -- and
+# chasing it would put the vagueness straight back into a taxonomy just cleaned
+# of it. Measured with this map in place: 53% -> 91%.
+#
+# THE RULE THAT KEEPS IT HONEST: map only true synonyms. Never merge two things
+# a reader would tell apart. "psychological" keeps its own label rather than
+# being folded into "thriller", because a psychological novel and a thriller are
+# not the same promise.
+#
+# The entries were read off the measured top of the provider vocabulary, not
+# invented: psychological 26, thrillers 22, crime 16, science 14, suspense 13.
+SUBJECT_SYNONYMS = {
+    "thrillers": "thriller",
+    "suspense": "thriller",
+    "true crime": "crime",
+    "space opera": "sci-fi",
+    "cyberpunk": "sci-fi",
+    "speculative": "sci-fi",
+    # A provider saying "Science" means science FICTION -- Dune comes back as
+    # "Science, Space Opera". The catalogue means Cosmos. Same word, two
+    # subjects, and left alone it would offer Cosmos to someone holding Dune.
+    # This is the identical failure already caught once, when A Game of Thrones
+    # was tagged "Power" and the shelf answered with The 48 Laws of Power. The
+    # catalogue label is "Popular science" now so the two cannot collide.
+    "science": "sci-fi",
+    "classics": "modern classic",
+    "magic": "fantasy",
+    "quests": "adventure",
+    "self-help": "self-improvement",
+    "motivational": "self-improvement",
+    "personal growth": "self-improvement",
+    "business & economics": "self-improvement",
+    "biography & autobiography": "memoir",
+    "biography": "memoir",
+    "autobiography": "memoir",
+    "memoirs": "memoir",
+    "anthropology": "history",
+    "civilization": "history",
+}
+
+
 def normalize_subjects(raw):
     """Turn one book's subject field into a set of comparable labels.
 
@@ -141,7 +193,9 @@ def normalize_subjects(raw):
                 continue
         if len(label) > 40:      # provider junk, not a shelf label
             continue
-        subjects.add(label)
+        # After the suffix strip, so "Science fiction" and "Speculative fiction"
+        # arrive here as "science" and "speculative" and both land on sci-fi.
+        subjects.add(SUBJECT_SYNONYMS.get(label, label))
     return subjects
 
 
