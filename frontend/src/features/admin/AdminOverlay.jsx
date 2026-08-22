@@ -266,4 +266,4 @@ import { authFetch } from "../../services/api.js";
       );
     }
 
-export { AdminOverlay, CatalogueEditor };
+export { AdminOverlay };

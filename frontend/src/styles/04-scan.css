@@ -68,10 +68,6 @@
 }
 .overview-heading .eyebrow { margin-bottom: 5px; }
 .overview-heading h3 { font-size: 24px; }
-.overview-heading .source-label {
-  flex: 0 1 auto; max-width: 260px; justify-content: flex-end; padding: 0;
-  color: var(--muted-text); background: transparent; text-align: right;
-}
 .overview-section .summary-box { margin-top: 0; }
 .source-details { margin-top: 12px; border: 1px solid var(--border); border-radius: var(--r-sm); background: #fffefa; }
 .source-details summary {
@@ -111,9 +107,6 @@
 }
 .source-meta-row a { color: var(--accent-dark); font-weight: 700; text-underline-offset: 3px; }
 .source-truncated { padding: 0 15px 15px; color: var(--faint-text); font-size: 12px; }
-.why-result { margin-top: 14px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.why-result > summary { min-height: 50px; display: flex; align-items: center; cursor: pointer; font-size: 13px; font-weight: 750; }
-.why-result > dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding-bottom: 8px; }
 
 .reading-tools {
   margin-top: 30px; padding: 20px; border: 1px solid #bfd0c6; border-radius: var(--r-md);
@@ -125,7 +118,6 @@
 .reading-controls { display: grid; grid-template-columns: minmax(180px, 1fr) auto; gap: 14px; align-items: end; margin-top: 17px; }
 .reading-controls label, .private-note-details label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 750; }
 .reading-controls select { width: 100%; min-height: 46px; }
-.favorite-action { min-height: 46px; }
 .private-note-details { margin-top: 15px; padding-top: 13px; border-top: 1px solid #bfd0c6; }
 .private-note-details summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-size: 13px; font-weight: 750; }
 .private-note-details textarea { min-height: 96px; resize: vertical; }
@@ -155,7 +147,6 @@
 @media (max-width: 768px) {
   .result-layout { grid-template-columns: 130px minmax(0, 1fr); gap: 24px; }
   .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
-  .overview-heading .source-label { max-width: none; text-align: left; }
 }
 
 @media (max-width: 640px) {
@@ -170,9 +161,7 @@
   .metadata-item:last-child { border-bottom: 0; }
   .source-details summary { align-items: flex-start; flex-direction: column; gap: 2px; }
   .confirmation-banner .button-row > * { width: 100%; }
-  .why-result > dl { grid-template-columns: 1fr; }
   .reading-controls { grid-template-columns: 1fr; }
-  .reading-controls .favorite-action { width: 100%; }
 }
 
 @media (max-width: 430px) {

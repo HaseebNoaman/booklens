@@ -123,4 +123,4 @@ function FallbackForm({ defaultTitle, defaultAuthor, message, onSearchByTitle, o
     </div>
   );
 }
-export { refusalGuidance, RefusalPanel, FallbackForm };
+export { RefusalPanel, FallbackForm };

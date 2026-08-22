@@ -305,9 +305,6 @@ function ReadingTools({ historyId, token, initialStatus = "identified", initialN
 export {
   QuickOverview,
   ReadingTools,
-  cleanDisplayText,
-  detectedLanguage,
-  externalProvider,
   providerRecordUrl,
   sourceLabel,
   sourceTextFor,

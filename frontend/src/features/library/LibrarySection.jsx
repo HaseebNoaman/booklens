@@ -237,4 +237,4 @@ const STATUS_LABELS = {
       );
     }
 
-export { LibrarySection, BookDetailsModal };
+export { LibrarySection };
