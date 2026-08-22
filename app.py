@@ -834,50 +834,6 @@ def history(current_user):
     return jsonify(items)
 
 
-@app.route("/api/books-by-author", methods=["POST"])
-@rate_limited(10, 60)
-@token_required
-def books_by_author(current_user):
-    # "More by this author": ONE lazy Google query (only when the user clicks
-    # the button, so normal scans cost no extra quota). Returns up to 4 other
-    # books, excluding the one being viewed.
-    data = request.get_json(silent=True) or {}
-    author = str(data.get("author", "")).strip()
-    exclude_title = str(data.get("exclude_title", "")).strip().lower()
-    if not author or len(author) > 120:
-        return jsonify({"error": "Author name required"}), 400
-
-    import requests as rq
-    from api import GOOGLE_BOOKS_URL, parse_book, cleanquery
-    try:
-        r = rq.get(GOOGLE_BOOKS_URL, params={
-            "q": f"inauthor:{cleanquery(author)}", "maxResults": 8,
-            "key": os.environ.get("GOOGLE_BOOKS_API_KEY"),
-            "langRestrict": "en", "printType": "books",
-            "orderBy": "relevance"}, timeout=10)
-        if r.status_code != 200:
-            return jsonify({"books": [],
-                            "message": "Suggestions temporarily unavailable"})
-        seen = set()
-        books = []
-        for item in r.json().get("items", []):
-            b = parse_book(item)
-            key = b.get("title", "").strip().lower()
-            # Skip the current book, duplicates, and derived junk.
-            if not key or key in seen or exclude_title in key or key in exclude_title:
-                continue
-            seen.add(key)
-            books.append({"title": b["title"], "author": b["author"],
-                          "thumbnail": b["thumbnail"],
-                          "published_date": b["published_date"]})
-            if len(books) >= 4:
-                break
-        return jsonify({"books": books})
-    except Exception:
-        return jsonify({"books": [],
-                        "message": "Suggestions temporarily unavailable"})
-
-
 @app.route("/api/history/export", methods=["GET"])
 @token_required
 def export_history(current_user):

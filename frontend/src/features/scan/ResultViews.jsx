@@ -5,7 +5,7 @@
    nothing written to the reader's library until they say yes.
 
    Everything these two are built from now lives beside this file:
-   ResultFacts, RefusalPanel, CandidateSelection, MoreByAuthor and ForYou.
+   ResultFacts, RefusalPanel, CandidateSelection and ForYou.
    This file was 891 lines holding all of it at once.
 */
 import React, { useEffect, useState } from "react";
@@ -17,7 +17,6 @@ import { AlreadyRead, LiveSignals, MetadataItem, plainEdition,
          plainPageNote } from "./ResultFacts.jsx";
 import { RefusalPanel, FallbackForm } from "./RefusalPanel.jsx";
 import { CandidateSelection } from "./CandidateSelection.jsx";
-import { MoreByAuthor } from "./MoreByAuthor.jsx";
 import { ForYou } from "./ForYou.jsx";
 
 // One candidate: show the answer, not a chooser.
@@ -323,7 +322,6 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
 
       <ReadingTools historyId={result.history_id} token={token}
                     onChanged={onLibraryChanged} />
-      <MoreByAuthor author={book.author} excludeTitle={book.title} token={token} />
       <div className="result-actions">
         {/* Identifying a book already records it, so this is not "save the
             book" -- it marks it as one worth keeping. Labelled for what it

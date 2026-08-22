@@ -86,12 +86,6 @@
 }
 .confirmation-banner .button-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
 .result-actions { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
-.more-author { margin-top: 25px; text-align: left; }
-.author-books { display: flex; flex-wrap: wrap; gap: 14px; }
-.author-book { width: 112px; font-size: 13px; }
-.author-book img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--r-sm); }
-.author-book b, .author-book small { display: block; margin-top: 5px; overflow-wrap: anywhere; }
-.author-book small { color: var(--muted-text); }
 .candidate-section .status-banner h3 { font-size: 20px; }
 .candidate-copy { min-width: 0; }
 .candidate-reset { margin-top: 16px; }
@@ -185,7 +179,6 @@
   .cover-column { display: block; }
   .cover-column .source-badge { width: 100%; max-width: 100%; margin-top: 12px; }
   .processing-state { min-height: 250px; padding-inline: 8px; }
-  .author-book { width: calc(50% - 7px); }
   .library-detail-top { align-items: flex-start; flex-direction: column; }
   .library-detail-copy { min-width: 0; width: 100%; }
   .candidate-facts { grid-template-columns: 1fr; }
