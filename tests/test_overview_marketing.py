@@ -73,6 +73,9 @@ def test_non_fiction_addressing_the_reader_is_still_allowed():
 
 
 def test_the_method_version_was_bumped():
-    # Cached v1 overviews may contain the marketing this rule removes, so the
-    # version must change for them to regenerate.
-    assert H.METHOD == "candidate_window_heuristic_v2"
+    # Cached overviews may contain the marketing these rules remove, so the
+    # version must change for them to regenerate. v3 is the rewrite that
+    # stopped choosing sentences. Everything else in this file is unchanged and
+    # still passes, which is what shows the rewrite did not let marketing back
+    # in through a door the retired whitelist happened to be blocking.
+    assert H.METHOD == "cleaned_provider_description_v3"

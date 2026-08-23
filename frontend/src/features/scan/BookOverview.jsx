@@ -97,9 +97,24 @@ function overviewQuality(value, language, isCatalogue = false) {
   // routes now answer the same question the same way. Measured against the
   // real catalogue it hides 2 records instead of 53, and both deserve it: an
   // 11-word scene-setting fragment, and one that opens "In chapter 32".
+  //
+  // The external bound moved on 2026-08-23 from 25-65 words and at most 2
+  // sentences, to 15-90 and no sentence ceiling. That pair of numbers was the
+  // shape of a one-or-two-sentence WINDOW, and the backend stopped extracting
+  // windows: it now shows the publisher's description with the sentences that
+  // are not about the book removed. Measured over 190 books, the median such
+  // description is 71 words across three or four sentences, so the old ceiling
+  // would have blanked most of them a second time, on the client, after the
+  // server had already decided they were fine. The floor moved for the same
+  // reason -- The Clan of the Cave Bear's entire Open Library record is 18
+  // words and is a complete answer.
+  //
+  // These two numbers must stay in step with MIN_WORDS and MAX_WORDS in
+  // whatitsabout_heuristic.py. They are duplicated rather than served because
+  // the card also renders text that never passed through that module.
   const invalidCatalogue = isCatalogue && (words.length < 25 || sentences.length < 1);
   const invalidExternal = !isCatalogue &&
-    (words.length < 25 || words.length > 65 || sentences.length < 1 || sentences.length > 2);
+    (words.length < 15 || words.length > 90 || sentences.length < 1);
   if (invalidCatalogue || invalidExternal || !/[.!?]$/.test(text)) {
     return { usable: false, text, reason: "The available text is too short or incomplete to present as a useful overview." };
   }

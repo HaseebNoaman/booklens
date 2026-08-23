@@ -1,31 +1,59 @@
-"""Deterministic, grounded What-It's-About selection for Tier-2 books.
+"""The publisher's own description, minus the parts that are not about the book.
 
-This module runs only after the existing matcher has selected an exact external
-record. It retrieves descriptions through exact IDs, cleans provider noise,
-builds single-sentence and adjacent-pair windows, and ranks those windows with
-small rules that can be explained in a viva. It never generates new prose.
+This module runs only after the matcher has selected an exact external record.
+It retrieves descriptions through exact IDs and removes provider noise. It never
+generates prose, and -- since 2026-08-23 -- it no longer CHOOSES prose either.
+
+It used to. Every one- and two-sentence window was scored, and a window also
+had to contain a word from a fixed list ("must", "faces", "discovers",
+"danger"...) or it was refused. Measured on 190 books outside the catalogue,
+that whitelist left 51% of cards blank, and 91 of those 97 blanks had a
+perfectly readable publisher description on the same screen. The Tale of
+Despereaux was refused because "a devious rat determined to bring them all to
+ruin" is not on the list.
+
+A whitelist over an open vocabulary cannot be completed -- the same lesson the
+provider/shelf synonym map already bought. So the rules were turned around.
+They now say what is NOT a description: markup, marketing, critical reception,
+an encyclopaedia opener, a publisher's reprint notice, chapter structure,
+spoilers. Everything else is the answer, in the publisher's own order.
+
+The only choice left is between SOURCES -- the first record that reads like a
+description wins -- which is a much smaller claim to defend, and it makes a bad
+card structurally impossible: the worst this can print is a real sentence the
+publisher wrote, never a machine's pick of the least-bad one.
 """
 
 from __future__ import annotations
 
 import re
-from typing import Iterable
 
 from result_content import clean_source_text, detect_language
 
 
-# v2: promotional verbs are rejected, and a predominantly promotional source
-# yields no overview. Bumping the version makes cached v1 summaries -- which
-# may contain the marketing this rule exists to remove -- regenerate.
-METHOD = "candidate_window_heuristic_v2"
-MIN_WORDS = 25
-PREFERRED_MIN_WORDS = 30
-PREFERRED_MAX_WORDS = 50
-MAX_WORDS = 65
-MIN_SCORE = 11
+# v3: nothing is extracted any more -- see the module docstring. Bumping the
+# version makes cached v1 and v2 overviews, which were single windows chosen by
+# the retired scorer, regenerate as cleaned descriptions.
+METHOD = "cleaned_provider_description_v3"
+
+# The card is a short PARAGRAPH now, not a one-or-two-sentence window, because
+# nothing is being extracted -- the publisher's sentences are shown in the
+# order they were written, minus the ones that are not about the book.
+#
+# MIN_WORDS was 25, chosen when a fragment shorter than that meant the picker
+# had found nothing worth showing. It is 15 here because a whole short
+# description is a complete answer: "The story of a Cro-Magnon woman orphaned
+# as a child and raised by a group of Neanderthals" is 18 words and is the
+# entire Open Library record for The Clan of the Cave Bear. The 25-word floor
+# was throwing that away, along with Carrie (17) and Watership Down (24).
+#
+# MAX_WORDS was 65 for the same reason and is 90 here: measured over 190 books,
+# the median cleaned description runs 71 words, so 65 cut most of them
+# mid-paragraph. 90 keeps three or four sentences and stops before an essay.
+MIN_WORDS = 15
+MAX_WORDS = 90
 
 _WORD_RE = re.compile(r"[A-Za-zÀ-ÿ0-9]+(?:['’][A-Za-zÀ-ÿ]+)?", re.UNICODE)
-_CONTENT_RE = re.compile(r"[A-Za-zÀ-ÿ]{3,}", re.UNICODE)
 _END_RE = re.compile(r"[.!?][\"'”’)]*$")
 
 _ABBREVIATION_RE = re.compile(
@@ -137,27 +165,11 @@ _CHARACTER_RE = re.compile(
     r"writer|doctor|soldier|teacher|king|queen|prince|princess|hero|heroine)\b",
     re.IGNORECASE,
 )
-_START_RE = re.compile(
-    r"\b(?:when|after|before|once|as |returns?|lives?|begins?|is born|"
-    r"grows up|finds (?:himself|herself|themselves)|on the eve|set in|"
-    r"in a world|at the start|newly|young|following)\b",
-    re.IGNORECASE,
-)
 _PREMISE_RE = re.compile(
     r"\b(?:must|faces?|forced|discovers?|struggles?|tries?|seeks?|threatens?|"
     r"danger|surviv(?:e|al)|escapes?|protects?|saves?|fights?|battle|mystery|"
     r"secret|choice|mission|quest|investigates?|murder|war|vanishes?|"
     r"disappears?|risk|challenge|against|only hope|has to|cannot|can't)\b",
-    re.IGNORECASE,
-)
-_ACTION_RE = re.compile(
-    r"\b(?:must|decides?|sets out|returns?|leaves?|travels?|joins?|takes?|"
-    r"searches?|investigates?|fights?|tries?|discovers?|finds?|faces?|"
-    r"struggles?|learns?|seeks?|builds?|creates?|crosses?|refuses?)\b",
-    re.IGNORECASE,
-)
-_CONNECTOR_RE = re.compile(
-    r"\b(?:but|however|until|forcing|leaving|yet|although|while|so that)\b",
     re.IGNORECASE,
 )
 
@@ -192,16 +204,6 @@ _IDEA_RE = re.compile(
     r"culture|mind|brain|body|nature|economy|politics|trauma|sleep)\b",
     re.IGNORECASE,
 )
-_SUBJECT_RE = re.compile(
-    r"\b(?:book|account|study|history|investigation|portrait|memoir|work|"
-    r"research|story of|life of|science of|world of)\b",
-    re.IGNORECASE,
-)
-_SCOPE_RE = re.compile(
-    r"\b(?:from .{2,45} to|across|throughout|over (?:the|a) |centuries|"
-    r"around the world|wide[- ]ranging)\b",
-    re.IGNORECASE,
-)
 
 _SPOILER_RE = re.compile(
     r"\b(?:the (?:killer|culprit|murderer) (?:is|was|turns out to be)|"
@@ -214,18 +216,120 @@ _SPOILER_RE = re.compile(
     re.IGNORECASE,
 )
 
-_COMMON_CAPITALIZED = {
-    "A", "An", "And", "As", "At", "After", "Before", "But", "For",
-    "From", "He", "Her", "His", "However", "In", "It", "Its", "On",
-    "Once", "She", "The", "Their", "They", "This", "When", "While",
-    "With", "Without", "Young",
-}
-_STOPWORDS = {
-    "a", "an", "and", "are", "as", "at", "be", "but", "by", "for",
-    "from", "has", "have", "he", "her", "his", "in", "into", "is",
-    "it", "its", "of", "on", "or", "she", "that", "the", "their",
-    "they", "this", "to", "was", "when", "which", "who", "with",
-}
+# ---------------------------------------------------------------------------
+# FOUR MORE KINDS OF SENTENCE THAT ARE NOT A DESCRIPTION.
+#
+# These were written by reading all 147 cards the provider path produces, one
+# at a time. Each pattern names the card that put it here, so a later reader
+# can judge it against the evidence rather than against taste. Nothing was
+# added on the strength of a guess about what providers might send.
+# ---------------------------------------------------------------------------
+
+# The encyclopaedia opener, in the shapes _BIBLIOGRAPHIC_RE does not reach:
+# apostrophes ("is a British children's picture book" -- The Gruffalo),
+# slashes ("is a 1994 horror/fantasy novel" -- Insomnia), plurals ("the third
+# of the four crime novels" -- The Hound of the Baskervilles), "written by"
+# (The Name of the Wind), and a parenthesised year (Heart of Darkness).
+_OPENER_RE = re.compile(
+    r"(?:\(\d{4}\)\s+is\b"
+    r"|\bis (?:a|an|the)\s+(?:\d{4}\s+)?(?:(?:[\w’'/-]+\s+){0,5})?"
+    r"(?:novel|novella|book|play|poem|memoir|biography|autobiography|story|"
+    r"collection|tragedy|comedy|epic|anthology|picture book|fairy tale)\b"
+    r"|\b(?:novel|novella|book|play|story|series)s? (?:written )?by (?:the )?"
+    r"(?:[\w’'-]+\s+){0,2}(?:writer|author|novelist|poet|playwright|dramatist)\b"
+    r"|\bis the (?:traditional name|debut|first|second|third|fourth|fifth|"
+    r"\d+(?:st|nd|rd|th))\b)",
+    re.IGNORECASE,
+)
+
+# How the book was RECEIVED. True, and never an answer to "what is it about?".
+#   "Critic Michael Straight has hailed it as ..."          The Two Towers
+#   "won the Bram Stoker Award for Best Novel in 1996"      The Green Mile
+#   "Widely acclaimed for his work completing ..."          The Way of Kings
+#   "transports us to a world unlike any we have ever"      A Clash of Kings
+#   "For over a century both children and adults have been enchanted"  Peter Pan
+_RECEPTION_RE = re.compile(
+    r"\b(?:hailed (?:it |this |him |her )?as|has been (?:called|hailed|praised)|"
+    r"described (?:it |this |them )?as|regarded as|"
+    r"(?:widely |traditionally )?(?:seen|considered) as|best[- ]?selling author|"
+    r"i(?:'ve| have) been recommending|one of (?:my|our) favou?rite|"
+    r"won (?:the )?[\w' ]{0,30}(?:award|prize|medal|acclaim)|was awarded the|"
+    r"nominated (?:as|for)|shortlisted for|winner of|"
+    r"one of the (?:\w+ ){0,3}(?:most|greatest|finest|best|great|important)\b|"
+    r"is one of the very few|critical acclaim|instant (?:success|bestseller)|"
+    r"beloved by|enthralled readers|continues to thrill|have been enchanted|"
+    r"widely acclaimed|acclaimed for|sit spellbound|"
+    r"transports? (?:us|readers)|invites readers|delivers the long-awaited|"
+    r"unlike any (?:we|you) have ever|cemented [\w’']+ stature|"
+    r"named .{0,30}in its list of|selected by [A-Z]|\bcritics?\b)",
+    re.IGNORECASE,
+)
+
+# Structure and narrative technique: true of the artefact, useless to someone
+# deciding whether to read it.
+#   "The section begins with Mrs Ramsay assuring her son James"  To the Lighthouse
+#   "Franklin's account of his life is divided into four parts"  Franklin
+#   "is told from an animal point of view"                       White Fang
+_STRUCTURE_RE = re.compile(
+    r"\b(?:the (?:section|chapter|part|work|book|novel|story|play|narrative) "
+    r"(?:begins|opens|starts|is (?:split|divided))\b|"
+    r"(?:is|are) (?:split|divided) into|there are actual breaks|"
+    r"(?:is|was) (?:partially |partly )?(?:told|narrated|written) (?:in|from)\b|"
+    r"point of view\b|as with (?:his|her|their) previous|"
+    r"in a new introduction|it includes connections to|"
+    r"according to \w+, it was|in the opening paragraph|"
+    r"prior to (?:starting|writing) the (?:novel|book)|"
+    r"the (?:style|prose|typography|illustrations?) (?:is|are|was)\b)",
+    re.IGNORECASE,
+)
+
+# The record describes an EDITION, or the publisher, or the author -- not the
+# book. Public-domain reprints and study editions arrive filed under the
+# original title with the packaging described instead of the story.
+#   "We are delighted to publish this classic book ..."      Walden
+#   "a parallel translation ... Recommended for students"    The Call of the Wild
+#   "the original text side by side with a modern version"   Julius Caesar
+#   "Arthur Miller (1915-2005), American dramatist, was born" The Crucible
+_EDITION_RE = re.compile(
+    r"\b(?:we are (?:delighted|pleased|proud) to (?:publish|present|offer)|"
+    r"as part of our (?:extensive|classic|special)|"
+    r"(?:many of )?the books in our collection|has been the leading publisher|"
+    r"penguin (?:modern )?classics|out of print for decades|"
+    r"reproduced from the original|scanned from the original|classic library|"
+    r"our publishing program|our philosophy has been guided|"
+    r"hand curated by our staff|deserves to be brought back|"
+    r"parallel translation|recommended for students|"
+    r"side by side with a modern|study activities|in comic book format|"
+    r"using this (?:text|edition)|book jacket|"
+    r"(?:originally |first )?seriali[sz]ed in|"
+    r"is one of (?:several|the) [\w ]{0,20}(?:plays|novels|books) "
+    r"(?:that )?(?:he|she|they) wrote|written (?:several|a few) years after|"
+    r"\(\d{4}\s*[-–]\s*\d{4}\)|"
+    r"(?:was |been )adapted (?:as|into) an? [\w -]*"
+    r"(?:film|movie|series|play|musical)|a major \w+ movie event)\b",
+    re.IGNORECASE,
+)
+
+# Markup a provider left behind, and the debris of a quoted review.
+#   "[Comment by Kim Stanley Robinson, on The Guardian's website][1]: > ..."
+#   "Cast: 2 to 3m, 6 to 10w."                              The Bluest Eye
+_DEBRIS_RE = re.compile(
+    r"\[[^\]]{3,}\]\[\d+\]|\]\(https?://|^\s*>|^\s*Cast:|"
+    r"^\s*(?:and|but|or)\s[\w ]{0,20}[\"”]\s*$")
+
+# A LEAD that cannot stand alone. Not a junk rule -- a consequence of them.
+# Dropping a sentence orphans the one after it: with its opener removed, To the
+# Lighthouse began "This prediction is denied by Mr Ramsay" and the reader had
+# no way to know what prediction. Only the FIRST kept sentence is tested; by
+# the second, the referent exists. _DANGLING_OPENING_RE covers the pronoun
+# cases already and is used alongside this.
+_ORPHAN_LEAD_RE = re.compile(
+    r"^\s*(?:this (?:prediction|discovery|event|decision)|"
+    r"these are the hallmarks|as our story opens|"
+    r"it (?:portrays|follows|tells|is at once))\b",
+    re.IGNORECASE,
+)
+
 
 
 def words(text: str) -> list[str]:
@@ -263,13 +367,56 @@ def sentence_is_junk(sentence: str) -> bool:
         return True
     if _PROMO_RE.search(value):
         return True
-    if _AWARD_RE.search(value) and not _has_story_or_thesis(value):
+    if (_OPENER_RE.search(value) or _RECEPTION_RE.search(value)
+            or _STRUCTURE_RE.search(value) or _EDITION_RE.search(value)
+            or _DEBRIS_RE.search(value)):
+        return True
+    # "Perfect for fans of ...", "reading group guide", "ages 8-12". Shelving
+    # advice, not description. This was a scoring signal that merely subtracted
+    # points; with the scorer gone it has to reject or it does nothing.
+    if _CATEGORY_RE.search(value):
+        return True
+    # No story-word escape for awards. It used to have one, because under the
+    # old design dropping too many sentences left nothing to choose between and
+    # the card went blank -- so the cleaner was made timid on purpose. Nothing
+    # is chosen any more, the surviving sentences are simply shown, so dropping
+    # one is cheap and an award is never a fact about what happens in the book.
+    # Measured: it was letting through "The Green Mile won the Bram Stoker
+    # Award" and "Her New York Times bestselling Outlander novels have earned
+    # the praise of critics" as whole cards.
+    if _AWARD_RE.search(value):
+        return True
+    # Spoilers used to be blocked by the accept gate that has gone. Without
+    # this line "the killer is ..." would print on the card of a detective
+    # novel, which is the one failure a reader could never forgive.
+    if _SPOILER_RE.search(value):
         return True
     if _BIBLIOGRAPHIC_RE.search(value) and not _has_story_or_thesis(value):
         return True
     if _PUBLICATION_ONLY_RE.search(value) and not _has_story_or_thesis(value):
         return True
-    if value[:1] in {'"', "'", "“", "‘"} and word_count(value) <= 30:
+    # PILED-UP PROMOTIONAL ADJECTIVES. _MARKETING_RE has been in this file
+    # since v1 and was never consulted -- it fed a score that no longer exists,
+    # so "an unforgettable novel that mixes fiction and photography in a
+    # thrilling reading experience" walked onto Miss Peregrine's card.
+    #
+    # TWO of them, not one. Every word in that list has an honest use in a real
+    # description -- "a powerful storm", "her beloved grandmother" -- and
+    # rejecting on one hit would take out ordinary sentences. Two in the same
+    # sentence is a blurb writer, not a plot.
+    if len(_MARKETING_RE.findall(value)) >= 2:
+        return True
+    # A QUOTED REVIEW, at any length. The 30-word ceiling let A Wizard of
+    # Earthsea open with 40 words of Neil Gaiman before the story started.
+    if value[:1] in {'"', "'", "“", "‘"}:
+        return True
+    # A FRAGMENT CUT OUT OF A QUOTATION. Kindred's card began 'My left arm."'
+    # -- the tail of a sentence whose opening was in the part the cleaner
+    # removed. A closing quote inside the first few words with no opening one
+    # before it is that shape.
+    head = value[:60]
+    if any(mark in head for mark in ('"', "”")) and not any(
+            mark in head for mark in ("“", "‘")) and value[:1] not in {'"', "“"}:
         return True
     return False
 
@@ -348,279 +495,156 @@ def infer_kind(categories: str = "", explicit_kind: str = "") -> str:
     return "fiction"
 
 
-def _title_tokens(title: str) -> set[str]:
-    return {
-        token.lower() for token in _CONTENT_RE.findall(title or "")
-        if token.lower() not in _STOPWORDS and len(token) >= 4
-    }
+def _is_wrong_document(sentence: str) -> bool:
+    """Does this sentence say the record is not a description at all?
+
+    A description can contain an encyclopaedia opener or a chapter note and
+    still be a description -- that is ordinary noise. But review quotes,
+    critical reception, sales copy and a publisher's reprint notice are what a
+    DIFFERENT KIND OF PAGE is made of, and enough of them means the provider
+    returned a review or a catalogue entry rather than a blurb.
+    """
+    return bool(_REVIEW_RE.search(sentence) or _RECEPTION_RE.search(sentence)
+                or _PROMO_RE.search(sentence) or _CTA_RE.search(sentence)
+                or _EDITION_RE.search(sentence) or _AWARD_RE.search(sentence)
+                or _DEBRIS_RE.search(sentence))
 
 
-def _content_tokens(text: str) -> set[str]:
-    return {
-        token.lower() for token in _CONTENT_RE.findall(text or "")
-        if token.lower() not in _STOPWORDS
-    }
+def read_one_source(raw_text: str) -> dict:
+    """Clean one provider record down to the part that describes the book.
 
+    Returns {"text", "refused", "language", "kept", "dropped"}. `refused` names
+    why there is no text, and is empty when there is.
+    """
+    cleaned = clean_description(raw_text or "")
+    language = cleaned["language"]
+    # A POSITIVE identification of English, not merely the absence of another
+    # language. detect_language scores nine languages by stop-word lists; text
+    # in a tenth scores zero everywhere and comes back "unknown". Accepting
+    # unknown put a Polish description of Paper Towns on an English card.
+    if language.get("code") != "en":
+        return {"text": "", "refused": "not_english", "language": language,
+                "kept": [], "dropped": cleaned["removed_sentences"]}
 
-def has_probable_name(text: str) -> bool:
-    """Detect a likely named entity without any book-specific name list."""
-    for match in re.finditer(
-        r"\b[A-Z][a-z]+(?:['’][A-Za-z]+)?(?:\s+[A-Z][a-z]+(?:['’][A-Za-z]+)?){0,2}",
-        text or "",
-    ):
-        phrase = match.group(0)
-        if phrase not in _COMMON_CAPITALIZED and len(phrase) >= 4:
-            return True
-    return False
+    # clean_description has already applied sentence_is_junk; cleaned
+    # ["sentences"] are the survivors and cleaned["removed_sentences"] is what
+    # it threw away. Filtering again here would be a no-op -- an earlier draft
+    # did exactly that and left the wrong-document count permanently at zero,
+    # which silently disabled the rule below.
+    kept = list(cleaned["sentences"])
+    dropped = list(cleaned["removed_sentences"])
+    wrong_document = sum(1 for s in dropped if _is_wrong_document(s))
 
+    # Advance past a lead that cannot stand on its own -- see _ORPHAN_LEAD_RE.
+    while kept and (_ORPHAN_LEAD_RE.match(kept[0])
+                    or _DANGLING_OPENING_RE.match(kept[0])):
+        dropped.append(kept.pop(0))
 
-def _pair_disconnected(sentences: list[str]) -> bool:
-    if len(sentences) != 2:
-        return False
-    first, second = sentences
-    overlap = _content_tokens(first) & _content_tokens(second)
-    linked_start = re.match(
-        r"^(?:he|she|they|it|this|that|these|those|but|however|when|after|"
-        r"as|yet|while|his|her|their)\b",
-        second,
-        re.IGNORECASE,
-    )
-    return not overlap and not linked_start
+    if not kept:
+        return {"text": "", "refused": "nothing_describes_the_book",
+                "language": language, "kept": [], "dropped": dropped}
 
+    # THE RECORD IS THE WRONG KIND OF DOCUMENT.
+    #
+    # Removing junk sentence by sentence stops working when the whole record is
+    # a newspaper review (The Left Hand of Darkness arrives as a Guardian
+    # column), a reprint publisher's page (Walden), a critics' round-up (The
+    # Two Towers) or author marketing (The 4-Hour Workweek). Writing a pattern
+    # for each is the unbounded-vocabulary trap the old whitelist fell into,
+    # approached from the other side. clean_description already carries the
+    # idea for advertisements (_PROMO_SOURCE_LIMIT).
+    #
+    # ONLY "wrong document" DROPS COUNT. The first version of this counted
+    # every dropped sentence and was measurably wrong: Open Library records
+    # derived from Wikipedia carry several bibliographic sentences AND a real
+    # one, so it threw away "A young girl named Alice falls through a rabbit
+    # hole into a fantasy world of anthropomorphic creatures" because three
+    # encyclopaedia openers sat beside it. An opener is ordinary noise inside a
+    # real description; a page of review quotes is a different document.
+    if wrong_document and wrong_document >= max(2, len(kept)):
+        return {"text": "", "refused": "mostly_not_a_description",
+                "language": language, "kept": kept, "dropped": dropped}
 
-def _length_points(count: int) -> int:
-    if PREFERRED_MIN_WORDS <= count <= PREFERRED_MAX_WORDS:
-        return 6
-    if MIN_WORDS <= count <= 29 or 51 <= count <= 60:
-        return 4
-    if 61 <= count <= MAX_WORDS:
-        return 2
-    return -100
+    chosen, running = [], 0
+    for sentence in kept:
+        length = word_count(sentence)
+        if chosen and running + length > MAX_WORDS:
+            break
+        chosen.append(sentence)
+        running += length
 
-
-def score_candidate(text: str, sentences: list[str], *, title: str,
-                    kind: str, sentence_index: int) -> dict:
-    """Score one extractive window using the frozen, additive rules."""
-    count = word_count(text)
-    signals = {
-        "preferred_length": PREFERRED_MIN_WORDS <= count <= PREFERRED_MAX_WORDS,
-        "title_overlap": bool(_title_tokens(title) & _content_tokens(text)),
-        "connector": bool(_CONNECTOR_RE.search(text)),
-        "marketing_residue": bool(_CTA_RE.search(text) or _MARKETING_RE.search(text)),
-        "publication_residue": bool(_AWARD_RE.search(text) or _REVIEW_RE.search(text)
-                                    or _BIBLIOGRAPHIC_RE.search(text)),
-        "category_residue": bool(_CATEGORY_RE.search(text)),
-        "disconnected_pair": _pair_disconnected(sentences),
-        "spoiler_resolution": bool(_SPOILER_RE.search(text)),
-        "dangling_opening": bool(_DANGLING_OPENING_RE.match(text)),
-    }
-    score = float(_length_points(count))
-    if signals["title_overlap"]:
-        score += 2
-    if signals["connector"]:
-        score += 2
-
-    if kind == "nonfiction":
-        signals.update({
-            "subject": bool(signals["title_overlap"] or _SUBJECT_RE.search(text)
-                            or has_probable_name(text)),
-            "thesis": bool(_THESIS_RE.search(text)),
-            "idea": bool(_IDEA_RE.search(text)),
-            "scope": bool(_SCOPE_RE.search(text)),
-        })
-        if signals["subject"]:
-            score += 4
-        if signals["thesis"]:
-            score += 6
-        if signals["idea"]:
-            score += 3
-        if signals["scope"]:
-            score += 2
-        required_signals = signals["subject"] and signals["thesis"]
-    else:
-        signals.update({
-            "named_person": has_probable_name(text),
-            "character": bool(has_probable_name(text) or _CHARACTER_RE.search(text)),
-            "starting_situation": bool(_START_RE.search(text)),
-            "premise": bool(_PREMISE_RE.search(text)),
-            "action": bool(_ACTION_RE.search(text)),
-        })
-        if signals["named_person"]:
-            score += 4
-        if signals["character"]:
-            score += 2
-        if signals["starting_situation"]:
-            score += 2
-        if signals["premise"]:
-            score += 5
-        if signals["action"]:
-            score += 3
-        required_signals = signals["character"] and signals["premise"]
-
-    if signals["marketing_residue"]:
-        score -= 8
-    if signals["publication_residue"]:
-        score -= 8
-    if signals["category_residue"]:
-        score -= 6
-    if signals["disconnected_pair"]:
-        score -= 3
-    if signals["dangling_opening"]:
-        score -= 5
-    score -= sentence_index * 0.15
-
-    accepted = (
-        MIN_WORDS <= count <= MAX_WORDS
-        and len(sentences) in {1, 2}
-        and all(_END_RE.search(sentence) for sentence in sentences)
-        and not signals["spoiler_resolution"]
-        and required_signals
-        and score >= MIN_SCORE
-    )
-    return {
-        "score": round(score, 3),
-        "accepted": accepted,
-        "word_count": count,
-        "sentence_count": len(sentences),
-        "signals": signals,
-    }
-
-
-def generate_candidate_windows(sentences: list[str]) -> Iterable[tuple[int, list[str]]]:
-    for index, sentence in enumerate(sentences):
-        yield index, [sentence]
-        if index + 1 < len(sentences):
-            yield index, [sentence, sentences[index + 1]]
-
-
-def _why_won(candidate: dict, kind: str) -> str:
-    signals = candidate["signals"]
-    reasons = []
-    if signals.get("preferred_length"):
-        reasons.append("preferred 30–50 word length")
-    if kind == "fiction":
-        if signals.get("character"):
-            reasons.append("character-bearing")
-        if signals.get("starting_situation"):
-            reasons.append("starting situation")
-        if signals.get("premise"):
-            reasons.append("central conflict/premise")
-        if signals.get("action"):
-            reasons.append("character action")
-    else:
-        if signals.get("subject"):
-            reasons.append("main-subject signal")
-        if signals.get("thesis"):
-            reasons.append("thesis/examination signal")
-        if signals.get("idea"):
-            reasons.append("central-idea signal")
-    return ", ".join(reasons) or "highest accepted frozen-rule score"
-
-
-def select_provider_lead(sources: list[dict]) -> dict:
-    """Return the first safe 1–2 sentence lead from the first usable source."""
-    for source in sources:
-        cleaned = clean_description(source.get("text", ""))
-        if cleaned["language"].get("code") != "en":
-            continue
-        sentences = cleaned["sentences"]
-        for size in (1, 2):
-            if len(sentences) < size:
-                continue
-            chosen = sentences[:size]
-            text = " ".join(chosen)
-            count = word_count(text)
-            if (MIN_WORDS <= count <= MAX_WORDS and not _SPOILER_RE.search(text)
-                    and all(_END_RE.search(sentence) for sentence in chosen)):
-                return {
-                    "status": "ready",
-                    "overview": text,
-                    "source": source.get("source"),
-                    "verification": source.get("verification"),
-                    "source_text": cleaned["text"],
-                    "word_count": count,
-                    "sentence_count": size,
-                }
-    return {"status": "unavailable", "overview": "",
-            "reason": "no_acceptable_provider_lead"}
+    text = " ".join(chosen)
+    if word_count(text) < MIN_WORDS:
+        return {"text": "", "refused": "too_short", "language": language,
+                "kept": kept, "dropped": dropped}
+    return {"text": text, "refused": "", "language": language,
+            "kept": kept, "dropped": dropped}
 
 
 def select_what_its_about(sources: list[dict], *, title: str = "",
                           categories: str = "", kind: str = "") -> dict:
-    """Rank extractive windows from every verified exact-provider source."""
-    resolved_kind = infer_kind(categories, kind)
-    candidates = []
+    """The publisher's own words, minus the parts that are not about the book.
+
+    NOTHING IS CHOSEN SENTENCE BY SENTENCE. An earlier version scored every
+    one- and two-sentence window and published the winner, gated behind a
+    keyword whitelist -- a candidate had to contain a word from a fixed list
+    ("must", "faces", "discovers", "danger"...) or it was refused outright.
+    Measured on 190 books outside the catalogue, that whitelist blanked 51% of
+    cards, and 91 of the 97 blanks had a perfectly readable publisher
+    description sitting on the same screen. The Tale of Despereaux was refused
+    because "determined to bring them all to ruin" is not on the list.
+
+    A whitelist over an open vocabulary cannot be completed -- the same lesson
+    the provider/shelf synonym map already bought. So the question was turned
+    around. The rules now say what is NOT a description -- markup, marketing,
+    critical reception, an encyclopaedia opener, a publisher's reprint notice,
+    chapter structure -- and everything else is the answer, in the order the
+    publisher wrote it.
+
+    What selection remains is between SOURCES, not sentences: the first record
+    that reads like a description wins. That is a far smaller claim to defend,
+    and it is what makes a bad card impossible to manufacture -- the worst this
+    can do is show a publisher's real sentence, never a machine's pick of the
+    least-bad one. Measured: 49% of cards filled -> 77%, on 190 books.
+    """
     source_audit = []
-    for source_index, source in enumerate(sources):
-        cleaned = clean_description(source.get("text", ""))
-        audit = {
+    for source in sources:
+        result = read_one_source(source.get("text", ""))
+        source_audit.append({
             "source": source.get("source"),
             "verification": source.get("verification"),
-            "language": cleaned["language"],
-            "kept_sentences": len(cleaned["sentences"]),
-            "removed_sentences": len(cleaned["removed_sentences"]),
-        }
-        source_audit.append(audit)
-        if cleaned["language"].get("code") != "en":
+            "language": result["language"],
+            "kept_sentences": len(result["kept"]),
+            "removed_sentences": len(result["dropped"]),
+            "refused": result["refused"],
+        })
+        if not result["text"]:
             continue
-        for sentence_index, window in generate_candidate_windows(cleaned["sentences"]):
-            text = " ".join(window)
-            scored = score_candidate(
-                text, window, title=title, kind=resolved_kind,
-                sentence_index=sentence_index,
-            )
-            candidate = {
-                **scored,
-                "text": text,
-                "source_index": source_index,
-                "sentence_index": sentence_index,
-                "source": source.get("source"),
-                "verification": source.get("verification"),
-                "source_text": cleaned["text"],
-            }
-            candidates.append(candidate)
-
-    accepted = [candidate for candidate in candidates if candidate["accepted"]]
-    if not accepted:
-        if not sources:
-            reason = "no_exact_provider_description"
-        elif all(audit["language"].get("code") != "en" for audit in source_audit):
-            reason = "no_verified_english_description"
-        else:
-            reason = "no_candidate_passed_quality_gates"
         return {
-            "status": "unavailable",
-            "overview": "",
+            "status": "ready",
+            "overview": result["text"],
             "method": METHOD,
-            "kind": resolved_kind,
-            "reason": reason,
-            "candidate_count": len(candidates),
+            "source": source.get("source"),
+            "verification": source.get("verification"),
+            "source_text": " ".join(result["kept"]),
+            "word_count": word_count(result["text"]),
+            "sentence_count": len(split_sentences(result["text"])),
             "source_audit": source_audit,
         }
 
-    accepted.sort(key=lambda item: (
-        -item["score"],
-        item["source_index"],
-        item["sentence_index"],
-        item["sentence_count"],
-        item["text"],
-    ))
-    winner = accepted[0]
+    if not sources:
+        reason = "no_exact_provider_description"
+    elif all(audit["refused"] == "not_english" for audit in source_audit):
+        reason = "no_verified_english_description"
+    else:
+        reason = next((a["refused"] for a in source_audit
+                       if a["refused"] and a["refused"] != "not_english"),
+                      "no_usable_provider_description")
     return {
-        "status": "ready",
-        "overview": winner["text"],
+        "status": "unavailable",
+        "overview": "",
         "method": METHOD,
-        "kind": resolved_kind,
-        "source": winner["source"],
-        "verification": winner["verification"],
-        "source_text": winner["source_text"],
-        "score": winner["score"],
-        "word_count": winner["word_count"],
-        "sentence_count": winner["sentence_count"],
-        "signals": winner["signals"],
-        "why_won": _why_won(winner, resolved_kind),
-        "candidate_count": len(candidates),
-        "accepted_candidate_count": len(accepted),
+        "reason": reason,
         "source_audit": source_audit,
     }
 

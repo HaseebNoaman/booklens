@@ -153,25 +153,31 @@ _SCORED = {}
 
 
 def stored_score(row):
-    """The best window the app could show from this book's stored summary.
+    """How much of this book's stored summary survives the app's own cleaner.
 
-    Local and instant -- no provider involved -- so it is computed here rather
-    than carried in the audit file. It reads the SCORE and deliberately ignores
-    the accept flag; see DESCRIPTION_SCORE_CUT above for why.
+    HISTORICAL NOTE, 2026-08-23. This used to ask the overview scorer for the
+    best-scoring window and rank on that number. That scorer was deleted with
+    the rest of the extraction machinery -- whatitsabout_heuristic no longer
+    chooses sentences, it removes the ones that are not about the book -- so
+    there is no score to ask for any more.
+
+    The replacement measures the same thing the score was standing in for: how
+    much usable description this book actually has. Words that survive cleaning,
+    0 when nothing does.
+
+    The shelf that shipped was selected under the OLD scorer, so re-running this
+    file will not reproduce the sixty exactly. DESCRIPTION_SCORE_CUT is on the
+    old scale and would have to be re-derived against this one first -- read the
+    band by hand, the way it was set the first time.
     """
     if row["id"] in _SCORED:
         return _SCORED[row["id"]]
     import whatitsabout_heuristic as wia
     text = (row.get("short_summary") or "").strip()
-    best = -999.0
+    best = 0.0
     if text:
-        kind = wia.infer_kind(row.get("genres") or "")
-        cleaned = wia.clean_description(text)
-        for index, window in wia.generate_candidate_windows(cleaned["sentences"]):
-            scored = wia.score_candidate(" ".join(window), window,
-                                         title=row["title"], kind=kind,
-                                         sentence_index=index)
-            best = max(best, scored["score"])
+        result = wia.read_one_source(text)
+        best = float(wia.word_count(result["text"]))
     _SCORED[row["id"]] = best
     return best
 
