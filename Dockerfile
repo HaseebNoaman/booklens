@@ -49,6 +49,20 @@ COPY --chown=booklens:booklens *.py ./
 COPY --chown=booklens:booklens bookfinder.seed.db ./
 COPY --from=frontend --chown=booklens:booklens /build/dist ./frontend/dist
 
+# The verified shelf's own covers -- 60 files, 1.2 MB, committed by
+# curate/fetch_covers.py and served by app.py's /covers/<id>.jpg route.
+#
+# Easy to leave out, and invisible until deployment: on a development machine
+# the folder is simply there, so the route works. Inside an image built without
+# this line every one of the 60 covers 404s, BookCover's chain falls through to
+# covers.openlibrary.org, and the app is back to a request per book per page
+# view to somebody else's server -- which is the exact thing committing the
+# covers was meant to stop.
+#
+# It is NOT copied into frontend/dist: stage 1 rebuilds that directory from
+# source and would discard anything placed there.
+COPY --chown=booklens:booklens catalogue_covers/ ./catalogue_covers/
+
 # Pre-bake the OCR weights into the IMAGE.
 #
 # This matters more than it looks. ocrpp.py builds the mobile reader at module
