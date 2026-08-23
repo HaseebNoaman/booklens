@@ -881,18 +881,27 @@ def favorite_history_item(current_user, history_id):
 @app.route("/api/history/<int:history_id>/reading", methods=["PATCH"])
 @token_required
 def update_reading_item(current_user, history_id):
-    """Save a private reading status and note for one owned history row."""
+    """Save a private reading status, and a note if one was sent.
+
+    The note field was taken off the card on 2026-08-23: across 41 history rows
+    it had produced 0 notes, while the reading status beside it had been used
+    15 times. The column, this route and its validation all stay -- the data is
+    the reader's, and an omitted key now preserves whatever is stored rather
+    than blanking it.
+    """
     data = request.get_json(silent=True) or {}
     allowed = {"identified", "want_to_read", "reading", "finished"}
     status = str(data.get("reading_status") or "identified").strip().lower()
-    note_value = data.get("private_note", "")
     if status not in allowed:
         return jsonify({"error": "Invalid reading status"}), 400
-    if not isinstance(note_value, str):
-        return jsonify({"error": "Private note must be text"}), 400
-    note = note_value.strip()
-    if len(note) > 1000:
-        return jsonify({"error": "Private note must be 1000 characters or fewer"}), 400
+    note = None                            # None = leave the stored note alone
+    if "private_note" in data:
+        note_value = data.get("private_note")
+        if not isinstance(note_value, str):
+            return jsonify({"error": "Private note must be text"}), 400
+        note = note_value.strip()
+        if len(note) > 1000:
+            return jsonify({"error": "Private note must be 1000 characters or fewer"}), 400
     updated = update_history_reading(current_user["id"], history_id,
                                      status, note)
     if updated is None:
@@ -1271,7 +1280,7 @@ def edition_evidence(book, scanned_isbn="", exact_isbn=None):
     }
 
 
-def live_for_client(book_id, title, author="", stored_pages=0):
+def live_for_client(book_id, title, author="", stored_pages=0, isbn=""):
     """What Open Library says about this book today, ready for the card.
 
     Measured before it was built: 98 of the 100 benchmark books carry a rating,
@@ -1283,9 +1292,12 @@ def live_for_client(book_id, title, author="", stored_pages=0):
     here because 113 of the 127 cached books have none at all and cannot show a
     reading time without it. The stored value wins when it exists; this only
     fills the gap.
+
+    The ISBN is passed through because a title query alone can be answered
+    entirely by summaries OF the book -- see livesignals._fetch.
     """
     try:
-        signals = livesignals.get(book_id, title, author)
+        signals = livesignals.get(book_id, title, author, isbn=isbn)
     except Exception:                                          # noqa: BLE001
         # A third-party bonus must never cost the reader their result.
         logging.warning("live signals unavailable for %r", title)
@@ -1575,7 +1587,8 @@ def finalize_candidate(current_user, attempt_id, candidate_id,
         "already_read": already_read(current_user["id"], row.get("title", ""),
                                      row.get("author", "")),
         "live": live_for_client(row.get("id"), row.get("title", ""),
-                                row.get("author", ""), row.get("page_count") or 0),
+                                row.get("author", ""), row.get("page_count") or 0,
+                                row.get("isbn_13") or ""),
         "edition_evidence": edition_evidence(
             row, stored.get("attempt_query_isbn", ""),
             # score_candidate() in the frozen matching core already decided

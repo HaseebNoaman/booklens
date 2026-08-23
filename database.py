@@ -661,12 +661,19 @@ def toggle_favorite(user_id, history_id):
 
 
 def update_history_reading(user_id, history_id, reading_status, private_note):
-    """Update one user's reading status/note and enforce row ownership."""
+    """Update one user's reading status/note and enforce row ownership.
+
+    private_note=None means LEAVE IT ALONE, which is what COALESCE is doing
+    here. The card no longer carries a note field, so it sends a status and
+    nothing else; without this, a reader who had written a note would have it
+    silently erased the next time they marked the book finished. An empty
+    string is still an explicit request to clear the note.
+    """
     conn = get_db()
     cur = conn.cursor()
     cur.execute("""
         UPDATE history
-           SET reading_status = ?, private_note = ?
+           SET reading_status = ?, private_note = COALESCE(?, private_note)
          WHERE id = ? AND user_id = ?
     """, (reading_status, private_note, history_id, user_id))
     conn.commit()

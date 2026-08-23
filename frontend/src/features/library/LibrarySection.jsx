@@ -229,8 +229,6 @@ const STATUS_LABELS = {
             <QuickOverview book={item} token={token} />
             <ReadingTools historyId={item.history_id} token={token}
                           initialStatus={item.reading_status}
-                          initialNote={item.private_note}
-                          initialFavorite={item.is_favorite}
                           onChanged={onChanged} />
             <p className="ocr-note">Scanned on {item.scanned_at}</p>
         </ModalShell>

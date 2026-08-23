@@ -116,13 +116,8 @@
 .reading-tools-heading h3 { margin-top: 3px; font-size: 20px; }
 .saved-indicator { display: inline-flex; align-items: center; gap: 6px; color: #1f5941; font-size: 12px; font-weight: 750; }
 .reading-controls { display: grid; grid-template-columns: minmax(180px, 1fr) auto; gap: 14px; align-items: end; margin-top: 17px; }
-.reading-controls label, .private-note-details label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 750; }
+.reading-controls label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 750; }
 .reading-controls select { width: 100%; min-height: 46px; }
-.private-note-details { margin-top: 15px; padding-top: 13px; border-top: 1px solid #bfd0c6; }
-.private-note-details summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-size: 13px; font-weight: 750; }
-.private-note-details textarea { min-height: 96px; resize: vertical; }
-.note-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 9px; }
-.note-actions small { color: var(--muted-text); }
 .reading-message { margin-top: 10px; color: #1f5941; font-size: 13px; font-weight: 650; }
 .reading-status { display: inline-flex; margin-top: 7px; padding: 3px 7px; border-radius: var(--r-sm); background: #eee9e0; color: #4f574f; font-size: 10px; font-weight: 750; text-transform: uppercase; }
 .status-want_to_read { color: #70410f; background: #f5e7ce; }

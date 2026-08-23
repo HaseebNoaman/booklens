@@ -75,17 +75,83 @@ def test_an_unrelated_book_is_rejected():
 def test_a_placeholder_title_cannot_acquire_a_rating(monkeypatch):
     """A book we know almost nothing about must not inherit a real book's
     numbers just because Open Library was willing to guess."""
-    monkeypatch.setattr(ls, "_fetch", lambda title, author="": {
+    monkeypatch.setattr(ls, "_fetch", lambda title, author="", isbn="": {
         "title": "The Great Gatsby", "ratings_average": 3.97,
         "ratings_count": 243, "readinglog_count": 3291,
         "number_of_pages_median": 185})
     assert ls.fetch_live_signals("Untitled Document", "") is None
 
 
+# ----- the ISBN question -----
+#
+# These three stub _search rather than _fetch, because _fetch's ordering is
+# exactly what is under test. conftest sets BOOKLENS_NO_LIVE_FETCH for the whole
+# suite, so each one turns it off for its own duration; nothing reaches the
+# network either way.
+
+def test_an_isbn_finds_the_book_a_title_query_cannot(monkeypatch):
+    """The 10X Rule, seen live 2026-08-23.
+
+    Open Library's five answers for "The 10X Rule Grant Cardone" are all
+    summary-mill products -- pressprint, Bookhabits, Dylan Hart,
+    FastDigest-Summary, Instaread -- and not one carries a rating. The guard
+    correctly rejected every one, so the card fell silent about a book Open
+    Library rates with 14 ratings and 447 shelves. An ISBN names an edition,
+    which cannot be answered with a summary OF the book.
+    """
+    monkeypatch.setenv("BOOKLENS_NO_LIVE_FETCH", "0")
+    mills = [{"title": "Summary and Detail Review of the 10X Rule"},
+             {"title": "Summary of the 10x Rule"},
+             {"title": "Practice WorkBook Based on the 10X Rule"},
+             {"title": "Summary of the 10X Rule"},
+             {"title": "Summary, Analysis and Review of the 10X Rule"}]
+    real = {"title": "The 10x rule", "ratings_average": 4.0,
+            "ratings_count": 14, "readinglog_count": 447}
+    monkeypatch.setattr(ls, "_search", lambda query, cache_key:
+                        [real] if query == "9781118064085" else mills)
+
+    assert ls.fetch_live_signals("The 10X Rule", "Grant Cardone") is None
+    signals = ls.fetch_live_signals("The 10X Rule", "Grant Cardone",
+                                    "9781118064085")
+    assert signals["n_ratings"] == 14
+    assert signals["on_shelves"] == 447
+
+
+def test_an_isbn_that_finds_nothing_falls_back_to_the_title(monkeypatch):
+    """ISBN FIRST, not INSTEAD.
+
+    Measured on 20 cached books that have a stored ISBN: title alone found a
+    rating for 17, ISBN alone for 14. Four were found only by title, because an
+    ISBN identifies an edition while the ratings are held on the work. So the
+    title query must still run when the ISBN comes back empty.
+    """
+    monkeypatch.setenv("BOOKLENS_NO_LIVE_FETCH", "0")
+    real = {"title": "Life of Pi", "ratings_average": 3.96,
+            "ratings_count": 151, "readinglog_count": 1113}
+    monkeypatch.setattr(ls, "_search", lambda query, cache_key:
+                        [] if query == "9780156027328" else [real])
+    signals = ls.fetch_live_signals("Life of Pi", "Yann Martel",
+                                    "9780156027328")
+    assert signals["n_ratings"] == 151
+
+
+def test_an_isbn_is_not_a_way_around_the_guard(monkeypatch):
+    """An ISBN Open Library files under a different book is rejected exactly as
+    a wrong title is. Without this the fix would hand the card the one thing
+    the whole feature exists to prevent: a confident rating belonging to
+    somebody else's book."""
+    monkeypatch.setenv("BOOKLENS_NO_LIVE_FETCH", "0")
+    monkeypatch.setattr(ls, "_search", lambda query, cache_key: [
+        {"title": "The Great Gatsby", "ratings_average": 3.97,
+         "ratings_count": 243, "readinglog_count": 3291}])
+    assert ls.fetch_live_signals("Life of Pi", "Yann Martel",
+                                 "9780156027328") is None
+
+
 # ----- what comes back -----
 
 def test_the_signals_are_read_off_the_document(monkeypatch):
-    monkeypatch.setattr(ls, "_fetch", lambda title, author="": {
+    monkeypatch.setattr(ls, "_fetch", lambda title, author="", isbn="": {
         "title": "Life of Pi", "ratings_average": 3.9634,
         "ratings_count": 151, "readinglog_count": 1113,
         "want_to_read_count": 900, "number_of_pages_median": 349})
@@ -100,20 +166,20 @@ def test_an_absurd_page_count_is_dropped(monkeypatch):
     """A 7-page record is an audiobook stub or a box-set entry, not a book, and
     it is how "about 1.5 hours" came to be printed under a 350-page novel."""
     for pages in (7, 12, 39, 2001, 5000):
-        monkeypatch.setattr(ls, "_fetch", lambda title, author="", p=pages: {
+        monkeypatch.setattr(ls, "_fetch", lambda title, author="", isbn="", p=pages: {
             "title": "Life of Pi", "number_of_pages_median": p})
         assert ls.fetch_live_signals("Life of Pi")["page_count"] == 0
 
 
 def test_a_provider_outage_costs_the_reader_nothing(monkeypatch):
-    def explode(title, author=""):
+    def explode(title, author="", isbn=""):
         raise RuntimeError("Open Library is down")
     monkeypatch.setattr(ls, "_fetch", explode)
     assert ls.fetch_live_signals("Anything") is None
 
 
 def test_nothing_known_is_not_an_error(monkeypatch):
-    monkeypatch.setattr(ls, "_fetch", lambda title, author="": None)
+    monkeypatch.setattr(ls, "_fetch", lambda title, author="", isbn="": None)
     assert ls.fetch_live_signals("A Book Published Yesterday") is None
 
 

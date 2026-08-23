@@ -250,12 +250,17 @@ const READING_OPTIONS = [
   ["finished", "Finished"],
 ];
 
-function ReadingTools({ historyId, token, initialStatus = "identified", initialNote = "",
+// Favourites are owned entirely by the card's action row, and the private-note
+// field went on 2026-08-23: across 41 history rows it had collected 0 notes,
+// while the reading status sitting beside it had been used 15 times. It was one
+// more control competing for attention with the one people actually use.
+//
+// The column and the route stay -- the data would be the reader's. The PATCH
+// simply omits the key now, which the route reads as "leave the note alone"
+// rather than as an empty note.
+function ReadingTools({ historyId, token, initialStatus = "identified",
                         onChanged }) {
   const [readingStatus, setReadingStatus] = useState(initialStatus || "identified");
-  const [note, setNote] = useState(initialNote || "");
-  // Favourites are owned entirely by the card's action row now. This panel
-  // keeps only what is genuinely its own: reading status and a private note.
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   if (!historyId) return null;
@@ -267,12 +272,11 @@ function ReadingTools({ historyId, token, initialStatus = "identified", initialN
       const response = await authFetch(`/history/${historyId}/reading`, token, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reading_status: nextStatus, private_note: note }),
+        body: JSON.stringify({ reading_status: nextStatus }),
       });
       const data = await readJson(response);
       if (!response.ok) throw new Error(data.error || "Could not save your reading details.");
       setReadingStatus(data.reading_status);
-      setNote(data.private_note || "");
       setMessage("Saved to your private library.");
       onChanged?.(data);
     } catch (error) {
@@ -297,21 +301,7 @@ function ReadingTools({ historyId, token, initialStatus = "identified", initialN
             {READING_OPTIONS.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
           </select>
         </div>
-
       </div>
-      <details className="private-note-details">
-        <summary>Add a private note</summary>
-        <label htmlFor={`private-note-${historyId}`}>Note about this book</label>
-        <textarea id={`private-note-${historyId}`} value={note} maxLength={1000}
-                  onChange={(event) => setNote(event.target.value)}
-                  placeholder="Why you want to read it, a class topic, or a reminder." />
-        <div className="note-actions">
-          <small>{note.length}/1000</small>
-          <button className="btn" type="button" disabled={saving} onClick={() => save()}>
-            {saving ? "Saving…" : "Save note"}
-          </button>
-        </div>
-      </details>
       {message && <p className="reading-message" role="status">{message}</p>}
     </section>
   );

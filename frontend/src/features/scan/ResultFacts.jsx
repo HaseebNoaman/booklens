@@ -53,8 +53,25 @@ function AlreadyRead({ record }) {
 // The "~" before the page count is doing real work. This is a median across
 // editions, not the copy in the reader's hand, and the card must not claim an
 // exactness it does not have.
+//
+// AND WHEN THERE IS NOTHING, IT SAYS SO.
+//
+// This block used to return null in both of its empty cases -- no record at
+// all, and a record carrying no rating and no shelf count -- so it simply
+// vanished. A reader could not tell "nobody has rated this" from "we never
+// looked", and every other empty state on this card explains itself. It is
+// worded as what we did, not as a fact about the book: Open Library is one
+// catalogue, and a book unrated there may be rated everywhere else.
+const NOTHING_FOUND = (
+  <div className="live-signals">
+    <p className="live-row live-caveat">
+      No reader rating found for this book on Open Library.
+    </p>
+  </div>
+);
+
 function LiveSignals({ live, exactLength }) {
-  if (!live) return null;
+  if (!live) return NOTHING_FOUND;
   const { rating, n_ratings: raters, on_shelves: shelves,
           page_count: pages, rating_is_thin: thin, freshness } = live;
   const rows = [];
@@ -86,7 +103,7 @@ function LiveSignals({ live, exactLength }) {
     );
   }
 
-  if (!rows.length) return null;
+  if (!rows.length) return NOTHING_FOUND;
   return <div className="live-signals">{rows}</div>;
 }
 

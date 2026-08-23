@@ -143,51 +143,89 @@ def titles_agree(asked, returned, author=""):
 SEARCH_RESULTS = 5
 
 
-def _fetch(title, author=""):
-    # The test suite must not reach Open Library. Left unguarded it added a
-    # real HTTP round-trip to every card built in a test, which is slow,
-    # flaky, and depends on somebody else's uptime to decide whether this
-    # project's tests pass. Same reason conftest forces the mail provider off.
-    if os.environ.get("BOOKLENS_NO_LIVE_FETCH") == "1":
-        return None
-    query = ("%s %s" % (title, author)).strip()
-    if not query:
-        return None
-    # The cache key carries the result count. disk_cache keys on the string it
-    # is given, so raising the limit while reusing the old key served the old
-    # single-result payload and the change looked like it had done nothing.
+def _search(query, cache_key):
+    """One Open Library search, cached. The docs list, or empty."""
     data = disk_cache.fetch_json(
-        "ol_live", "%s|n=%d" % (query, SEARCH_RESULTS), OPEN_LIBRARY_SEARCH_URL,
+        "ol_live", cache_key, OPEN_LIBRARY_SEARCH_URL,
         params={"q": query, "limit": SEARCH_RESULTS, "fields": LIVE_FIELDS},
         timeout=10, headers={"User-Agent": "BookLens/1.0"})
     if not data:
-        return None
-    docs = data.get("docs") or []
+        return []
+    return data.get("docs") or []
 
-    # Among the records that ARE this book, prefer the one the most readers
-    # rated. That is the canonical work record; the others are duplicates and
-    # single editions. Records that are NOT this book are discarded here rather
-    # than later, so the choice is only ever made between right answers.
+
+def _best_agreeing(docs, title, author):
+    """Among the records that ARE this book, the one the most readers rated.
+
+    That is the canonical work record; the others are duplicates and single
+    editions. Records that are NOT this book are discarded here rather than
+    later, so the choice is only ever made between right answers.
+    """
     agreeing = [d for d in docs if titles_agree(title, d.get("title", ""), author)]
     if not agreeing:
-        # Hand back the first anyway: fetch_live_signals runs the same check and
-        # will reject it, and keeping one path for that decision means the
-        # rejection is logged in one place.
-        return docs[0] if docs else None
+        return None
     agreeing.sort(key=lambda d: (int(d.get("ratings_count") or 0),
                                  int(d.get("readinglog_count") or 0)),
                   reverse=True)
     return agreeing[0]
 
 
-def fetch_live_signals(title, author=""):
+def _fetch(title, author="", isbn=""):
+    # The test suite must not reach Open Library. Left unguarded it added a
+    # real HTTP round-trip to every card built in a test, which is slow,
+    # flaky, and depends on somebody else's uptime to decide whether this
+    # project's tests pass. Same reason conftest forces the mail provider off.
+    if os.environ.get("BOOKLENS_NO_LIVE_FETCH") == "1":
+        return None
+
+    # ASK BY ISBN FIRST, WHEN THERE IS ONE.
+    #
+    # A title query can be answered entirely by books ABOUT the book. Asking
+    # for "The 10X Rule Grant Cardone" returns five summary-mill products
+    # (pressprint, Bookhabits, Instaread and two more); not one carries a
+    # rating, and titles_agree correctly rejects all five -- so the card fell
+    # silent about a book Open Library rates with 14 ratings and 447 shelves.
+    # An ISBN cannot be answered that way, because it names one edition.
+    #
+    # FIRST, not INSTEAD. Measured on 20 cached books that have a stored ISBN:
+    # title alone found a rating for 17, ISBN alone for 14, ISBN-then-title for
+    # 18. ISBN is the better first question and the worse only question -- an
+    # ISBN identifies an edition, while the ratings are held on the work.
+    #
+    # Its answer goes through the same agreement guard as the title path, so a
+    # wrong or mis-filed ISBN is rejected exactly as a wrong title is. Only 44
+    # of the 155 cached books have an ISBN at all; the rest fall straight
+    # through to the query below, unchanged.
+    if isbn:
+        doc = _best_agreeing(
+            _search(isbn, "isbn:%s|n=%d" % (isbn, SEARCH_RESULTS)), title, author)
+        if doc is not None:
+            return doc
+
+    query = ("%s %s" % (title, author)).strip()
+    if not query:
+        return None
+    # The cache key carries the result count. disk_cache keys on the string it
+    # is given, so raising the limit while reusing the old key served the old
+    # single-result payload and the change looked like it had done nothing.
+    docs = _search(query, "%s|n=%d" % (query, SEARCH_RESULTS))
+    doc = _best_agreeing(docs, title, author)
+    if doc is not None:
+        return doc
+    # Hand back the first anyway: fetch_live_signals runs the same check and
+    # will reject it, and keeping one path for that decision means the
+    # rejection is logged in one place.
+    return docs[0] if docs else None
+
+
+def fetch_live_signals(title, author="", isbn=""):
     """A plain dict, or None when Open Library knows nothing.
 
     Never raises. A live signal is a bonus; identifying a book must not fail
     because a free third-party service is having a bad day.
     """
     try:
-        doc = _fetch(title, author)
+        doc = _fetch(title, author, isbn)
     except Exception:                                          # noqa: BLE001
         logging.warning("Open Library live lookup failed for %r", title)
         return None
@@ -266,7 +304,7 @@ def load(book_id):
     return out
 
 
-def get(book_id, title, author="", allow_fetch=True):
+def get(book_id, title, author="", allow_fetch=True, isbn=""):
     """What the rest of the app calls.
 
     Returns a fresh stored signal, refetches a stale one, and returns None
@@ -279,7 +317,7 @@ def get(book_id, title, author="", allow_fetch=True):
         return stored
     if not allow_fetch:
         return stored
-    fresh = fetch_live_signals(title, author)
+    fresh = fetch_live_signals(title, author, isbn)
     if fresh is None:
         return stored                    # keep the stale one rather than lose it
     save(book_id, fresh)
