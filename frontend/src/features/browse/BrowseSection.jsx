@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { authFetch, readJson } from "../../services/api.js";
 import { BookCover, Icon } from "../../components/ui.jsx";
+import { ResultCard } from "../scan/ResultViews.jsx";
 
 // Browse the verified books without holding one.
 //
@@ -8,63 +9,18 @@ import { BookCover, Icon } from "../../components/ui.jsx";
 // an exact title, so the most trustworthy data in the product was invisible to
 // the people it was built for. This is the way in.
 //
-// It answers the same question a scan does -- "is this for me?" -- against the
-// reader's own library, and it writes nothing: looking at a book is not
-// reading it.
-function ForYouLine({ forYou }) {
-  if (!forYou) return null;
-  const { state, subjects = [], examples = [], book_count: count = 0 } = forYou;
-
-  if (state === "match") {
-    return (
-      <div className="browse-foryou match">
-        <p className="browse-foryou-line">
-          You have read or saved {count} {count === 1 ? "book" : "books"} with these subjects
-        </p>
-        <div className="tag-row">
-          {subjects.map((s) => <span className="tag tag-genre" key={s}>{s}</span>)}
-        </div>
-        {examples.length > 0 && (
-          <p className="browse-foryou-examples">
-            {examples.join(", ")}
-            {count > examples.length && ` and ${count - examples.length} more`}
-          </p>
-        )}
-      </div>
-    );
-  }
-  if (state === "interest_match") {
-    return (
-      <div className="browse-foryou match">
-        <p className="browse-foryou-line">Matches an interest you chose</p>
-        <div className="tag-row">
-          {subjects.map((s) => <span className="tag tag-genre" key={s}>{s}</span>)}
-        </div>
-      </div>
-    );
-  }
-  if (state === "cold_start") {
-    return (
-      <p className="browse-foryou empty">
-        Mark a book below as read and BookLens can start answering this.
-      </p>
-    );
-  }
-  if (state === "no_match") {
-    return (
-      <p className="browse-foryou empty">
-        None of the {count} books in your library share these subjects.
-      </p>
-    );
-  }
-  return (
-    <p className="browse-foryou empty">
-      Not enough subject data for this book to compare it with your library.
-    </p>
-  );
-}
-
-export function BrowseSection({ token }) {
+// IT SHOWS THE SAME CARD A SCAN DOES. This file used to carry a second,
+// simplified card of its own -- a cut-down "Is this for you?", the stored
+// overview as a bare paragraph, and a facts line -- so the 60 books this
+// project actually vouches for showed LESS than a book it found on the
+// internet: no reader rating, no edition line, no starter shelf, no library
+// controls. /api/catalogue/<id> now answers with the confirm route's payload,
+// field for field, and this renders ResultCard with it. The only difference
+// left is where the data came from, which the card's source badge states.
+//
+// It still writes nothing by itself: looking at a book is not reading it. The
+// reader has to say so, which is what the card's "I have read this" is for.
+export function BrowseSection({ token, onLibraryChanged }) {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([]);
   const [total, setTotal] = useState(0);
@@ -72,23 +28,29 @@ export function BrowseSection({ token }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [marking, setMarking] = useState(false);
-  const [marked, setMarked] = useState(false);
 
-  async function markRead(book) {
+  async function loadDetail(recordId) {
+    const response = await authFetch(`/catalogue/${recordId}`, token);
+    const data = await readJson(response);
+    return response.ok ? data : null;
+  }
+
+  async function markRead(recordId) {
     setMarking(true);
     try {
-      const response = await authFetch(`/catalogue/${book.id}/read`, token, {
+      const response = await authFetch(`/catalogue/${recordId}/read`, token, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: "finished" }),
       });
-      if (response.ok) {
-        setMarked(true);
-        // Re-read the evidence: one book is now enough for a real answer.
-        const fresh = await authFetch(`/catalogue/${book.id}`, token);
-        const data = await readJson(fresh);
-        if (fresh.ok) setSelected((s) => ({ ...s, for_you: data.for_you }));
-      }
+      if (!response.ok) return;
+      // Re-read the whole card rather than patching one field. Marking a book
+      // read changes four answers at once -- already_read, the history id the
+      // library controls hang off, is_favorite, and the taste evidence -- and
+      // reading them back together is what keeps them from disagreeing.
+      const fresh = await loadDetail(recordId);
+      if (fresh) setSelected({ ...fresh, recordId });
+      onLibraryChanged?.();
     } finally {
       setMarking(false);
     }
@@ -119,19 +81,21 @@ export function BrowseSection({ token }) {
   }, [token, query]);
 
   async function open(book) {
-    setMarked(false);
-    setSelected({ ...book, loading: true });
+    // The grid row is enough to draw the cover and title immediately, so the
+    // overlay opens on the book rather than on a spinner.
+    setSelected({ pending: book, recordId: book.id });
     try {
-      const response = await authFetch(`/catalogue/${book.id}`, token);
-      const data = await readJson(response);
-      if (response.ok) setSelected({ ...data.book, for_you: data.for_you });
-      else setSelected({ ...book, loading: false });
+      const data = await loadDetail(book.id);
+      if (data) setSelected({ ...data, recordId: book.id });
+      else setSelected(null);
     } catch {
-      setSelected({ ...book, loading: false });
+      setSelected(null);
     }
   }
 
   if (!token) return null;
+
+  const pending = selected?.pending;
 
   return (
     <section className="container section" id="browse" aria-labelledby="browse-title">
@@ -174,38 +138,33 @@ export function BrowseSection({ token }) {
 
       {selected && (
         <div className="browse-detail" role="dialog" aria-modal="true"
-             aria-label={selected.title}>
+             aria-label={(pending || selected.book || {}).title || "Book"}>
           <div className="browse-detail-inner">
             <button className="btn-outline browse-close" type="button"
                     onClick={() => setSelected(null)}>Close</button>
-            <div className="browse-detail-layout">
-              <BookCover className="result-cover" src={selected.thumbnail}
-                         fallback={selected.thumbnail_fallback}
-                         alt={`Cover of ${selected.title}`} />
-              <div>
-                <h3 className="book-title">{selected.title}</h3>
-                <p className="book-author">by {selected.author || "Unknown author"}</p>
-                {selected.loading
-                  ? <p className="browse-status">Checking your library…</p>
-                  : <ForYouLine forYou={selected.for_you} />}
-                {/* The way out of cold start. Marking a book read is a
-                    deliberate act, which is exactly the signal the profile
-                    counts -- and it needs no camera. */}
-                <div className="browse-detail-actions">
-                  <button className="btn" type="button" disabled={marking}
-                          onClick={() => markRead(selected)}>
-                    {marked ? "Added to your library" :
-                     marking ? "Saving…" : "I have read this"}
-                  </button>
+            {pending ? (
+              <div className="browse-detail-loading">
+                <BookCover className="result-cover" src={pending.thumbnail}
+                           fallback={pending.thumbnail_fallback}
+                           alt={`Cover of ${pending.title}`} />
+                <div>
+                  <h3 className="book-title">{pending.title}</h3>
+                  <p className="book-author">by {pending.author || "Unknown author"}</p>
+                  <p className="browse-status" role="status">Checking your library…</p>
                 </div>
-                {selected.summary && <p className="desc-text">{selected.summary}</p>}
-                <p className="browse-detail-facts">
-                  {[selected.publisher, selected.published_date,
-                    selected.isbn_13 && `ISBN ${selected.isbn_13}`]
-                    .filter(Boolean).join(" · ")}
-                </p>
               </div>
-            </div>
+            ) : (
+              <ResultCard result={selected} token={token}
+                          onReset={() => setSelected(null)}
+                          resetLabel="Close"
+                          onMarkRead={() => markRead(selected.recordId)}
+                          markingRead={marking}
+                          onLibraryChanged={async () => {
+                            const fresh = await loadDetail(selected.recordId);
+                            if (fresh) setSelected({ ...fresh, recordId: selected.recordId });
+                            onLibraryChanged?.();
+                          }} />
+            )}
           </div>
         </div>
       )}

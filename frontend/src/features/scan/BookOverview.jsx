@@ -263,6 +263,13 @@ function ReadingTools({ historyId, token, initialStatus = "identified",
   const [readingStatus, setReadingStatus] = useState(initialStatus || "identified");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  // In Browse this panel is mounted before the book is in the library and only
+  // becomes visible once it is, so the stored status arrives AFTER the initial
+  // state was taken. Without this it stayed on "Not started" for a book stored
+  // as finished. Declared above the early return so the hook order is fixed.
+  useEffect(() => {
+    setReadingStatus(initialStatus || "identified");
+  }, [initialStatus, historyId]);
   if (!historyId) return null;
 
   async function save(nextStatus = readingStatus) {

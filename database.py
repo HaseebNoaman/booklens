@@ -489,6 +489,45 @@ def save_book(book_data):
     return book_id
 
 
+def find_book_by_catalogue_id(catalogue_id):
+    """The cached books row for one verified catalogue record, if it exists.
+
+    save_book() always INSERTs, so every path that turned a catalogue record
+    into a books row made a NEW one -- catalogue 45 already carries two. That
+    was survivable while the only such path was "I have read this"; it is not
+    survivable now that Browse builds a full card, which would have meant a row
+    per view. The oldest row wins so the answer is stable.
+    """
+    if not catalogue_id:
+        return None
+    conn = get_db()
+    row = conn.execute(
+        "SELECT * FROM books WHERE catalogue_id = ? ORDER BY id LIMIT 1",
+        (catalogue_id,)).fetchone()
+    conn.close()
+    return row
+
+
+def find_history_for_book(user_id, book_id):
+    """This reader's own history row for one book, or None.
+
+    Browse does not scan, so a browsed book usually has no history row at all
+    and the card's library controls stay hidden -- which is correct: looking at
+    a book is not reading it. Once the reader says they have read it, this is
+    what lights those controls up without a second round trip.
+    """
+    if not user_id or not book_id:
+        return None
+    conn = get_db()
+    row = conn.execute("""
+        SELECT id, is_favorite, reading_status
+          FROM history WHERE user_id = ? AND book_id = ?
+         ORDER BY id DESC LIMIT 1
+    """, (user_id, book_id)).fetchone()
+    conn.close()
+    return row
+
+
 def save_history(user_id, book_id):
     # Record that this user scanned this book.
     # Returns the new history row's id. The caller needs it because a scan is

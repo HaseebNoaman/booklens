@@ -77,19 +77,25 @@
 }
 
 .browse-detail-inner {
-  width: min(44rem, 100%);
-  padding: 1.4rem;
+  /* Wider than it was. This holds the full result card now -- cover column,
+     rating, "Is this for you?", overview, details and library controls --
+     rather than a paragraph and a facts line. */
+  width: min(60rem, 100%);
+  padding: 1rem;
   border-radius: var(--r-md);
   background: var(--surface);
 }
 
-.browse-detail-layout {
+/* Only the moment before the card arrives: the grid row already knows the
+   cover and the title, so the overlay opens on the book, not on a spinner. */
+.browse-detail-loading {
   display: flex;
   flex-wrap: wrap;
   gap: 1.2rem;
+  padding: 0.4rem 0.4rem 1rem;
 }
 
-.browse-detail-layout .result-cover {
+.browse-detail-loading .result-cover {
   width: 9rem;
   aspect-ratio: 2 / 3;
   object-fit: cover;
@@ -97,12 +103,6 @@
 }
 
 .browse-close { float: right; }
-
-.browse-foryou { margin: 0.6rem 0 0.8rem; }
-.browse-foryou-line { margin: 0 0 0.5rem; font-weight: 600; }
-.browse-foryou-examples { margin: 0.5rem 0 0; color: var(--muted-text); font-size: 0.9rem; }
-.browse-foryou.empty { color: var(--muted-text); }
-.browse-detail-facts { margin-top: 0.9rem; color: var(--muted-text); font-size: 0.9rem; }
 
 /* Reading interests, editable from the profile. Deliberately presented as a
    secondary control: it is a cold-start crutch, not the profile itself. */
@@ -142,4 +142,3 @@
 
 .interest-saved { color: var(--muted-text); font-size: 0.9rem; }
 
-.browse-detail-actions { margin: 0.9rem 0; }

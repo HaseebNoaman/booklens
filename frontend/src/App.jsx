@@ -106,7 +106,11 @@ export default function App() {
         <ScanSection token={token}
           onNeedLogin={() => setModal("login")}
           onScanned={() => setLibraryVersion((version) => version + 1)} />
-        {token && <BrowseSection token={token} />}
+        {/* Browse can now write to the library from inside its card -- "I have
+            read this", reading status, favourites -- so it bumps the same
+            counter a scan does, or the Library panel below goes stale. */}
+        {token && <BrowseSection token={token}
+                    onLibraryChanged={() => setLibraryVersion((v) => v + 1)} />}
         {token && <LibrarySection token={token} version={libraryVersion} />}
         <ContactSection />
       </main>

@@ -131,8 +131,16 @@ function SingleCandidateCard({ result, token, scanImage, onResolved, onReset }) 
 }
 
 
+// resetLabel, onMarkRead and markingRead exist for Browse, which renders this
+// same card for a verified book nobody scanned. There the last button closes an
+// overlay rather than starting another scan, and the reader has no history row
+// yet -- so the library controls that hang off result.history_id stay hidden,
+// and "I have read this" stands in their place. A scan passes none of the
+// three and behaves exactly as it did.
 function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error, token,
-                      onLibraryChanged, onResolved, scanImage }) {
+                      onLibraryChanged, onResolved, scanImage,
+                      resetLabel = "Scan another book", onMarkRead,
+                      markingRead = false }) {
   const book = result.book;
   const ocr = result.ocr || {};
   const [correcting, setCorrecting] = useState(false);
@@ -320,7 +328,14 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
         </div>
       </div>
 
+      {/* initialStatus matters wherever the card can open on a book that is
+          already in the library -- Browse, after "I have read this". Without
+          it the control opened on "Not started" for a book stored as finished,
+          and the reader's next change wrote that back. A scan sends nothing,
+          and the default is still "identified", which is what a fresh scan
+          genuinely is. */}
       <ReadingTools historyId={result.history_id} token={token}
+                    initialStatus={result.reading_status}
                     onChanged={onLibraryChanged} />
       <div className="result-actions">
         {/* Identifying a book already records it, so this is not "save the
@@ -330,6 +345,16 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
           <button className="btn" type="button" disabled={savingFavorite}
                   onClick={toggleSave}>
             {favorite ? "Saved to favourites" : "Save to favourites"}
+          </button>
+        )}
+        {/* Browse's way into the library. Marking a book read is a deliberate
+            act, which is exactly the signal the taste profile counts, and it
+            needs no camera. It disappears once there is a history row, because
+            the reading-status control above it does the same job better. */}
+        {!result.history_id && onMarkRead && (
+          <button className="btn" type="button" disabled={markingRead}
+                  onClick={onMarkRead}>
+            {markingRead ? "Saving…" : "I have read this"}
           </button>
         )}
         {/* Preview opens the provider text already on this page rather than
@@ -346,7 +371,7 @@ function ResultCard({ result, onReset, onSearchByTitle, onRetry, loading, error,
             Find online
           </a>
         )}
-        <button className="btn-outline" onClick={onReset}>Scan another book</button>
+        <button className="btn-outline" onClick={onReset}>{resetLabel}</button>
       </div>
     </article>
   );

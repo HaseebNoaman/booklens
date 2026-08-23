@@ -61,6 +61,7 @@ from database import (CACHE_AUTHOR_MATCH, backfill_book_thumbnail,
                       get_admin_stats, get_all_users, get_all_books,
                       get_recent_scans, delete_book, delete_user,
                       save_message, get_all_messages, delete_message,
+                      find_book_by_catalogue_id, find_history_for_book,
                       find_cached_exact, lookup_verified_catalogue,
                       verified_catalogue_candidates,
                       create_catalogue_book, update_catalogue_book,
@@ -2068,13 +2069,67 @@ def catalogue_for_reader(row):
         "id": row.get("id"),
         "title": row.get("title", ""),
         "author": row.get("author", ""),
-        "publisher": row.get("publisher", ""),
-        "published_date": row.get("publication_year", ""),
+        # A dataset's "n/a" is not a publisher. See real_value().
+        "publisher": real_value(row.get("publisher", "")),
+        "published_date": real_value(row.get("publication_year", "")),
         "categories": row.get("genres", ""),
         "isbn_13": row.get("isbn_13", ""),
         "thumbnail": catalogue_cover(row),
         "thumbnail_fallback": catalogue_cover_fallback(row),
     }
+
+
+# Strings a source dataset uses to mean "we do not know". They are not values,
+# and the card's details grid hides a field it has nothing for -- so passing
+# these through printed "PUBLISHER n/a" under a book as though that were the
+# publisher's name. One of the 60 verified records does this.
+_NOT_A_VALUE = {"n/a", "na", "n.a.", "unknown", "none", "null", "-", "--"}
+
+
+def real_value(text):
+    value = (text or "").strip()
+    return "" if value.lower() in _NOT_A_VALUE else value
+
+
+def catalogue_summary_state(row):
+    """The stored overview for a verified record, and whether it is showable.
+
+    Tier 1 never runs the summary worker -- _run_summary_job refuses a book
+    with a catalogue_id -- so a verified book's overview is whatever review
+    put in the record, and "unavailable" here is final rather than pending.
+    """
+    verified_summary = (row["verified_summary"] or "").strip()
+    short_summary = (row["short_summary"] or "").strip()
+    stored_status = row["short_summary_status"] or ""
+    status = ("ready" if short_summary and
+              stored_status in {"ok", "fallback_extract"} else "unavailable")
+    return verified_summary, short_summary, status
+
+
+def catalogue_books_row(record_id, reader, verified_summary="",
+                        short_summary="", summary_status="unavailable"):
+    """The cached books row for a verified record, created once and reused.
+
+    A catalogue record is not a books row, and two things the card needs are
+    keyed on books.id: the live_signals table, and the overview poller at
+    /api/books/<id>/summary. So the row has to exist -- but it must not be
+    created again on every view, which is what save_book() alone would do.
+    """
+    existing = find_book_by_catalogue_id(record_id)
+    if existing is not None:
+        return dict(existing)
+    book_id = save_book({
+        "title": reader["title"], "author": reader["author"],
+        "description": "", "ai_summary": short_summary,
+        "thumbnail": reader["thumbnail"], "page_count": 0,
+        "publisher": reader["publisher"],
+        "published_date": reader["published_date"],
+        "categories": reader["categories"], "confidence": "high",
+        "catalogue_id": record_id, "isbn_13": reader["isbn_13"],
+        "verified_summary": verified_summary,
+        "summary_status": summary_status,
+    })
+    return dict(get_book_by_id(book_id))
 
 
 @app.route("/api/catalogue", methods=["GET"])
@@ -2138,14 +2193,14 @@ def mark_catalogue_book_read(current_user, record_id):
     if status not in {"finished", "reading", "want_to_read"}:
         return jsonify({"error": "Invalid reading status"}), 400
 
-    book = catalogue_for_reader(row)
-    book_id = save_book({
-        "title": book["title"], "author": book["author"], "description": "",
-        "ai_summary": "", "thumbnail": book["thumbnail"], "page_count": 0,
-        "publisher": book["publisher"], "published_date": book["published_date"],
-        "categories": book["categories"], "confidence": "high",
-        "catalogue_id": record_id, "isbn_13": book["isbn_13"],
-    })
+    reader = catalogue_for_reader(row)
+    verified_summary, short_summary, summary_status = catalogue_summary_state(row)
+    # The same shared row the card uses. This used to call save_book() directly,
+    # which always INSERTs, so marking a book read a second time -- or marking
+    # one the card had already cached -- made a duplicate books row that the
+    # card's history lookup could then miss.
+    book_id = catalogue_books_row(record_id, reader, verified_summary,
+                                  short_summary, summary_status)["id"]
     history_id = save_history(current_user["id"], book_id)
     update_history_reading(current_user["id"], history_id, status, "")
     return jsonify({"book_id": book_id, "history_id": history_id,
@@ -2156,18 +2211,77 @@ def mark_catalogue_book_read(current_user, record_id):
 @app.route("/api/catalogue/<int:record_id>", methods=["GET"])
 @token_required
 def catalogue_detail(current_user, record_id):
-    """One verified book, with the same "Is this for you?" evidence as a scan."""
+    """One verified book, on the SAME card a scan produces.
+
+    Browse used to answer with a card of its own: a simplified "Is this for
+    you?", the stored overview as a bare paragraph, and nothing else. So the 60
+    books this project actually vouches for showed LESS than a book it found on
+    the internet -- no reader rating, no edition line, no library controls, no
+    starter shelf. The only honest difference between the two is where the data
+    came from, and the source badge already says that.
+
+    So this returns the confirm route's payload shape, field for field, and the
+    client renders the same component. What it does NOT do is write a history
+    row: looking at a book is still not reading it. The books row it creates is
+    the shared cache every path uses, not the reader's library.
+    """
     row = get_catalogue_book(record_id)
     if row is None or row["verification_status"] != "VERIFIED":
         return jsonify({"error": "Book not found"}), 404
-    book = catalogue_for_reader(row)
-    book["summary"] = (row["short_summary"] or "").strip()
+
+    reader = catalogue_for_reader(row)
+    verified_summary, short_summary, summary_status = catalogue_summary_state(row)
+    book = catalogue_books_row(record_id, reader, verified_summary,
+                               short_summary, summary_status)
+
+    # The record is the truth for a verified book; the cached row is only where
+    # it is kept. Anything review has changed since the row was written wins,
+    # including the cover, which is served from this repository and needs no
+    # network. "summary" stays as well: it was this route's original field.
+    book.update({
+        "thumbnail": reader["thumbnail"],
+        "thumbnail_fallback": reader["thumbnail_fallback"],
+        "title": reader["title"], "author": reader["author"],
+        "publisher": reader["publisher"],
+        "published_date": reader["published_date"],
+        "categories": reader["categories"], "isbn_13": reader["isbn_13"],
+        "verified_summary": verified_summary,
+        "ai_summary": short_summary,
+        "summary": short_summary,
+        "summary_status": summary_status,
+    })
+
+    engagement = find_history_for_book(current_user["id"], book["id"])
     return jsonify({
+        "status": "success",
+        "source": "local_catalogue",
+        "confidence": "high",
         "book": book,
+        # None until the reader says they have read it. The card hides its
+        # library controls on exactly that condition, so browsing shows the
+        # book without pretending it is in a library it is not in.
+        "history_id": engagement["id"] if engagement else None,
+        "is_favorite": bool(engagement["is_favorite"]) if engagement else False,
+        # The card's reading-status control has to open on what is stored, or a
+        # book just marked finished reads back as "Not started" and the next
+        # change writes that over the truth.
+        "reading_status": (engagement["reading_status"] or "identified"
+                           ) if engagement else "identified",
+        # book["id"] is passed for the same reason the scan card passes it: a
+        # book must never be offered as evidence for itself.
         "for_you": taste_for_client(current_user["id"], book["categories"],
-                                    None, book["title"]),
+                                    book["id"], book["title"]),
         "already_read": already_read(current_user["id"], book["title"],
                                      book.get("author", "")),
+        "live": live_for_client(book["id"], book["title"], book.get("author", ""),
+                                book.get("page_count") or 0,
+                                book.get("isbn_13") or ""),
+        "edition_evidence": edition_evidence(book, "", exact_isbn=False),
+        "catalogue_status": "VERIFIED",
+        "summary_trust": "CATALOGUE_VERIFIED",
+        "summary_status": summary_status,
+        "summary_message": ("" if short_summary else
+                            "A grounded summary is not available for this book."),
     })
 
 

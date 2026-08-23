@@ -106,14 +106,84 @@ def test_a_browsed_book_carries_the_same_taste_evidence(client):
     assert detail["book"]["summary"]
 
 
+def test_a_verified_book_gets_the_same_card_a_scan_gets(client):
+    """The 60 books this project vouches for used to show LESS than a book it
+    found on the internet: Browse had a simplified card of its own, with no
+    reader rating, no edition line and no library controls. The detail route
+    now answers with the confirm route's payload, field for field, so both
+    render the same component -- and the only difference left is where the data
+    came from, which the card's source badge already states."""
+    token = register_and_login(client)
+    add_book()
+    record = client.get("/api/catalogue", headers=auth(token)).get_json()["books"][0]
+
+    card = client.get("/api/catalogue/%d" % record["id"],
+                      headers=auth(token)).get_json()
+    for field in ("book", "for_you", "already_read", "live", "edition_evidence",
+                  "history_id", "is_favorite", "catalogue_status",
+                  "summary_trust", "summary_status"):
+        assert field in card, "%s missing -- the card cannot render it" % field
+    assert card["catalogue_status"] == "VERIFIED"
+    assert card["summary_trust"] == "CATALOGUE_VERIFIED"
+    # The overview panel reads its source text off catalogue_id +
+    # verified_summary, exactly as it does for a scanned catalogue book.
+    assert card["book"]["catalogue_id"] == record["id"]
+    assert card["book"]["verified_summary"]
+    assert card["book"]["id"]         # a books row, so live signals can key on it
+
+
 def test_browsing_writes_nothing_to_the_library(client):
     # Looking at a book is not reading it. Nothing may enter history.
+    #
+    # The card does need a books row -- live signals key on books.id and the
+    # overview poller asks /api/books/<id>/summary -- but that row is the
+    # SHARED cache every path uses, not this reader's library.
     token = register_and_login(client)
     user = database.get_user_by_email("reader@example.com")
     add_book()
     record = client.get("/api/catalogue", headers=auth(token)).get_json()["books"][0]
-    client.get("/api/catalogue/%d" % record["id"], headers=auth(token))
+    card = client.get("/api/catalogue/%d" % record["id"],
+                      headers=auth(token)).get_json()
     assert database.get_user_history(user["id"]) == []
+    assert card["history_id"] is None
+    assert card["is_favorite"] is False
+
+
+def test_opening_the_same_book_twice_reuses_one_cached_row(client):
+    """save_book() always INSERTs. Before the lookup that backs this, every
+    path turning a catalogue record into a books row made a NEW one -- which
+    was survivable at one row per "I have read this", and is not survivable at
+    one row per view."""
+    token = register_and_login(client)
+    add_book()
+    record = client.get("/api/catalogue", headers=auth(token)).get_json()["books"][0]
+
+    ids = set()
+    for _ in range(3):
+        card = client.get("/api/catalogue/%d" % record["id"],
+                          headers=auth(token)).get_json()
+        ids.add(card["book"]["id"])
+    client.post("/api/catalogue/%d/read" % record["id"], headers=auth(token))
+    ids.add(client.get("/api/catalogue/%d" % record["id"],
+                       headers=auth(token)).get_json()["book"]["id"])
+    assert len(ids) == 1, "a books row was created per view"
+
+
+def test_saying_you_have_read_it_lights_up_the_library_controls(client):
+    """The card hides its reading status and favourite button on history_id, so
+    browsing shows the book without pretending it is in a library it is not in.
+    Saying you have read it is what puts it there."""
+    token = register_and_login(client)
+    add_book()
+    record = client.get("/api/catalogue", headers=auth(token)).get_json()["books"][0]
+    assert client.get("/api/catalogue/%d" % record["id"],
+                      headers=auth(token)).get_json()["history_id"] is None
+
+    client.post("/api/catalogue/%d/read" % record["id"], headers=auth(token))
+    after = client.get("/api/catalogue/%d" % record["id"],
+                       headers=auth(token)).get_json()
+    assert after["history_id"] is not None
+    assert after["already_read"] is not None
 
 
 def test_a_missing_or_unverified_record_is_a_404(client):
